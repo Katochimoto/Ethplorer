@@ -342,7 +342,7 @@ class Ethplorer {
                     $result['cryptokitties'] = true;
                     break;
                 }
-            }            
+            }
         }
         if(!isset($result['token']) && !isset($result['pager'])){
             // Get balances
@@ -492,7 +492,7 @@ class Ethplorer {
             }
             $result = $limitedResult;
         }
-        
+
         return $result;
     }
 
@@ -623,7 +623,7 @@ class Ethplorer {
         evxProfiler::checkpoint('getTransaction', 'START', 'hash=' . $tx);
         $cursor = $this->oMongo->find('transactions', array("hash" => $tx));
         $result = false;
-        foreach($cursor as $result) break;        
+        foreach($cursor as $result) break;
         if($result){
             $receipt = isset($result['receipt']) ? $result['receipt'] : false;
             $result['gasLimit'] = $result['gas'];
@@ -816,7 +816,7 @@ class Ethplorer {
                 $aBalances = [];
                 foreach($cursor as $balance){
                     $aBalances[] = $balance;
-                }                
+                }
                 foreach($aBalances as $balance){
                     $total += floatval($balance['balance']);
                 }
@@ -874,9 +874,9 @@ class Ethplorer {
                     $result['txsCount'] = $token['txsCount'];
                     $result['transfersCount'] = $token['transfersCount'];
                 }
-                
+
                 $result['txsCount'] = (int)$result['txsCount'] + 1; // Contract creation tx
-                
+
                 if(isset($this->aSettings['client']) && isset($this->aSettings['client']['tokens'])){
                     $aClientTokens = $this->aSettings['client']['tokens'];
                     if(isset($aClientTokens[$address])){
@@ -948,7 +948,7 @@ class Ethplorer {
      * @param string $address  Contract address
      * @return int
      */
-    public function countOperations($address, $useFilter = TRUE, $showEth = FALSE){        
+    public function countOperations($address, $useFilter = TRUE, $showEth = FALSE){
         evxProfiler::checkpoint('countOperations', 'START', 'address=' . $address . ', useFilter = ' . ($useFilter ? 'ON' : 'OFF'));
         $cache = 'countOperations-' . $address . ($showEth ? '-eth' : '');
         $result = $this->oCache->get($cache, false, true, 30);
@@ -959,7 +959,7 @@ class Ethplorer {
             }else{
                 $cursor = $this->oMongo->find('addressCache', array("address" => $address));
                 $aCachedData = false;
-                foreach($cursor as $aCachedData) break;                
+                foreach($cursor as $aCachedData) break;
                 if(false !== $aCachedData){
                     evxProfiler::checkpoint('countTransfersFromCache', 'START', 'address=' . $address);
                     $result = $aCachedData['transfersCount'];
@@ -1030,7 +1030,7 @@ class Ethplorer {
             if($token = $this->getToken($address)){
                 $result = $token['txsCount'];
                 $result++; // One for contract creation
-            } else { 
+            } else {
                 $cursor = $this->oMongo->find('addressCache', array("address" => $address));
                 $aCachedData = false;
                 foreach($cursor as $aCachedData) break;
@@ -1084,7 +1084,7 @@ class Ethplorer {
         if($updateCache || (false === $lastblock)){
             $cursor = $this->oMongo->find('blocks', array(), array('number' => -1), 1, false, array('number'));
             $block = false;
-            foreach($cursor as $block) break;            
+            foreach($cursor as $block) break;
             $lastblock = $block && isset($block['number']) ? $block['number'] : false;
             $this->oCache->save('lastBlock', $lastblock);
         }
@@ -1147,7 +1147,7 @@ class Ethplorer {
         if(isset($options['token']) && isset($options['history'])){
             $search['contract'] = $options['token'];
         }elseif(!$showEth){
-            $search['contract'] = array('$ne' => 'ETH');   
+            $search['contract'] = array('$ne' => 'ETH');
         }
 
         $sort = array("timestamp" => -1);
@@ -1861,7 +1861,7 @@ class Ethplorer {
         }else{
             if(('transfer' === $type) && ($aToken = $this->getToken($address))){
                 $result = isset($aToken['transfersCount']) ? $aToken['transfersCount'] : 0;
-            } else {            
+            } else {
                 $result = $this->oMongo->count('operations', $search);
             }
         }
@@ -2215,7 +2215,7 @@ class Ethplorer {
                         $aDailyRecord['average'] = $aDailyRecord['volume'] ? ($aDailyRecord['volumeConverted'] / $aDailyRecord['volume']) : 0;
                         $aPriceHistoryDaily[] = $aDailyRecord;
                         $prevVol = $aDailyRecord['volume'];
-                        $prevVolC = $aDailyRecord['volumeConverted'];                        
+                        $prevVolC = $aDailyRecord['volumeConverted'];
                     }
                     $curDate = $aPriceHistory[$i]['date'];
                 }

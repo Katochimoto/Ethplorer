@@ -71,9 +71,9 @@ class evxMongoScanner extends evxMongo {
                     'balances'     => "tokenBalances",
                     'addressCache' => "cacheAddressData"
                 );
-                break;                
+                break;
             default:
-                throw new \Exception('Unknown mongodb driver ' . $dbDriver);
+                throw new \Exception('Unknown mongodb driver ' . $aSettings['driver']);
         }
         $finish = microtime(true);
         $qTime = $finish - $start;

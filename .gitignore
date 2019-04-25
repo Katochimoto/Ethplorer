@@ -1,0 +1,10 @@
+dist
+vendor
+node_modules
+
+service/log
+service/cache
+service/_service.php
+service/config.php
+
+composer.lock
