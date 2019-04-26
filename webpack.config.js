@@ -37,9 +37,17 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.pug$/,
+        test: /\.hbs$/,
         use: [
-          'pug-loader'
+          {
+            loader: 'handlebars-loader',
+            options: {
+              partialDirs: [
+                path.join(srcPath, 'templates', 'components')
+              ],
+              inlineRequires: '\/assets\/images\/'
+            }
+          },
         ]
       },
       {
@@ -66,6 +74,26 @@ const config = {
             loader: 'sass-loader'
           }
         ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[hash].[ext]',
+              outputPath: 'images'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'file-loader',
+        options: {
+          name: '[hash].[ext]',
+          outputPath: 'fonts'
+        }
       },
     ]
   },
@@ -177,18 +205,39 @@ const config = {
 
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'templates/index.pug',
+      template: 'templates/pages/index.hbs',
       inject: false,
       cache: false,
       hash: false,
       chunksSortMode: 'dependency',
       alwaysWriteToDisk: true,
+      minify: {
+        collapseWhitespace: true,
+        keepClosingSlash: true,
+        removeComments: true,
+        removeEmptyAttributes: true
+      },
     }),
 
     // new SriPlugin({
     //   hashFuncNames: ['sha256', 'sha384']
     // }),
-  ]
+  ],
+
+  devServer: {
+    noInfo: true,
+    hot: false,
+    compress: false,
+    contentBase: distPath,
+    host: 'localhost',
+    port: 9001,
+    publicPath: publicPath,
+    proxy: {},
+    clientLogLevel: 'warning',
+    open: true,
+    openPage: '',
+    // writeToDisk: true,
+  }
 }
 
 module.exports = config

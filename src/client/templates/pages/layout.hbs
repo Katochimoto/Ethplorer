@@ -1,0 +1,33 @@
+<!doctype html>
+<html
+    class="h-100"
+    {{#if htmlWebpackPlugin.options.lang}}
+        lang="{{htmlWebpackPlugin.options.lang}}"
+    {{else}}
+        lang="en"
+    {{/if}}
+    {{#if htmlWebpackPlugin.files.manifest}}
+        manifest="{{htmlWebpackPlugin.files.manifest}}"
+    {{/if}}
+>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta content="ie=edge" http-equiv="x-ua-compatible" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>{{htmlWebpackPlugin.options.title}}</title>
+        {{#each htmlWebpackPlugin.files.css}}
+            <link href="{{this}}" rel="stylesheet" crossorigin="anonymous" />
+        {{/each}}
+    </head>
+    <body class="d-flex flex-column h-100">
+        {{> nav}}
+        <main role="main" class="d-flex flex-column flex-fill flex-shrink-0">
+            {{> @partial-block}}
+        </main>
+        {{> foot}}
+        {{#each htmlWebpackPlugin.files.js}}
+            <script type="text/javascript" src="{{this}}" defer></script>
+        {{/each}}
+    </body>
+</html>
