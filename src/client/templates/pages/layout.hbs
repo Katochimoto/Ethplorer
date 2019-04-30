@@ -22,12 +22,71 @@
     </head>
     <body class="d-flex flex-column h-100">
         {{> nav}}
-        <main role="main" class="d-flex flex-column flex-fill flex-shrink-0">
+        <main role="main" class="d-flex flex-column flex-fill flex-shrink-0 position-relative">
+            <div class="bg bg-top"></div>
+            <div class="bg bg-bottom"></div>
             {{> @partial-block}}
         </main>
         {{> foot}}
+
+        <div
+            id="modal-subscribe"
+            class="modal fade"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="modal-subscribe-title"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <form
+                    class="modal-content"
+                    action="https://forms.tildacdn.com/procces/"
+                    method="POST"
+                    novalidate
+                >
+                    <div class="modal-body text-dark">
+                        <button type="button" class="close mt-n2" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title h2 mb-2" id="modal-subscribe-title">
+                            Subscribe to newsletter
+                        </h5>
+                        <p class="mb-3">
+                            We only send imporant updates once a month
+                        </p>
+                        <div class="mb-3">
+                            <input
+                                type="text"
+                                name="email"
+                                class="form-control form-control-lg"
+                                placeholder="E-mail address"
+                                required
+                            />
+                            <div class="invalid-feedback">
+                                Please correct e-mail address
+                            </div>
+                        </div>
+                        <p class="m-0">
+                            Follow
+                            <a href="https://twitter.com/ethplorer" class="highlighted text-dark" target="_blank" rel="noopener noreferrer">
+                                Ethplorer's twitter
+                            </a>
+                            to be first to know all tricks and updates
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         {{#each htmlWebpackPlugin.files.js}}
-            <script type="text/javascript" src="{{this}}" defer></script>
+            <script
+                type="text/javascript"
+                src="{{this}}"
+            ></script>
         {{/each}}
     </body>
 </html>

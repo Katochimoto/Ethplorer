@@ -7,7 +7,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
-//const SriPlugin = require('webpack-subresource-integrity')
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
+const SriPlugin = require('webpack-subresource-integrity')
 //const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
 //const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 //const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
@@ -33,6 +35,12 @@ const config = {
     alias: {
       '@': srcPath
     },
+  },
+  externals: {
+    'jquery': 'jQuery',
+    'ethplorer-widget': 'ethplorerWidget',
+    'ethplorer-search': 'EthplorerSearch',
+    'ethplorer-note': 'EthplorerNote',
   },
   module: {
     rules: [
@@ -158,7 +166,7 @@ const config = {
       cleanOnceBeforeBuildPatterns: [ 'dist/**/*' ],
     }),
     //new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
-    //new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     //require('./plugins/HashedModuleIdsPlugin')(),
     //require('./plugins/CopyWebpackPlugin')(),
     //require('./plugins/DefinePlugin')(),
@@ -186,22 +194,6 @@ const config = {
     //     yandex: false
     //   }
     // }),
-    // new SWPrecacheWebpackPlugin({
-    //   verbose: true,
-    //   cacheId: 'wizata',
-    //   filename: 'sw.js',
-    //   dontCacheBustUrlsMatching: /\.\w{8}\./,
-    //   minify: false,
-    //   // navigateFallback: homepage + 'index.html',
-    //   staticFileGlobsIgnorePatterns: [
-    //     /\.map$/,
-    //     /\.cache$/,
-    //     /\.webapp$/,
-    //     /\.xml$/,
-    //     /\.txt$/,
-    //     /manifest.*\.json$/
-    //   ]
-    // }),
 
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -219,9 +211,47 @@ const config = {
       },
     }),
 
-    // new SriPlugin({
-    //   hashFuncNames: ['sha256', 'sha384']
-    // }),
+    new AddAssetHtmlPlugin([
+      {
+        filepath: path.join(rootPath, 'node_modules/jquery/dist/jquery.min.js'),
+        hash: true,
+        attributes: {
+          nomodule: true,
+        },
+      },
+      {
+        filepath: path.join(rootPath, 'api/widget.js'),
+        hash: true,
+        attributes: {
+          nomodule: true,
+        },
+      },
+      {
+        filepath: path.join(rootPath, 'js/ethplorer-search.js'),
+        hash: true,
+        attributes: {
+          nomodule: true,
+        },
+      },
+      {
+        filepath: path.join(rootPath, 'js/ethplorer-note.js'),
+        hash: true,
+        attributes: {
+          nomodule: true,
+        },
+      },
+      {
+        filepath: path.join(srcPath, 'assets/js/jquery-ui.min.js'),
+        hash: true,
+        attributes: {
+          nomodule: true,
+        },
+      },
+    ]),
+
+    new SriPlugin({
+      hashFuncNames: ['sha256', 'sha384']
+    }),
   ],
 
   devServer: {
