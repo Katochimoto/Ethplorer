@@ -1,6 +1,11 @@
+.vscode
+dist
 vendor
+node_modules
+service/_service.php
 service/config.php
 service/log
+service/cache
 composer.lock
 docker-compose.yaml
 Dockerfile

@@ -1,0 +1,116 @@
+@import "custom";
+@import "jquery";
+
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+@import "~bootstrap/scss/bootstrap";
+
+body {
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+}
+
+.footer {
+  padding-top: 60px;
+  padding-bottom: 75px;
+  background-color: #0d0d0d;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+a.highlighted {
+  border-bottom: 2px solid $primary;
+  box-shadow: inset 0px -1px 0px 0px $primary;
+
+  &.text-secondary {
+    border-bottom: 2px solid #eee;
+    box-shadow: inset 0px -1px 0px 0px #eee;
+  }
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.bg {
+  position: absolute;
+  right: 0;
+  left: 0;
+  background-position: center center;
+  background-attachment: scroll;
+  background-image: url("../images/bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  pointer-events: none;
+
+  &.bg-top {
+    top: 0;
+    height: 285px;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: linear-gradient(to bottom, rgba(13,31,46,1), rgba(0,0,0,1))
+    }
+  }
+
+  &.bg-bottom {
+    bottom: 0;
+    height: 370px;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.7))
+    }
+  }
+}
+
+.ethplorer-widget {
+  & .widget-top-totals {
+    font-size: 0.7em;
+  }
+}
+
+#token-pulse .widget-top-totals ~ div ~ div {
+  display: none;
+}
+
+#token-top,
+#token-last {
+  background-color: transparent;
+  overflow: hidden;
+  font-size: 12px;
+}
+
+@include media-breakpoint-up(xl) {
+  #token-top,
+  #token-last {
+    font-size: 14px;
+  }
+}
+
+@include media-breakpoint-only(xs) {
+  .btn-block-xs-only {
+    display: block;
+    width: 100%;
+  }
+}

@@ -1,0 +1,293 @@
+{{#> layout }}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="mt-5 font-weight-bold">Ethereum Tokens Explorer</h1>
+            <h2 class="h5 font-weight-bold mb-4">
+                Your friendly gate into the Ethereum tokens world
+            </h2>
+            <form
+                id="search-form"
+                class="mb-4 d-flex flex-column flex-sm-row align-items-sm-start"
+                action="/search/"
+                method="POST"
+                novalidate
+            >
+                <div class="mr-sm-3 mb-2 flex-grow flex-fill">
+                    <label class="sr-only" for="ethplore-address">Token name</label>
+                    <input
+                        id="ethplore-address"
+                        name="data"
+                        type="text"
+                        class="form-control form-control-lg"
+                        placeholder="Enter tx / address / token name"
+                        required
+                    />
+                    <div class="invalid-feedback">
+                        No one field is filled
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg mb-2">
+                    Ethplore →
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="card bg-dark mb-4">
+                <div class="card-body d-flex flex-column flex-sm-row flex-md-column flex-lg-row">
+                    <h4 class="card-title">See samples:</h4>
+                    <p class="card-text">
+                        <a href="/address/0xd47297cdcf36eed17305d6a5471c6cd482c7e91c" class="highlighted">track address portfolio</a>,
+                        <a href="/tx/0x225ff3f300727e469138658ea3b2770a52de65e219044fd520a652d93e6aac4e" class="highlighted">token transfer</a>,
+                        <br/>
+                        <a href="/address/0xf3db5fa2c66b7af3eb0c0b782510816cbe4813b8" class="highlighted">token information and chart</a>,
+                        <br/>
+                        <a href="/tx/0x5d5299f0e87d06a53c3b52458c823b98524b9f7b228485a9badf15c871bca9c7?from=ehome" class="highlighted">token issuance with description</a>,
+                        <br/>
+                        Custom data: <a href="/address/0xf3763c30dd6986b53402d41a8552b8f7f6a6089b?from=ehome" class="highlighted">Chainy project</a>,
+                        <br/>
+                        Custom data: <a href="/tx/0xbfbf64b792a1416a501cb4234a667be66a8a4dfaa460d703a15678545ff27811?from=ehome" class="highlighted">Chainy Message</a>,
+                        <br/>
+                        <a href="/tx/0xfc56fad8d31c0f3d02c332f764c7b2b17e762b7d197b3f0f544a00425d5c57ee" class="highlighted">internal transactions/multiple transfers</a>,
+                        <a href="/address/0x6b9b275da653e270c0ad462a0e3dcd9906719fdc?from=ehome#tab=tab-issuances" class="highlighted">issuances</a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="card bg-transparent d-none d-md-block">
+                <div class="card-body h5">
+                    <p>
+                        Show your token traction and use token's API with Ethplorer widgets
+                    </p>
+                    <p class="font-weight-bold mb-0">
+                        <a href="/widgets?from=ehome" class="highlighted">Get a widget</a>
+                        or
+                        <a href="https://github.com/EverexIO/Ethplorer/wiki/Ethplorer-API" class="highlighted" target="_blank" rel="noopener noreferrer">
+                            use API
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="card bg-transparent mb-4 d-none d-md-block">
+                <div class="card-body d-flex flex-column flex-sm-row">
+                    <a href="#!subscribe" class="btn btn-primary btn-lg mr-sm-2 mb-2 font-weight-bold flex-fill" data-toggle="modal" data-target="#modal-subscribe">
+                        Subscribe
+                    </a>
+                    <a href="http://bit.ly/ethp-contact" class="btn btn-light btn-lg  mb-2 font-weight-bold flex-fill" target="_blank" rel="noopener noreferrer">
+                        Contact us
+                    </a>
+                </div>
+            </div>
+
+            <div class="card bg-transparent mb-4 d-none d-md-block">
+                <div class="card-body text-secondary">
+                    <h5 class="card-title font-weight-bold">Powered by Ethplorer:</h5>
+                    <p class="card-text">
+                        <p>Most of the great projects out there are already using Ethplorer's API</p>
+                        <a href="https://myetherwallet.com" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="../../assets/images/logos/myetherwallet.png"
+                                alt="MyEtherWallet"
+                                height="30"
+                                decoding="async"
+                                importance="low"
+                            />
+                        </a>
+                        <a href="https://metamask.io" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="../../assets/images/logos/metamask.png"
+                                alt="Metamask"
+                                height="30"
+                                decoding="async"
+                                importance="low"
+                            />
+                        </a>
+                        <a href="https://about.bancor.network" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="../../assets/images/logos/bancor.svg"
+                                alt="Bancor"
+                                height="30"
+                                decoding="async"
+                                importance="low"
+                            />
+                        </a>
+                        <a href="https://storj.io" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="../../assets/images/logos/storj.svg"
+                                alt="Storj"
+                                height="30"
+                                decoding="async"
+                                importance="low"
+                            />
+                        </a>
+                        <a href="https://mycrypto.com" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="../../assets/images/logos/mycrypto.svg"
+                                alt="MyCrypto"
+                                height="30"
+                                decoding="async"
+                                importance="low"
+                            />
+                        </a>
+                        <a href="https://atomicwallet.io" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="../../assets/images/logos/atomicwallet.png"
+                                alt="AtomicWallet"
+                                height="30"
+                                decoding="async"
+                                importance="low"
+                            />
+                        </a>
+                        <a href="https://www.coinigy.com" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="../../assets/images/logos/coinigy.svg"
+                                alt="Coinigy"
+                                height="30"
+                                decoding="async"
+                                importance="low"
+                            />
+                        </a>
+                        <a href="https://cointracking.info" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="../../assets/images/logos/cointracking.png"
+                                alt="Cointracking"
+                                height="30"
+                                decoding="async"
+                                importance="low"
+                            />
+                        </a>
+                        <a href="https://ambisafe.com" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="../../assets/images/logos/ambisafe.svg"
+                                alt="Ambisafe"
+                                height="30"
+                                decoding="async"
+                                importance="low"
+                            />
+                        </a>
+                        <a href="https://coinpeak.io" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="../../assets/images/logos/coinpeak.png"
+                                alt="Coinpeak"
+                                height="30"
+                                decoding="async"
+                                importance="low"
+                            />
+                        </a>
+                        <a href="https://coinbooks.io" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="../../assets/images/logos/coinbooks.png"
+                                alt="Coinbooks"
+                                height="30"
+                                decoding="async"
+                                importance="low"
+                            />
+                        </a>
+                        <a href="https://chainy.link" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="../../assets/images/logos/chainy.png"
+                                alt="Chainy"
+                                width="120"
+                                decoding="async"
+                                importance="low"
+                            />
+                        </a>
+                        <a href="https://everex.cash" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer">
+                            <img
+                                src="../../assets/images/logos/everexwallet.png"
+                                alt="EverexWallet"
+                                height="30"
+                                decoding="async"
+                                importance="low"
+                            />
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="card mb-4 bg-transparent text-center">
+                <div class="card-body px-0 pb-0">
+                    <h3 class="card-title">Ethereum Tokens Index</h3>
+                    <div id="token-pulse"></div>
+                </div>
+                <div class="card-footer">
+                    <a href="/index?from=homeWidget" class="text-primary">
+                        view full...
+                    </a>
+                </div>
+            </div>
+
+            <div class="card bg-dark mb-4 text-center">
+                <div class="card-body px-0 pb-0">
+                    <h3 class="card-title">Top tokens activity</h3>
+                    <div id="token-top"></div>
+                </div>
+                <div class="card-footer">
+                    <a href="/top" class="text-primary">
+                        view top 50...
+                    </a>
+                </div>
+            </div>
+
+            <div class="card bg-dark text-center">
+                <div class="card-body px-0 pb-0">
+                    <h3 class="card-title">Recent token transactions</h3>
+                    <div id="token-last"></div>
+                </div>
+                <div class="card-footer">
+                    <a href="/last" class="text-primary">
+                        view more...
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="mt-auto position-relative">
+    <header class="container">
+        <h2 class="py-5 text-center">About Ethplorer</h2>
+    </header>
+    <section class="container">
+        <div class="row pb-5">
+            <div class="col-sm">
+                <p>
+                    Token information and analytics for crypto investors, brokers, hedge funds and cryptomarket traders.
+                </p>
+                <p>
+                    Easy access to Ethereum-issued tokens, along with charts and in-depth transactions history based on token addresses, helping users to turn knowledge into powerful decision making.
+                </p>
+            </div>
+            <div class="col-sm">
+                <p>
+                    <a
+                        href="/address/0xd47297cdcf36eed17305d6a5471c6cd482c7e91c"
+                        class="highlighted"
+                    ><strong>Track portfolio</strong></a>
+                    for any Ethereum address with historical balance charts and transactions.
+                </p>
+                <p>
+                    Complete address analytics from historical balances to the volumes of trading, operations and transfers per token per day.
+                </p>
+                <p>
+                    <a
+                        href="https://github.com/EverexIO/Ethplorer/wiki/Ethplorer-API"
+                        class="highlighted"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    ><strong>Explore</strong></a>
+                    marketing possibilities with token API and display widgets.
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+{{/layout}}
