@@ -15,6 +15,21 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta content="ie=edge" http-equiv="x-ua-compatible" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+        {{#if htmlWebpackPlugin.options.baseHref}}
+        <base href="{{htmlWebpackPlugin.options.baseHref}}">
+        {{/if}}
+
+        {{#if htmlWebpackPlugin.options.meta}}
+            {{#each htmlWebpackPlugin.options.meta}}
+                <meta
+                    {{#each this}}
+                        {{@key}}="{{this}}"
+                    {{/each}}
+                />
+            {{/each}}
+        {{/if}}
+
         <title>{{htmlWebpackPlugin.options.title}}</title>
         {{#each htmlWebpackPlugin.files.css}}
             <link href="{{this}}" rel="stylesheet" crossorigin="anonymous" />

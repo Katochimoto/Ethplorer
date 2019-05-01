@@ -26,8 +26,8 @@ const config = {
   output: {
     path: distPath,
     publicPath: publicPath,
-    filename: '[contenthash].js',
-    chunkFilename: '[contenthash].js',
+    filename: 'js/[contenthash].js',
+    chunkFilename: 'js/[contenthash].js',
     crossOriginLoading: 'anonymous'
   },
   resolve: {
@@ -165,13 +165,12 @@ const config = {
   plugins: [
     new CleanWebpackPlugin({
       verbose: true,
-      cleanOnceBeforeBuildPatterns: [ 'dist/**/*' ],
     }),
     // new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new ExtractCssChunks({
-      filename: '[name]-[contenthash].css',
-      chunkFilename: '[name]-[contenthash].css',
+      filename: 'css/[name]-[contenthash].css',
+      chunkFilename: 'css/[name]-[contenthash].css',
       orderWarning: true,
     }),
 
@@ -210,11 +209,29 @@ const config = {
         removeComments: true,
         removeEmptyAttributes: true
       },
+      meta: [
+        { 'http-equiv': 'X-XSS-Protection', content: '1;mode=block' },
+        { 'http-equiv': 'Strict-Transport-Security', content: 'max-age=31536000; includeSubDomains; preload' },
+        { 'http-equiv': 'X-Content-Type-Options', content: 'nosniff' },
+        { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
+        { name: 'description', content: '' },
+        { name: 'og:type', content: 'website' },
+        { name: 'og:url', content: 'https://ethplorer.io' },
+        { name: 'og:title', content: 'Ethplorer — Ethereum tokens explorer and data viewer. Top tokens, Charts, Pulse, Analytics' },
+        { name: 'og:description', content: '' },
+        { name: 'og:image', content: '' },
+        { name: 'fb:app_id', content: '257953674358265' },
+        { name: 'theme-color', content: '#000000' },
+        { name: 'mobile-web-app-capable', content: 'yes' },
+        { name: 'format-detection', content: 'telephone=no' },
+      ],
     }),
 
     new AddAssetHtmlPlugin([
       {
         filepath: path.join(rootPath, 'node_modules/jquery/dist/jquery.min.js'),
+        outputPath: 'js',
+        publicPath: '/js',
         hash: true,
         attributes: {
           nomodule: true,
@@ -222,6 +239,8 @@ const config = {
       },
       {
         filepath: path.join(rootPath, 'api/widget.js'),
+        outputPath: 'js',
+        publicPath: '/js',
         hash: true,
         attributes: {
           nomodule: true,
@@ -229,6 +248,8 @@ const config = {
       },
       {
         filepath: path.join(rootPath, 'js/ethplorer-search.js'),
+        outputPath: 'js',
+        publicPath: '/js',
         hash: true,
         attributes: {
           nomodule: true,
@@ -236,6 +257,8 @@ const config = {
       },
       {
         filepath: path.join(rootPath, 'js/ethplorer-note.js'),
+        outputPath: 'js',
+        publicPath: '/js',
         hash: true,
         attributes: {
           nomodule: true,
@@ -243,6 +266,8 @@ const config = {
       },
       {
         filepath: path.join(srcPath, 'assets/js/jquery-ui.min.js'),
+        outputPath: 'js',
+        publicPath: '/js',
         hash: true,
         attributes: {
           nomodule: true,
