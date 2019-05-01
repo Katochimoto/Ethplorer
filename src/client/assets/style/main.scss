@@ -107,3 +107,10 @@ a.highlighted {
     font-size: 14px;
   }
 }
+
+@include media-breakpoint-only(xs) {
+  .btn-block-xs-only {
+    display: block;
+    width: 100%;
+  }
+}

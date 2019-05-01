@@ -1,5 +1,6 @@
 import $ from 'jquery'
 import page from 'page'
+import Cookies from 'js-cookie'
 import 'bootstrap'
 import './assets/style/main.scss'
 import widget from 'ethplorer-widget'
@@ -85,6 +86,13 @@ $(function () {
       $(this).removeClass('is-invalid')
     })
 
+  $('#cookie-notify')
+    .on('closed.bs.alert', () => {
+      const expires = new Date()
+      expires.setFullYear(expires.getFullYear() + 2)
+      Cookies.set('agree_to_use', Date.now(), { expires })
+    })
+
   EthplorerSearch.init($('#search-form'), $('#search-form input[name="data"]'), data => {
     data = $.trim(data).toLowerCase()
     const isAddress = data && /^0x[0-9a-f]{40}$/.test(data)
@@ -96,4 +104,8 @@ $(function () {
       document.location.href = '/tx/' + data + '?from=search';
     }
   })
+
+  if (!Cookies.get('agree_to_use')) {
+    setTimeout(() => $('#cookie-notify').slideDown(), 200)
+  }
 })
