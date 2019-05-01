@@ -4,15 +4,14 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 const SriPlugin = require('webpack-subresource-integrity')
-//const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
-//const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
-//const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 const publicPath = '/'
 const rootPath = process.cwd()
@@ -52,6 +51,9 @@ const config = {
             options: {
               partialDirs: [
                 path.join(srcPath, 'templates', 'components')
+              ],
+              helperDirs: [
+                path.join(srcPath, 'helpers')
               ],
               inlineRequires: '\/assets\/images\/'
             }
@@ -165,37 +167,36 @@ const config = {
       verbose: true,
       cleanOnceBeforeBuildPatterns: [ 'dist/**/*' ],
     }),
-    //new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
+    // new BundleAnalyzerPlugin({ analyzerMode: 'static' }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    //require('./plugins/HashedModuleIdsPlugin')(),
-    //require('./plugins/CopyWebpackPlugin')(),
-    //require('./plugins/DefinePlugin')(),
-    //require('./plugins/WebpackPwaManifest')(),
     new ExtractCssChunks({
       filename: '[name]-[contenthash].css',
       chunkFilename: '[name]-[contenthash].css',
       orderWarning: true,
     }),
-    // new FaviconsWebpackPlugin({
-    //   logo: path.join(srcPath, 'assets', 'img', 'ico.png'),
-    //   prefix: 'icons-[hash:8]/',
-    //   persistentCache: true,
-    //   inject: true,
-    //   icons: {
-    //     android: true,
-    //     appleIcon: true,
-    //     appleStartup: false,
-    //     coast: false,
-    //     favicons: true,
-    //     firefox: true,
-    //     opengraph: false,
-    //     twitter: false,
-    //     windows: false,
-    //     yandex: false
-    //   }
-    // }),
+
+    new FaviconsWebpackPlugin({
+      logo: path.join(srcPath, 'assets', 'images', 'ico.png'),
+      prefix: 'icons-[hash:8]/',
+      persistentCache: true,
+      inject: true,
+      title: 'Ethplorer',
+      icons: {
+        android: true,
+        appleIcon: true,
+        appleStartup: false,
+        coast: false,
+        favicons: true,
+        firefox: true,
+        opengraph: false,
+        twitter: false,
+        windows: false,
+        yandex: false
+      }
+    }),
 
     new HtmlWebpackPlugin({
+      title: 'Ethplorer — Ethereum tokens explorer and data viewer. Top tokens, Charts, Pulse, Analytics',
       filename: 'index.html',
       template: 'templates/pages/index.hbs',
       inject: false,

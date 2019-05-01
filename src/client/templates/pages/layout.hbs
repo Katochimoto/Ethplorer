@@ -19,6 +19,8 @@
         {{#each htmlWebpackPlugin.files.css}}
             <link href="{{this}}" rel="stylesheet" crossorigin="anonymous" />
         {{/each}}
+
+        {{> fb-pixel}}
     </head>
     <body class="d-flex flex-column h-100">
         {{> nav}}
@@ -37,5 +39,6 @@
                 src="{{this}}"
             ></script>
         {{/each}}
+        {{> ga}}
     </body>
 </html>

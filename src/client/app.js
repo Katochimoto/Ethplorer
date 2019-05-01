@@ -1,6 +1,7 @@
 import $ from 'jquery'
 import page from 'page'
 import Cookies from 'js-cookie'
+import * as Sentry from '@sentry/browser'
 import 'bootstrap'
 import './assets/style/main.scss'
 import widget from 'ethplorer-widget'
@@ -38,6 +39,10 @@ page({
   popstate: false,
   decodeURLComponents: false,
   hashbang: true,
+})
+
+Sentry.init({
+  dsn: 'https://8d6dcaecdb6c4390b545e02c5b2e7116@ethplorer.io/erp'
 })
 
 $(function () {
