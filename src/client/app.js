@@ -93,9 +93,7 @@ $(function () {
 
   $('#cookie-notify')
     .on('closed.bs.alert', () => {
-      const expires = new Date()
-      expires.setFullYear(expires.getFullYear() + 2)
-      Cookies.set('agree_to_use', Date.now(), { expires })
+      Cookies.set('agree_to_use', Date.now(), { expires: 365 * 2 })
     })
 
   EthplorerSearch.init($('#search-form'), $('#search-form input[name="data"]'), data => {
