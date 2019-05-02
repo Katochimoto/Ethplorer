@@ -7,6 +7,9 @@ import './assets/style/main.scss'
 import widget from 'ethplorer-widget'
 import EthplorerSearch from 'ethplorer-search'
 
+import './templates/components/note'
+import './templates/components/modal-subscribe'
+
 window.eWgs = []
 window.tildaBrowserLang = 'EN'
 
@@ -46,34 +49,6 @@ Sentry.init({
 })
 
 $(function () {
-  $('#modal-subscribe')
-    .on('hidden.bs.modal', function () {
-      $('input[name="email"]', this)
-        .removeClass('is-invalid')
-        .val('')
-
-      page('/#')
-    })
-    .on('shown.bs.modal', function () {
-      $('input[name="email"]', this)
-        .trigger('focus')
-    })
-    .on('submit', 'form', function (event) {
-      event.preventDefault()
-      const $email = $('input[name="email"]', this)
-      const email = $.trim($email.val())
-      const isValid = email && /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(email)
-
-      $email.toggleClass('is-invalid', !isValid)
-
-      if (!isValid) {
-        $email.trigger('focus')
-      }
-    })
-    .on('input', 'input[name="email"]', function () {
-      $(this).removeClass('is-invalid')
-    })
-
   $('#search-form')
     .on('submit', function (event) {
       event.preventDefault()
