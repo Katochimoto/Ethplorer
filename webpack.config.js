@@ -3,6 +3,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlBeautifyPlugin = require('html-beautify-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
@@ -203,12 +204,12 @@ const config = {
       hash: false,
       chunksSortMode: 'dependency',
       alwaysWriteToDisk: true,
-      minify: {
-        collapseWhitespace: true,
-        keepClosingSlash: true,
-        removeComments: true,
-        removeEmptyAttributes: true
-      },
+      // minify: {
+      //   collapseWhitespace: true,
+      //   keepClosingSlash: true,
+      //   removeComments: true,
+      //   removeEmptyAttributes: true
+      // },
       meta: [
         { 'http-equiv': 'X-XSS-Protection', content: '1;mode=block' },
         { 'http-equiv': 'Strict-Transport-Security', content: 'max-age=31536000; includeSubDomains; preload' },
@@ -236,12 +237,12 @@ const config = {
       hash: false,
       chunksSortMode: 'dependency',
       alwaysWriteToDisk: true,
-      minify: {
-        collapseWhitespace: true,
-        keepClosingSlash: true,
-        removeComments: true,
-        removeEmptyAttributes: true
-      },
+      // minify: {
+      //   collapseWhitespace: true,
+      //   keepClosingSlash: true,
+      //   removeComments: true,
+      //   removeEmptyAttributes: true
+      // },
       meta: [
         { 'http-equiv': 'X-XSS-Protection', content: '1;mode=block' },
         { 'http-equiv': 'Strict-Transport-Security', content: 'max-age=31536000; includeSubDomains; preload' },
@@ -258,6 +259,18 @@ const config = {
         { name: 'mobile-web-app-capable', content: 'yes' },
         { name: 'format-detection', content: 'telephone=no' },
       ],
+    }),
+
+    new HtmlBeautifyPlugin({
+      config: {
+        html: {
+          indent_size: 2,
+          indent_inner_html: true,
+          no_preserve_newlines: true,
+          unformatted: ['script'],
+          wrap_line_length: 0,
+        },
+      },
     }),
 
     new AddAssetHtmlPlugin([

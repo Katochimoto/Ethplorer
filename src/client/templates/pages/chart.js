@@ -1,1 +1,18 @@
-console.log('>>>> chart')
+import $ from 'jquery'
+import widget from 'ethplorer-widget'
+
+$(function () {
+  $('main').attr('data-page', 'chart')
+
+  widget.init('#token-top', 'tokenHistoryGrouped', {
+    period: 90,
+    theme: 'dark',
+    cap: true,
+    full: true,
+    total: true,
+    options: {
+      pointSize: 0,
+      height: 300,
+    },
+  })
+})
