@@ -2,7 +2,7 @@
 @import "jquery";
 
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
 @import "~@fortawesome/fontawesome-free/scss/brands.scss";
 
 @import "~bootstrap/scss/bootstrap";
@@ -120,6 +120,12 @@ main {
   #token-top,
   #token-last {
     font-size: 14px;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  #nav-search-form {
+    max-width: 315px;
   }
 }
 
