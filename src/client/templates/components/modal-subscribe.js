@@ -1,9 +1,10 @@
 import $ from 'jquery'
-import page from 'page'
 
 let subscribeProgress = false
 
 $(function () {
+  const hasHash = document.location.hash === '#subscribe'
+
   $('#modal-subscribe')
     .on('hidden.bs.modal', function () {
       $(this)
@@ -12,7 +13,9 @@ $(function () {
         .find('button[type="submit"]').show().end()
         .find('input[name="email"]').removeClass('is-invalid').val('')
 
-      page('/#')
+      if (hasHash) {
+        document.location.hash = ''
+      }
     })
     .on('shown.bs.modal', function () {
       $(this)
@@ -101,4 +104,8 @@ $(function () {
     .on('input', 'input[name="email"]', function () {
       $(this).removeClass('is-invalid')
     })
+
+  if (hasHash) {
+    $('#modal-subscribe').modal('show')
+  }
 })

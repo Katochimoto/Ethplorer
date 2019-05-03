@@ -21,13 +21,13 @@ const distPath = path.join(rootPath, 'dist')
 const config = {
   context: srcPath,
   entry: {
-    main: path.join(srcPath, 'app.js'),
+    app: path.join(srcPath, 'app.js'),
   },
   output: {
     path: distPath,
     publicPath: publicPath,
-    filename: 'js/[contenthash].js',
-    chunkFilename: 'js/[contenthash].js',
+    filename: 'js/[name]-[contenthash].js',
+    chunkFilename: 'js/[name]-[contenthash].js',
     crossOriginLoading: 'anonymous'
   },
   resolve: {
@@ -227,6 +227,39 @@ const config = {
       ],
     }),
 
+    new HtmlWebpackPlugin({
+      title: 'Ethplorer — Ethereum Tokens Index. Market Cap and Operations historical chart',
+      filename: 'chart.html',
+      template: 'templates/pages/chart.hbs',
+      inject: false,
+      cache: false,
+      hash: false,
+      chunksSortMode: 'dependency',
+      alwaysWriteToDisk: true,
+      minify: {
+        collapseWhitespace: true,
+        keepClosingSlash: true,
+        removeComments: true,
+        removeEmptyAttributes: true
+      },
+      meta: [
+        { 'http-equiv': 'X-XSS-Protection', content: '1;mode=block' },
+        { 'http-equiv': 'Strict-Transport-Security', content: 'max-age=31536000; includeSubDomains; preload' },
+        { 'http-equiv': 'X-Content-Type-Options', content: 'nosniff' },
+        { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
+        { name: 'description', content: '' },
+        { name: 'og:type', content: 'website' },
+        { name: 'og:url', content: 'https://ethplorer.io/index' },
+        { name: 'og:title', content: 'Ethplorer — Ethereum Tokens Index. Market Cap and Operations historical chart' },
+        { name: 'og:description', content: '' },
+        { name: 'og:image', content: '/img/459ffc10b8bd5c3350bf9f338600db50.jpg' },
+        { name: 'fb:app_id', content: '257953674358265' },
+        { name: 'theme-color', content: '#000000' },
+        { name: 'mobile-web-app-capable', content: 'yes' },
+        { name: 'format-detection', content: 'telephone=no' },
+      ],
+    }),
+
     new AddAssetHtmlPlugin([
       {
         filepath: path.join(rootPath, 'node_modules/jquery/dist/jquery.min.js'),
@@ -286,13 +319,16 @@ const config = {
     compress: false,
     contentBase: distPath,
     host: 'localhost',
+    allowedHosts: [
+      'ethplorer.test',
+    ],
     port: 9001,
     publicPath: publicPath,
     proxy: {},
     clientLogLevel: 'warning',
     open: true,
     openPage: '',
-    // writeToDisk: true,
+    writeToDisk: true,
   }
 }
 

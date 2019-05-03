@@ -1,6 +1,10 @@
 # DirectoryIndex page2357218.html
 RewriteEngine On
 
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^index$ /dist/chart.html [L]
+RewriteRule ^index/$ /dist/chart.html [L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !^/dist/
 RewriteCond %{REQUEST_URI} !^/api/
@@ -11,8 +15,8 @@ RewriteRule ^(.*)$ /dist/$1 [L]
 
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ https://ethplorer.io/$1 [L,R=301]
-RewriteRule ^index$ page2354227.html
-RewriteRule ^index/$ page2354227.html
+# RewriteRule ^index$ page2354227.html
+# RewriteRule ^index/$ page2354227.html
 RewriteRule ^last$ page627123.html
 RewriteRule ^last/$ page627123.html
 RewriteRule ^top$ page627210.html
