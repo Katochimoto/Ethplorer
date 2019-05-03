@@ -73,6 +73,7 @@ main {
       background-size: cover;
       background-repeat: no-repeat;
       pointer-events: none;
+      z-index: -1;
     }
 
     &::after {
@@ -93,11 +94,8 @@ main {
       background-size: cover;
       background-repeat: no-repeat;
       pointer-events: none;
+      z-index: -1;
     }
-  }
-
-  & > .container {
-    z-index: 1;
   }
 }
 
