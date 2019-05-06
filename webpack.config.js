@@ -227,10 +227,18 @@ const config = {
     page('top'),
     page('top-weekly'),
     page('last'),
-    page('widgets'),
+    // page('widgets'),
     page('about'),
     page('privacy'),
     page('wc'),
+
+    new HtmlWebpackPlugin({
+      filename: 'widgets.twig',
+      template: 'pages/widgets.twig',
+      inject: 'body',
+      chunksSortMode: 'dependency',
+      alwaysWriteToDisk: true,
+    }),
 
     new HtmlBeautifyPlugin({
       config: {

@@ -48,3 +48,15 @@
     </section>
 </div>
 {% endblock %}
+
+{% block scripts %}
+{% verbatim %}
+    {% if scriptAddon %}
+        <script>
+            {% autoescape 'js' %}
+            {{ scriptAddon }}
+            {% endautoescape %}
+        </script>
+    {% endif %}
+{% endverbatim %}
+{% endblock %}
