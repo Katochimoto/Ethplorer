@@ -1,0 +1,39 @@
+{% extends "./layout.twig" %}
+
+{% block page %}wc{% endblock %}
+
+{% block title %}
+    Widgets and Charts for Ethereum Token
+{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="" />
+    <meta name="og:url" content="https://ethplorer.io/wc" />
+    <meta name="og:title" content="Widgets and Charts for Ethereum Token" />
+    <meta name="og:description" content="" />
+    <meta name="og:image" content="{{ asset('../assets/images/bg2.jpg') }}" />
+{% endblock %}
+
+{% block navbar %}
+    {% include '../components/nav-search.twig' with { 'active': 'wc' } %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h1 class="mt-5 font-weight-bold">Top tokens by current volume</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card bg-transparent border-0">
+                <div class="card-body">
+                    <div id="token-wc"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -230,6 +230,7 @@ const config = {
     page('widgets'),
     page('about'),
     page('privacy'),
+    page('wc'),
 
     new HtmlBeautifyPlugin({
       config: {

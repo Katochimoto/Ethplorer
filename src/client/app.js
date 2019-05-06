@@ -58,6 +58,12 @@ page('/privacy', () => import(
   './pages/privacy.js'
 ))
 
+page('/wc', () => import(
+  /* webpackChunkName: "page-wc" */
+  /* webpackMode: "lazy" */
+  './pages/wc.js'
+))
+
 page({
   click: false,
   popstate: false,
