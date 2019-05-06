@@ -228,6 +228,7 @@ const config = {
     page('last'),
     page('widgets'),
     page('about'),
+    page('privacy'),
 
     new HtmlBeautifyPlugin({
       config: {

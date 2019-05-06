@@ -46,6 +46,12 @@ page('/about', () => import(
   './pages/about.js'
 ))
 
+page('/privacy', () => import(
+  /* webpackChunkName: "page-privacy" */
+  /* webpackMode: "lazy" */
+  './pages/privacy.js'
+))
+
 page({
   click: false,
   popstate: false,
