@@ -225,6 +225,7 @@ const config = {
     page('index'),
     page('chart'),
     page('top'),
+    page('top-weekly'),
     page('last'),
     page('widgets'),
     page('about'),

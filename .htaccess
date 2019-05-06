@@ -12,6 +12,8 @@ RewriteRule ^about$ /dist/about.html [L]
 RewriteRule ^about/$ /dist/about.html [L]
 RewriteRule ^privacy$ /dist/privacy.html [L]
 RewriteRule ^privacy/$ /dist/privacy.html [L]
+RewriteRule ^top/weekly$ /dist/top-weekly.html [L]
+RewriteRule ^top/weekly/$ /dist/top-weekly.html [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !^/dist/
@@ -33,8 +35,8 @@ RewriteRule ^(.*)/$ https://ethplorer.io/$1 [L,R=301]
 # RewriteRule ^about/$ page627364.html
 # RewriteRule ^privacy$ page627373.html
 # RewriteRule ^privacy/$ page627373.html
-RewriteRule ^top/weekly$ page738889.html
-RewriteRule ^top/weekly/$ page738889.html
+# RewriteRule ^top/weekly$ page738889.html
+# RewriteRule ^top/weekly/$ page738889.html
 RewriteRule ^wc$ page1054060.html
 RewriteRule ^wc/$ page1054060.html
 RewriteRule ^vertical$ page2260238.html

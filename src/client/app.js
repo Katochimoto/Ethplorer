@@ -28,6 +28,12 @@ page('/top', () => import(
   './pages/top.js'
 ))
 
+page('/top/weekly', () => import(
+  /* webpackChunkName: "page-top-weekly" */
+  /* webpackMode: "lazy" */
+  './pages/top-weekly.js'
+))
+
 page('/last', () => import(
   /* webpackChunkName: "page-last" */
   /* webpackMode: "lazy" */

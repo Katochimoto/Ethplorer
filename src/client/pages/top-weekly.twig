@@ -1,0 +1,49 @@
+{% extends "./layout.twig" %}
+
+{% block page %}top-weekly{% endblock %}
+
+{% block title %}
+    Top 50 Ethereum Tokens - Weekly
+{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="" />
+    <meta name="og:url" content="https://ethplorer.io/top/weekly" />
+    <meta name="og:title" content="Top 50 Ethereum Tokens - Weekly" />
+    <meta name="og:description" content="" />
+    <meta name="og:image" content="{{ asset('../assets/images/bg2.jpg') }}" />
+{% endblock %}
+
+{% block navbar %}
+    {% include '../components/nav-search.twig' with { 'active': 'top-weekly' } %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h1 class="mt-5 font-weight-bold">Top Ethereum Tokens Activity</h1>
+            <p>*grouped by operations count</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card bg-transparent border-0">
+                <div class="card-body">
+                    <div id="token-top-weekly"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-auto position-relative text-center mb-4">
+    <header class="container">
+        <h2 class="py-4 text-center">See also</h2>
+    </header>
+    <section class="container">
+        <p><a href="/last" class="highlighted"><b>Recent Token operations monitor</b></a></p>
+        <p><a href="/widgets" class="highlighted"><b>Token Widgets and Charts <nobr>for your website</nobr></b></a></p>
+    </section>
+</div>
+{% endblock %}
