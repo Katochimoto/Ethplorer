@@ -1,4 +1,22 @@
-{{#> layout}}
+{% extends "./layout.twig" %}
+
+{% block title %}
+    Ethplorer — Ethereum Tokens Index. Market Cap and Operations historical chart
+{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="" />
+    <meta name="og:url" content="https://ethplorer.io/index" />
+    <meta name="og:title" content="Ethplorer — Ethereum Tokens Index. Market Cap and Operations historical chart" />
+    <meta name="og:description" content="" />
+    <meta name="og:image" content="{{ asset('../assets/images/bg2.jpg') }}" />
+{% endblock %}
+
+{% block navbar %}
+    {% include '../components/nav-search.twig' %}
+{% endblock %}
+
+{% block content %}
 <div class="container">
     <div class="row">
         <div class="col text-center">
@@ -26,4 +44,4 @@
         <p><a href="/widgets" class="highlighted"><b>Token Widgets and Charts <nobr>for your website</nobr></b></a></p>
     </section>
 </div>
-{{/layout}}
+{% endblock %}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="h-100" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-XSS-Protection" content="1;mode=block" />
+        <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload" />
+        <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+        <meta http-equiv="x-dns-prefetch-control" content="on" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="fb:app_id" content="257953674358265" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="og:type" content="website" />
+        {% block meta %}{% endblock %}
+
+        <title>{% block title %}{% endblock %}</title>
+
+        {% include '../components/fb-pixel.twig' %}
+    </head>
+    <body class="d-flex flex-column h-100">
+        {% block navbar %}
+            {% include '../components/nav.twig' %}
+        {% endblock %}
+        <main role="main" class="d-flex flex-column flex-fill flex-shrink-0 position-relative">
+            {% include '../components/note.twig' %}
+            {% block content %}{% endblock %}
+        </main>
+        {% include '../components/foot.twig' %}
+        {% include '../components/cookie-notify.twig' %}
+        {% include '../components/modal-subscribe.twig' %}
+        {% include '../components/ga.twig' %}
+    </body>
+</html>

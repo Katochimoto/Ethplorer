@@ -1,4 +1,18 @@
-{{#> layout}}
+{% extends "./layout.twig" %}
+
+{% block title %}
+    Ethplorer — Ethereum tokens explorer and data viewer. Top tokens, Charts, Pulse, Analytics
+{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="" />
+    <meta name="og:url" content="https://ethplorer.io" />
+    <meta name="og:title" content="Ethplorer — Ethereum tokens explorer and data viewer. Top tokens, Charts, Pulse, Analytics" />
+    <meta name="og:description" content="" />
+    <meta name="og:image" content="" />
+{% endblock %}
+
+{% block content %}
 <div class="container">
     <div class="row">
         <div class="col">
@@ -91,7 +105,7 @@
                         <p>Most of the great projects out there are already using Ethplorer's API</p>
                         <a href="https://myetherwallet.com" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer nofollow">
                             <img
-                                src="../../assets/images/logos/myetherwallet.png"
+                                src="../assets/images/logos/myetherwallet.png"
                                 alt="MyEtherWallet"
                                 height="30"
                                 decoding="async"
@@ -100,7 +114,7 @@
                         </a>
                         <a href="https://metamask.io" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer nofollow">
                             <img
-                                src="../../assets/images/logos/metamask.png"
+                                src="../assets/images/logos/metamask.png"
                                 alt="Metamask"
                                 height="30"
                                 decoding="async"
@@ -109,7 +123,7 @@
                         </a>
                         <a href="https://about.bancor.network" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer nofollow">
                             <img
-                                src="../../assets/images/logos/bancor.svg"
+                                src="../assets/images/logos/bancor.svg"
                                 alt="Bancor"
                                 height="30"
                                 decoding="async"
@@ -118,7 +132,7 @@
                         </a>
                         <a href="https://storj.io" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer nofollow">
                             <img
-                                src="../../assets/images/logos/storj.svg"
+                                src="../assets/images/logos/storj.svg"
                                 alt="Storj"
                                 height="30"
                                 decoding="async"
@@ -127,7 +141,7 @@
                         </a>
                         <a href="https://mycrypto.com" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer nofollow">
                             <img
-                                src="../../assets/images/logos/mycrypto.svg"
+                                src="../assets/images/logos/mycrypto.svg"
                                 alt="MyCrypto"
                                 height="30"
                                 decoding="async"
@@ -136,7 +150,7 @@
                         </a>
                         <a href="https://atomicwallet.io" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer nofollow">
                             <img
-                                src="../../assets/images/logos/atomicwallet.png"
+                                src="../assets/images/logos/atomicwallet.png"
                                 alt="AtomicWallet"
                                 height="30"
                                 decoding="async"
@@ -145,7 +159,7 @@
                         </a>
                         <a href="https://www.coinigy.com" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer nofollow">
                             <img
-                                src="../../assets/images/logos/coinigy.svg"
+                                src="../assets/images/logos/coinigy.svg"
                                 alt="Coinigy"
                                 height="30"
                                 decoding="async"
@@ -154,7 +168,7 @@
                         </a>
                         <a href="https://cointracking.info" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer nofollow">
                             <img
-                                src="../../assets/images/logos/cointracking.png"
+                                src="../assets/images/logos/cointracking.png"
                                 alt="Cointracking"
                                 height="30"
                                 decoding="async"
@@ -163,7 +177,7 @@
                         </a>
                         <a href="https://ambisafe.com" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer nofollow">
                             <img
-                                src="../../assets/images/logos/ambisafe.svg"
+                                src="../assets/images/logos/ambisafe.svg"
                                 alt="Ambisafe"
                                 height="30"
                                 decoding="async"
@@ -172,7 +186,7 @@
                         </a>
                         <a href="https://coinpeak.io" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer nofollow">
                             <img
-                                src="../../assets/images/logos/coinpeak.png"
+                                src="../assets/images/logos/coinpeak.png"
                                 alt="Coinpeak"
                                 height="30"
                                 decoding="async"
@@ -181,7 +195,7 @@
                         </a>
                         <a href="https://coinbooks.io" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer nofollow">
                             <img
-                                src="../../assets/images/logos/coinbooks.png"
+                                src="../assets/images/logos/coinbooks.png"
                                 alt="Coinbooks"
                                 height="30"
                                 decoding="async"
@@ -190,7 +204,7 @@
                         </a>
                         <a href="https://chainy.link" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer nofollow">
                             <img
-                                src="../../assets/images/logos/chainy.png"
+                                src="../assets/images/logos/chainy.png"
                                 alt="Chainy"
                                 width="120"
                                 decoding="async"
@@ -199,7 +213,7 @@
                         </a>
                         <a href="https://everex.cash" class="opacity-50 d-inline-block mb-4 mr-4" target="_blank" rel="noopener noreferrer nofollow">
                             <img
-                                src="../../assets/images/logos/everexwallet.png"
+                                src="../assets/images/logos/everexwallet.png"
                                 alt="EverexWallet"
                                 height="30"
                                 decoding="async"
@@ -284,4 +298,4 @@
         </div>
     </div>
 </div>
-{{/layout}}
+{% endblock %}

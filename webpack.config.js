@@ -45,21 +45,32 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.hbs$/,
+        test: /\.js$/,
+        loader: 'babel-loader',
+      },
+      {
+        test: /\.twig$/,
         use: [
           {
-            loader: 'handlebars-loader',
+            loader: 'html-loader',
             options: {
-              partialDirs: [
-                path.join(srcPath, 'templates', 'components')
+              interpolate: true,
+              attrs: [
+                'img:src',
               ],
-              helperDirs: [
-                path.join(srcPath, 'helpers')
-              ],
-              inlineRequires: '\/assets\/images\/'
-            }
+            },
           },
-        ]
+          {
+            loader: 'twig-html-loader',
+            options: {
+              functions: {
+                asset: function (file) {
+                  return "${require('" + file + "')}"
+                },
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.scss$/,
@@ -87,7 +98,7 @@ const config = {
         ]
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif|svg)$/,
         use: [
           {
             loader: 'file-loader',
@@ -99,7 +110,7 @@ const config = {
         ]
       },
       {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        test: /\.(woff2?|eot|ttf|otf)$/,
         loader: 'file-loader',
         options: {
           name: '[hash].[ext]',
@@ -196,12 +207,9 @@ const config = {
     }),
 
     new HtmlWebpackPlugin({
-      title: 'Ethplorer — Ethereum tokens explorer and data viewer. Top tokens, Charts, Pulse, Analytics',
       filename: 'index.html',
-      template: 'templates/pages/index.hbs',
-      inject: false,
-      cache: false,
-      hash: false,
+      template: 'pages/index.twig',
+      inject: 'body',
       chunksSortMode: 'dependency',
       alwaysWriteToDisk: true,
       // minify: {
@@ -210,31 +218,12 @@ const config = {
       //   removeComments: true,
       //   removeEmptyAttributes: true
       // },
-      meta: [
-        { 'http-equiv': 'X-XSS-Protection', content: '1;mode=block' },
-        { 'http-equiv': 'Strict-Transport-Security', content: 'max-age=31536000; includeSubDomains; preload' },
-        { 'http-equiv': 'X-Content-Type-Options', content: 'nosniff' },
-        { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
-        { name: 'description', content: '' },
-        { name: 'og:type', content: 'website' },
-        { name: 'og:url', content: 'https://ethplorer.io' },
-        { name: 'og:title', content: 'Ethplorer — Ethereum tokens explorer and data viewer. Top tokens, Charts, Pulse, Analytics' },
-        { name: 'og:description', content: '' },
-        { name: 'og:image', content: '' },
-        { name: 'fb:app_id', content: '257953674358265' },
-        { name: 'theme-color', content: '#000000' },
-        { name: 'mobile-web-app-capable', content: 'yes' },
-        { name: 'format-detection', content: 'telephone=no' },
-      ],
     }),
 
     new HtmlWebpackPlugin({
-      title: 'Ethplorer — Ethereum Tokens Index. Market Cap and Operations historical chart',
       filename: 'chart.html',
-      template: 'templates/pages/chart.hbs',
-      inject: false,
-      cache: false,
-      hash: false,
+      template: 'pages/chart.twig',
+      inject: 'body',
       chunksSortMode: 'dependency',
       alwaysWriteToDisk: true,
       // minify: {
@@ -243,22 +232,6 @@ const config = {
       //   removeComments: true,
       //   removeEmptyAttributes: true
       // },
-      meta: [
-        { 'http-equiv': 'X-XSS-Protection', content: '1;mode=block' },
-        { 'http-equiv': 'Strict-Transport-Security', content: 'max-age=31536000; includeSubDomains; preload' },
-        { 'http-equiv': 'X-Content-Type-Options', content: 'nosniff' },
-        { 'http-equiv': 'x-dns-prefetch-control', content: 'on' },
-        { name: 'description', content: '' },
-        { name: 'og:type', content: 'website' },
-        { name: 'og:url', content: 'https://ethplorer.io/index' },
-        { name: 'og:title', content: 'Ethplorer — Ethereum Tokens Index. Market Cap and Operations historical chart' },
-        { name: 'og:description', content: '' },
-        { name: 'og:image', content: '/img/459ffc10b8bd5c3350bf9f338600db50.jpg' },
-        { name: 'fb:app_id', content: '257953674358265' },
-        { name: 'theme-color', content: '#000000' },
-        { name: 'mobile-web-app-capable', content: 'yes' },
-        { name: 'format-detection', content: 'telephone=no' },
-      ],
     }),
 
     new HtmlBeautifyPlugin({
@@ -279,51 +252,36 @@ const config = {
         outputPath: 'js',
         publicPath: '/js',
         hash: true,
-        attributes: {
-          nomodule: true,
-        },
       },
       {
         filepath: path.join(rootPath, 'api/widget.js'),
         outputPath: 'js',
         publicPath: '/js',
         hash: true,
-        attributes: {
-          nomodule: true,
-        },
       },
       {
         filepath: path.join(rootPath, 'js/ethplorer-search.js'),
         outputPath: 'js',
         publicPath: '/js',
         hash: true,
-        attributes: {
-          nomodule: true,
-        },
       },
       {
         filepath: path.join(rootPath, 'js/ethplorer-note.js'),
         outputPath: 'js',
         publicPath: '/js',
         hash: true,
-        attributes: {
-          nomodule: true,
-        },
       },
       {
         filepath: path.join(srcPath, 'assets/js/jquery-ui.min.js'),
         outputPath: 'js',
         publicPath: '/js',
         hash: true,
-        attributes: {
-          nomodule: true,
-        },
       },
     ]),
 
-    new SriPlugin({
-      hashFuncNames: ['sha256', 'sha384']
-    }),
+    // new SriPlugin({
+    //   hashFuncNames: ['sha256', 'sha384']
+    // }),
   ],
 
   devServer: {
