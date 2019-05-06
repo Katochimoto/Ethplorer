@@ -46,7 +46,8 @@ main {
 
   &[data-page="chart"],
   &[data-page="top"],
-  &[data-page="last"] {
+  &[data-page="last"],
+  &[data-page="about"] {
     background-position: center center;
     background-attachment: scroll;
     background-image:

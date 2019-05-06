@@ -34,6 +34,18 @@ page('/last', () => import(
   './pages/last.js'
 ))
 
+page('/widgets', () => import(
+  /* webpackChunkName: "page-widgets" */
+  /* webpackMode: "lazy" */
+  './pages/widgets.js'
+))
+
+page('/about', () => import(
+  /* webpackChunkName: "page-about" */
+  /* webpackMode: "lazy" */
+  './pages/about.js'
+))
+
 page({
   click: false,
   popstate: false,

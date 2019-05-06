@@ -1,0 +1,50 @@
+{% extends "./layout.twig" %}
+
+{% block page %}widgets{% endblock %}
+
+{% block title %}
+    Ethplorer - Widgets and Charts for Ethereum Tokens
+{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="" />
+    <meta name="og:url" content="https://ethplorer.io/widgets" />
+    <meta name="og:title" content="Ethplorer - Widgets and Charts for Ethereum Tokens" />
+    <meta name="og:description" content="" />
+    <meta name="og:image" content="{{ asset('../assets/images/bg2.jpg') }}" />
+{% endblock %}
+
+{% block navbar %}
+    {% include '../components/nav-search.twig' with { 'active': 'widgets' } %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h1 class="mt-5 font-weight-bold">Recent Ethereum token transactions monitor</h1>
+            <hr class="bg-white w-25 my-4" />
+            <p>refreshing in real-time</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card bg-transparent border-0">
+                <div class="card-body">
+                    <div id="token-last"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-auto position-relative text-center mb-4">
+    <header class="container">
+        <h2 class="py-4 text-center">See also</h2>
+    </header>
+    <section class="container">
+        <p><a href="/top" class="highlighted"><b>Top-50 Ethereum Tokens Activity</b></a></p>
+        <p><a href="/widgets" class="highlighted"><b>Token Widgets and Charts <nobr>for your website</nobr></b></a></p>
+    </section>
+</div>
+{% endblock %}

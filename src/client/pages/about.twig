@@ -1,0 +1,69 @@
+{% extends "./layout.twig" %}
+
+{% block page %}about{% endblock %}
+
+{% block title %}
+    About Ethplorer — Ethereum Tokens Explorer and Data viewer
+{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="" />
+    <meta name="og:url" content="https://ethplorer.io/about" />
+    <meta name="og:title" content="About Ethplorer — Ethereum Tokens Explorer and Data viewer" />
+    <meta name="og:description" content="" />
+    <meta name="og:image" content="{{ asset('../assets/images/bg2.jpg') }}" />
+{% endblock %}
+
+{% block navbar %}
+    {% include '../components/nav-search.twig' with { 'active': 'about' } %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10">
+            <div class="card bg-white border-0 my-5">
+                <div class="card-body text-dark p-3 p-sm-5">
+                    <h1 class="card-title font-weight-bold text-center mb-4">How it works and what's the problem</h1>
+                    <p class="card-text">
+                        Ethereum tokens are not built into its blockchain.
+                        Those are smart contracts that can be written as you wish.
+                        Therefore, except of the smart contracts owner, it's really hard to detect the information inside such tokens.
+                        <br/><br/>
+                        Because there is no public independent third-party viewer, it makes a serious obstacle in popularization of Ethereum based tokens.
+                        Such viewer could display the issuance history, description, and other token and blockchain attributes publicly available.
+                        <br/><br/>
+                        Ethplorer is one of the solutions for this problem.
+                        It display the information about Ethereum tokens from its blockchain not only for developers, but for public.
+                        <br/><br/>
+                        EIP20 protocol has been accepted by Ethereum community and became the first standard protocol for token creation and development (ERC20).
+                        However, many tokens, including well known DAO and Digix were created before final version of EIP20,
+                        and they were made with a few modifications that prevent them to be read them correctly.
+                        <br/><br/>
+                        We will be adding additional functionality to support the display process of those tokens.
+                        Including the addition of ABI for contracts which creators would provide them to us.
+                        <br/><br/>
+                        So, if your token is shown incorrectly and you want fix that in Ethplorer, please let us know.
+                        <br/><br/>
+                        Considering the above, keep in mind that viewing of tokens does not guarantee that all token information will be displayed correctly.
+                        Please leave your feedback and suggestions and we will keep developing Ethplorer so it can display more information.
+                        <br/><br/>
+                        You are welcome to discussion it in comments below,
+                        fill form by clicking "update" at your token's page or email us to: support@ethplorer.io
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-auto position-relative text-center mb-4">
+    <header class="container">
+        <h2 class="py-4 text-center">See also</h2>
+    </header>
+    <section class="container">
+        <p><a href="/last" class="highlighted"><b>Recent Token operations monitor</b></a></p>
+        <p><a href="/top" class="highlighted"><b>Top-50 Ethereum Tokens Activity</b></a></p>
+        <p><a href="/widgets" class="highlighted"><b>Token Widgets and Charts <nobr>for your website</nobr></b></a></p>
+    </section>
+</div>
+{% endblock %}

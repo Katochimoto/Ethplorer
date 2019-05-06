@@ -226,6 +226,8 @@ const config = {
     page('chart'),
     page('top'),
     page('last'),
+    page('widgets'),
+    page('about'),
 
     new HtmlBeautifyPlugin({
       config: {
