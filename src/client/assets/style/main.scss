@@ -44,7 +44,9 @@ main {
   position: relative;
   min-height: calc(100vh - 72px);
 
-  &[data-page="chart"] {
+  &[data-page="chart"],
+  &[data-page="top"],
+  &[data-page="last"] {
     background-position: center center;
     background-attachment: scroll;
     background-image:

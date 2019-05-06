@@ -3,8 +3,6 @@ import widget from 'ethplorer-widget'
 import EthplorerSearch from 'ethplorer-search'
 
 $(function () {
-  $('main').attr('data-page', 'index')
-
   widget.init('#token-pulse', 'tokenHistoryGrouped', {
     period: 90,
     theme: 'dark',

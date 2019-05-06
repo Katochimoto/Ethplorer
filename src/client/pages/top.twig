@@ -1,28 +1,28 @@
 {% extends "./layout.twig" %}
 
-{% block page %}chart{% endblock %}
+{% block page %}top{% endblock %}
 
 {% block title %}
-    Ethplorer — Ethereum Tokens Index. Market Cap and Operations historical chart
+    Ethplorer — Top Ethereum Tokens Activity. By Trade Volume, By Market Capitalization
 {% endblock %}
 
 {% block meta %}
     <meta name="description" content="" />
-    <meta name="og:url" content="https://ethplorer.io/index" />
-    <meta name="og:title" content="Ethplorer — Ethereum Tokens Index. Market Cap and Operations historical chart" />
+    <meta name="og:url" content="https://ethplorer.io/top" />
+    <meta name="og:title" content="Ethplorer — Top Ethereum Tokens Activity. By Trade Volume, By Market Capitalization" />
     <meta name="og:description" content="" />
     <meta name="og:image" content="{{ asset('../assets/images/bg2.jpg') }}" />
 {% endblock %}
 
 {% block navbar %}
-    {% include '../components/nav-search.twig' with { 'active': 'chart' } %}
+    {% include '../components/nav-search.twig' with { 'active': 'top' } %}
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col text-center">
-            <h1 class="mt-5 font-weight-bold">Ethereum Tokens Index</h1>
+            <h1 class="mt-5 font-weight-bold">Top Ethereum Tokens Activity</h1>
         </div>
     </div>
 
@@ -41,7 +41,6 @@
         <h2 class="py-4 text-center">See also</h2>
     </header>
     <section class="container">
-        <p><a href="/top" class="highlighted"><b>Top Ethereum Tokens Activity</b></a></p>
         <p><a href="/last" class="highlighted"><b>Recent Token operations monitor</b></a></p>
         <p><a href="/widgets" class="highlighted"><b>Token Widgets and Charts <nobr>for your website</nobr></b></a></p>
     </section>

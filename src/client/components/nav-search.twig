@@ -35,14 +35,14 @@
 
         <div class="collapse navbar-collapse justify-content-end" id="navbar">
             <ul class="navbar-nav my-4 my-lg-0 mr-lg-2">
-                <li class="nav-item">
+                <li class="nav-item{% if active == 'top' %} active{% endif %}">
                     <a class="nav-link" href="/top?from=etop">Top Tokens</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item{% if active == 'chart' %} active{% endif %}">
                     <a class="nav-link" href="/index?from=etop">Index Chart</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Last Tx</a>
+                <li class="nav-item{% if active == 'last' %} active{% endif %}">
+                    <a class="nav-link" href="/last?from=etop">Last Tx</a>
                 </li>
                 <li class="nav-item">
                     <a

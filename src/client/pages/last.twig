@@ -1,28 +1,40 @@
 {% extends "./layout.twig" %}
 
-{% block page %}chart{% endblock %}
+{% block page %}last{% endblock %}
 
 {% block title %}
-    Ethplorer — Ethereum Tokens Index. Market Cap and Operations historical chart
+    Ethplorer — Last Ethereum tokens transactions in real-time
 {% endblock %}
 
 {% block meta %}
     <meta name="description" content="" />
-    <meta name="og:url" content="https://ethplorer.io/index" />
-    <meta name="og:title" content="Ethplorer — Ethereum Tokens Index. Market Cap and Operations historical chart" />
+    <meta name="og:url" content="https://ethplorer.io/last" />
+    <meta name="og:title" content="Ethplorer — Last Ethereum tokens transactions in real-time" />
     <meta name="og:description" content="" />
     <meta name="og:image" content="{{ asset('../assets/images/bg2.jpg') }}" />
 {% endblock %}
 
 {% block navbar %}
-    {% include '../components/nav-search.twig' with { 'active': 'chart' } %}
+    {% include '../components/nav-search.twig' with { 'active': 'last' } %}
 {% endblock %}
 
 {% block content %}
 <div class="container">
+    <ins class="adsbygoogle"
+        data-ad-client="ca-pub-9429151221150004"
+        data-ad-slot="2734463808"
+    ></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" async></script>
+</div>
+
+<div class="container">
     <div class="row">
         <div class="col text-center">
-            <h1 class="mt-5 font-weight-bold">Ethereum Tokens Index</h1>
+            <h1 class="mt-5 font-weight-bold">Recent Ethereum token transactions monitor</h1>
+            refreshing in real-time
         </div>
     </div>
 
@@ -30,7 +42,7 @@
         <div class="col">
             <div class="card bg-transparent border-0">
                 <div class="card-body">
-                    <div id="token-top"></div>
+                    <div id="token-last"></div>
                 </div>
             </div>
         </div>
@@ -41,8 +53,7 @@
         <h2 class="py-4 text-center">See also</h2>
     </header>
     <section class="container">
-        <p><a href="/top" class="highlighted"><b>Top Ethereum Tokens Activity</b></a></p>
-        <p><a href="/last" class="highlighted"><b>Recent Token operations monitor</b></a></p>
+        <p><a href="/top" class="highlighted"><b>Top-50 Ethereum Tokens Activity</b></a></p>
         <p><a href="/widgets" class="highlighted"><b>Token Widgets and Charts <nobr>for your website</nobr></b></a></p>
     </section>
 </div>

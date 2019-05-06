@@ -19,6 +19,22 @@ const rootPath = process.cwd()
 const srcPath = path.join(rootPath, 'src/client')
 const distPath = path.join(rootPath, 'dist')
 
+function page (name) {
+  return new HtmlWebpackPlugin({
+    filename: name + '.html',
+    template: 'pages/' + name + '.twig',
+    inject: 'body',
+    chunksSortMode: 'dependency',
+    alwaysWriteToDisk: true,
+    minify: {
+      collapseWhitespace: true,
+      keepClosingSlash: true,
+      removeComments: true,
+      removeEmptyAttributes: true
+    },
+  })
+}
+
 const config = {
   context: srcPath,
   entry: {
@@ -206,33 +222,10 @@ const config = {
       }
     }),
 
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'pages/index.twig',
-      inject: 'body',
-      chunksSortMode: 'dependency',
-      alwaysWriteToDisk: true,
-      // minify: {
-      //   collapseWhitespace: true,
-      //   keepClosingSlash: true,
-      //   removeComments: true,
-      //   removeEmptyAttributes: true
-      // },
-    }),
-
-    new HtmlWebpackPlugin({
-      filename: 'chart.html',
-      template: 'pages/chart.twig',
-      inject: 'body',
-      chunksSortMode: 'dependency',
-      alwaysWriteToDisk: true,
-      // minify: {
-      //   collapseWhitespace: true,
-      //   keepClosingSlash: true,
-      //   removeComments: true,
-      //   removeEmptyAttributes: true
-      // },
-    }),
+    page('index'),
+    page('chart'),
+    page('top'),
+    page('last'),
 
     new HtmlBeautifyPlugin({
       config: {

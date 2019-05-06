@@ -2,8 +2,6 @@ import $ from 'jquery'
 import widget from 'ethplorer-widget'
 
 $(function () {
-  $('main').attr('data-page', 'chart')
-
   widget.init('#token-top', 'tokenHistoryGrouped', {
     period: 90,
     theme: 'dark',

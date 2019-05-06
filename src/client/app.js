@@ -22,6 +22,18 @@ page('/index', () => import(
   './pages/chart.js'
 ))
 
+page('/top', () => import(
+  /* webpackChunkName: "page-top" */
+  /* webpackMode: "lazy" */
+  './pages/top.js'
+))
+
+page('/last', () => import(
+  /* webpackChunkName: "page-last" */
+  /* webpackMode: "lazy" */
+  './pages/last.js'
+))
+
 page({
   click: false,
   popstate: false,

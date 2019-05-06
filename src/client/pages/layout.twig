@@ -16,7 +16,7 @@
         <meta name="og:type" content="website" />
         {% block meta %}{% endblock %}
 
-        <title>{% block title %}{% endblock %}</title>
+        <title>{{ block('title') }}</title>
 
         {% include '../components/fb-pixel.twig' %}
     </head>
@@ -24,7 +24,11 @@
         {% block navbar %}
             {% include '../components/nav.twig' %}
         {% endblock %}
-        <main role="main" class="d-flex flex-column flex-fill flex-shrink-0 position-relative">
+        <main
+            role="main"
+            class="d-flex flex-column flex-fill flex-shrink-0 position-relative"
+            data-page="{{ block('page') }}"
+        >
             {% include '../components/note.twig' %}
             {% block content %}{% endblock %}
         </main>
