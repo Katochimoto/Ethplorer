@@ -6,7 +6,7 @@ $font-family-sans-serif: "Roboto", sans-serif, -apple-system, BlinkMacSystemFont
 
 $blue: #1396e2;
 $dark: #242424;
-$body-bg: #000;
+$body-bg: #051322;
 $body-color: #fff;
 
 $navbar-padding-y: 1rem;
@@ -15,3 +15,10 @@ $link-color: #fff;
 $link-decoration: none;
 $link-hover-color: #fff;
 $link-hover-decoration: none;
+
+$dropdown-border-width: 0px;
+$dropdown-bg: rgba(255, 255, 255, 0.97);
+$dropdown-link-hover-color: $blue;
+$dropdown-link-hover-bg: none;
+
+$navbar-light-hover-color: $blue;
