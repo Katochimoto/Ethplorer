@@ -89,7 +89,7 @@ const config = {
         ],
       },
       {
-        test: /\.scss$/,
+        test: /\.(s?)css$/,
         use: [
           {
             loader: process.env.NODE_ENV !== 'production' ? 'style-loader' : ExtractCssChunks.loader,
@@ -227,10 +227,9 @@ const config = {
     page('top'),
     page('top-weekly'),
     page('last'),
-    // page('widgets'),
+    page('widgets'),
     page('about'),
     page('privacy'),
-    page('wc'),
 
     new HtmlWebpackPlugin({
       filename: 'widgets.twig',

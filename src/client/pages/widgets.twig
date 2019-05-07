@@ -7,6 +7,8 @@
 {% endblock %}
 
 {% block meta %}
+    <meta name="referrer" content="never" />
+    <meta name="referrer" content="no-referrer" />
     <meta name="description" content="" />
     <meta name="og:url" content="https://ethplorer.io/widgets" />
     <meta name="og:title" content="Ethplorer - Widgets and Charts for Ethereum Tokens" />
@@ -20,42 +22,192 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col text-center">
-            <h1 class="mt-5 font-weight-bold">Recent Ethereum token transactions monitor</h1>
-            <hr class="bg-white w-25 my-4" />
-            <p>refreshing in real-time</p>
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8">
+            <h1 class="mt-5 mb-4">
+                Widgets and Charts<br/>for Ethereum Tokens
+            </h1>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col">
-            <div class="card bg-transparent border-0">
-                <div class="card-body">
-                    <div id="token-last"></div>
-                </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-6 col-md-5">
+            <p>
+                Display the activity of your token right from your website!
+                Ethplorer offers a few modes of highly customizable widgets.
+                Popular widget modes are Token Activity Chart (for the last month), Recent Transactions, Top Ethereum tokens activity.
+            </p>
+            <p>
+                Charts are based on Google Charts, so you can customize it as you like by referring to
+                <a href="https://developers.google.com/chart/" class="text-primary" target="_blank" rel="noopener noreferrer nofollow">Google Charts instructions</a>.
+            </p>
+            <p>
+                Below see different samples of widgets and customizations.
+            </p>
+        </div>
+        <div class="col-12 col-sm-4 col-md-3">
+            <div class="alert alert-info font-italic small">
+                Note: the most simple way to get a widget for your token is<br/>
+                1) find your token in Ethplorer, and<br/>
+                2) use the widget link there.
             </div>
         </div>
     </div>
 </div>
-<div class="mt-auto position-relative text-center mb-4">
-    <header class="container">
-        <h2 class="py-4 text-center">See also</h2>
-    </header>
-    <section class="container">
-        <p><a href="/top" class="highlighted"><b>Top-50 Ethereum Tokens Activity</b></a></p>
-        <p><a href="/widgets" class="highlighted"><b>Token Widgets and Charts <nobr>for your website</nobr></b></a></p>
-    </section>
+<div class="bg-white text-dark my-5">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-10 col-md-8">
+                <h3>How to install widget code</h3>
+                1. Add jQuery in the HEAD section of your page (if not present):
+                {% set jQueryScript = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>' %}
+                <pre class="alert alert-secondary small p-2">{{ jQueryScript|e }}</pre>
+                2. Get any widget code displayed below, put div placeholder and code somewhere in BODY section.<br/>
+                3. Customize widget data and style using options and styles (optional).
+            </div>
+        </div>
+    </div>
 </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8">
+            <h2>Chart Widgets</h2>
+        </div>
+    </div>
+
+    <div class="row justify-content-center my-2">
+        <div class="col-7 col-sm-6 col-md-5">
+            <h3 class="h4">Token Activity Chart</h3>
+        </div>
+        <div class="col-5 col-sm-4 col-md-3 text-right">
+            <button
+                class="btn btn-info"
+                data-code="ethplorer-textarea-1"
+                data-description="Setup in options 'token' and 'title' parameters to address and name of your token."
+            >Get Code</button>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 col-sm-10 col-md-8">
+            <div id="token-history-grouped-1" class="text-dark"></div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center my-2">
+        <div class="col-7 col-sm-6 col-md-5">
+            <h3 class="h4">Customized Tokens Activity Chart</h3>
+        </div>
+        <div class="col-5 col-sm-4 col-md-3 text-right">
+            <button
+                class="btn btn-info"
+                data-code="ethplorer-textarea-2"
+            >Get Code</button>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 col-sm-10 col-md-8">
+            <div id="token-history-grouped-2" class="text-dark"></div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center my-2">
+        <div class="col-7 col-sm-6 col-md-5">
+            <h3 class="h4">Dark Theme Chart</h3>
+        </div>
+        <div class="col-5 col-sm-4 col-md-3 text-right">
+            <button class="btn btn-info" data-code="ethplorer-textarea-3">Get Code</button>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 col-sm-10 col-md-8">
+            <div id="token-history-grouped-3"></div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8">
+            <h2>Text Widgets</h2>
+        </div>
+    </div>
+
+    <div class="row justify-content-center my-2">
+        <div class="col-7 col-sm-6 col-md-5">
+            <h3 class="h4">Recent Token Activity</h3>
+        </div>
+        <div class="col-5 col-sm-4 col-md-3 text-right">
+            <button class="btn btn-info" data-code="ethplorer-textarea-10">Get Code</button>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 col-sm-10 col-md-8">
+            <div id="token-txs-10"></div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center my-2">
+        <div class="col-7 col-sm-6 col-md-5">
+            <h3 class="h4">Customized Token Activity Widget</h3>
+        </div>
+        <div class="col-5 col-sm-4 col-md-3 text-right">
+            <button class="btn btn-info" data-code="ethplorer-textarea-11">Get Code</button>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 col-sm-10 col-md-8">
+            <div id="token-txs-11"></div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center my-2">
+        <div class="col-7 col-sm-6 col-md-5">
+            <h3 class="h4">Top Tokens by Activity</h3>
+        </div>
+        <div class="col-5 col-sm-4 col-md-3 text-right">
+            <button class="btn btn-info" data-code="ethplorer-textarea-12">Get Code</button>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 col-sm-10 col-md-8">
+            <div id="token-txs-12"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="dialog-editor" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content text-dark">
+      <div class="modal-header">
+        <h5 class="modal-title">Widget Code</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="dialog-editor-descr"></p>
+        <pre class="m-0 editor-code"><code id="dialog-editor-code" class="html pb-0 small"></code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="disqus_thread" class="container my-5"></div>
+<script>
+    (function () { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.async = true;
+        s.src = '//https-ethplorer-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
 {% endblock %}
 
 {% block scripts %}
 {% verbatim %}
     {% if scriptAddon %}
         <script>
-            {% autoescape 'js' %}
-            {{ scriptAddon }}
-            {% endautoescape %}
+            {{ scriptAddon|raw }}
         </script>
     {% endif %}
 {% endverbatim %}

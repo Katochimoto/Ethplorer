@@ -51,7 +51,8 @@ main {
   background-size: cover;
   background-repeat: no-repeat;
 
-  &[data-page="index"] {
+  &[data-page="index"],
+  &[data-page="widgets"] {
     background: none !important;
 
     &::before {
@@ -113,6 +114,42 @@ main {
   background-color: transparent;
   overflow: hidden;
   font-size: 12px;
+}
+
+.editor-code {
+  max-height: 400px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+#token-txs-11 {
+  line-height: 1.8;
+  border-radius: 8px;
+  max-width: 700px !important;
+  background-blend-mode: darken;
+  background-color: rgba(21,12,70,0.9);
+}
+
+#token-txs-11 .txs.big-screen-table td .tx-amount{
+  display: inline-block;
+  width: 150px;
+  white-space: nowrap;
+}
+
+#token-txs-11 .txs.big-screen-table td .tx-link{
+  max-width: 120px;
+}
+
+#token-txs-11 .txs.big-screen-table td .tx-link:last-child{
+  max-width: 150px;
+}
+
+#token-txs-11 .txs.big-screen-table td .tx-amount a:nth-child(1){
+  max-width: 110px !important;
+}
+
+#token-txs-11 .txs.big-screen-table td .tx-amount  a:nth-child(2){
+  max-width: 50px !important;
 }
 
 @include media-breakpoint-up(xl) {

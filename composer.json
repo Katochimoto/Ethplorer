@@ -2,7 +2,8 @@
     "require": {
         "litipk/php-bignumbers": "0.8.6",
         "predis/predis": "1.1.1",
-        "sentry/sentry": "^1.10@dev"
+        "sentry/sentry": "^1.10@dev",
+        "twig/twig": "^2.0"
     },
     "minimum-stability": "dev",
     "prefer-stable" : false

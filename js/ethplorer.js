@@ -19,7 +19,8 @@ Ethplorer = {
     debugId: "",
     data: {},
     pageSize: 10,
-    service: /*"https://ethplorer.io/service/service.php",*/ "/service/service.php",
+    // service: "https://ethplorer.io/service/service.php",
+    service: "/service/service.php",
     filter: '',
     ethPrice: {rate: 0, diff: 0},
     searchCache: {},
@@ -481,7 +482,7 @@ Ethplorer = {
             $('#tx-status').addClass(oTx.success ? 'green' : 'red');
         } else if (oTx.blockNumber && txData.pending) {
             $('#txEthStatus').removeClass('text-danger text-success');
-            $('#txEthStatus').html('Processing'); 
+            $('#txEthStatus').html('Processing');
         } else {
             $('#txEthStatus').removeClass('text-danger text-success');
             $('#txEthStatus').html('Pending');
@@ -618,8 +619,8 @@ Ethplorer = {
                     op.index = idx;
                     var opToken = Ethplorer.prepareToken(op.token);
                     var valFloat = 0;
-                    if('undefined' !== typeof(op.value)){                       
-                        valFloat = parseFloat(Ethplorer.Utils.toBig(op.value).toString());                        
+                    if('undefined' !== typeof(op.value)){
+                        valFloat = parseFloat(Ethplorer.Utils.toBig(op.value).toString());
                         valFloat = valFloat / Math.pow(10, opToken.decimals);
                         if(Ethplorer.Utils.isSafari()){
                             op.value = valFloat;
@@ -708,10 +709,10 @@ Ethplorer = {
                     $('#operation-status').addClass(oOperation.success ? 'green' : 'red');
                 } else if (oTx.blockNumber && txData.pending) {
                     $('#txTokenStatus').removeClass('text-danger text-success');
-                    $('#txTokenStatus').html('Processing'); 
+                    $('#txTokenStatus').html('Processing');
                 } else {
                     $('#txTokenStatus').removeClass('text-danger text-success');
-                    $('#txTokenStatus').html('Pending'); 
+                    $('#txTokenStatus').html('Pending');
                 }
             }else{
                 titleAdd += 'Operation';
@@ -759,8 +760,8 @@ Ethplorer = {
                     success: txData.tx.success,
                     usdPrice: txData.tx.usdPrice
                 }
-                
-                var operationFields = ['operation', 'operation.from', 'operation.to']; 
+
+                var operationFields = ['operation', 'operation.from', 'operation.to'];
                 var value = Ethplorer.Utils.formatNum(txData.tx.value, true, 18, true, true) + '&nbsp;<i class="fab fa-ethereum"></i>&nbsp;ETH';
                 if (txData.tx.success) {
                     // Custom price value
@@ -788,7 +789,7 @@ Ethplorer = {
                     $('#operation-status').addClass(txData.operation.success ? 'green' : 'red');
                 } else if (oTx.blockNumber && txData.pending) {
                     $('#operation-status').removeClass('text-danger text-success');
-                    $('#txTokenStatus').html('Processing'); 
+                    $('#txTokenStatus').html('Processing');
                 } else {
                     $('#operation-status').removeClass('text-danger text-success');
                     $('#txTokenStatus').html('Pending');
@@ -828,7 +829,7 @@ Ethplorer = {
         $("table").find("tr:visible:odd").addClass("odd");
         $("table").find("tr:visible:even").addClass("even");
         $("table").find("tr:visible:last").addClass("last");
-        
+
         Ethplorer.gaSendEvent('ethpPageView', 'viewTx', 'tx-ok');
     },
     getAddressDetails: function(address){
@@ -898,7 +899,7 @@ Ethplorer = {
         }
         var qrIcon = '<a style="float:right;position:relative;" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
         if(data.isContract && data.token){
-           
+
             qrIcon = '<a style="float:right;position:relative;line-height:48px;" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
             $('#address-token-details').show();
             var oToken = Ethplorer.prepareToken(data.token);
@@ -1248,7 +1249,7 @@ Ethplorer = {
                     $('#widget-block').hide();
                     $('#token-price-history-grouped-widget').hide();
                 }
-                var opt = 
+                var opt =
                     {
                         theme: 'dark',
                         getCode: true,
@@ -1304,7 +1305,7 @@ Ethplorer = {
                     }else{
                         var txToken = Ethplorer.prepareToken(data.token ? data.token : data.tokens[tx.contract]);
                     }
-                    if(!tx.isEth){ 
+                    if(!tx.isEth){
                         var k = Math.pow(10, txToken.decimals);
                         if(Ethplorer.Utils.isSafari()){
                             qty = qty / k;

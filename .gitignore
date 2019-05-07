@@ -1,4 +1,5 @@
 .vscode
+cache
 dist
 vendor
 node_modules
