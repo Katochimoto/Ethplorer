@@ -48,6 +48,7 @@ EthplorerSearch = {
                 });
             },
             minLength: 1,
+            position: { my: 'left+3 top', at: 'left bottom', collision: 'fit flip' },
             select: function(event, ui){
                 if('undefined' !== typeof(ui.item[2])){
                     if('undefined' !== typeof(Ethplorer)){
@@ -56,21 +57,26 @@ EthplorerSearch = {
                     document.location.href = '/address/' + ui.item[2] + '?from=search';
                 }
             }
-        })
-        .autocomplete( "instance" )._renderItem = function(ul, res){
+        });
+
+        EthplorerSearch.el.autocomplete( "instance" )._renderItem = function(ul, res){
             if(!res) return;
             if('undefined' !== typeof(res[0])){
                 var address = res[2];
                 var text = (res[0] ? $('<span>').text(res[0]).html() : "")  + (res[1] ? (' (' + res[1] + ')') : '');
                 text = text.replace(new RegExp(EthplorerSearch.el.val(), 'ig'), "<b>$&</b>");
                 address = address.replace(new RegExp(EthplorerSearch.el.val(), 'ig'), "<b>$&</b>");
-                text += (' <span style="color:#aaa;">' + address + '</span>')
+                text += (' <div class="ui-menu-item-address">' + address + '</div>')
                 return $('<li class="ui-menu-item">').append(text).appendTo(ul);
             }
             if('undefined' !== typeof(res.more)){
                 return $('<li class="have-more ui-state-disabled">').append(res.more + ' results more...').appendTo(ul);
             }
             return $('<li class="not-found ui-state-disabled">').append('No results').appendTo(ul);
+        };
+
+        EthplorerSearch.el.autocomplete( "instance" )._resizeMenu = function(){
+            this.menu.element.outerWidth(this.element.outerWidth() - 6);
         };
     }
 };
