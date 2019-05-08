@@ -12,10 +12,13 @@
   padding: 3px .4em;
   font-size: 16px;
   white-space: nowrap;
-  border: 1px solid transparent;
+  border: none;
+
+  &:not(:first-child) {
+    border-top: 1px solid #d8d8d8;
+  }
 
   &:hover {
-    border-color: transparent;
     background: transparent;
     font-weight: normal;
     color: $blue;
@@ -29,7 +32,7 @@
     opacity: 1 !important;
     color: #aaa;
     padding-top: 4px;
-    border-top: 1px dotted #aaa;
+    border-top: 1px dotted #d8d8d8;
     font-style: italic;
     pointer-events: none;
   }
