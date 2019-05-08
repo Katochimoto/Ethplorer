@@ -51,8 +51,12 @@ EthplorerSearch = {
             position: { my: 'left+3 top', at: 'left bottom', collision: 'fit flip' },
             select: function(event, ui){
                 if('undefined' !== typeof(ui.item[2])){
-                    if('undefined' !== typeof(Ethplorer)){
-                        Ethplorer.gaSendEvent('userAction', 'searchHeader', ui.item[2]);
+                    if (
+                        window.Ethplorer &&
+                        typeof window.Ethplorer === 'object' &&
+                        typeof window.Ethplorer.gaSendEvent === 'function'
+                    ) {
+                        window.Ethplorer.gaSendEvent('userAction', 'searchHeader', ui.item[2]);
                     }
                     document.location.href = '/address/' + ui.item[2] + '?from=search';
                 }
