@@ -183,7 +183,8 @@ main {
     font-size: 14px;
   }
 
-  .ethplorer-widget .tx-amount a {
+  .ethplorer-widget .tx-amount .tx-link,
+  .ethplorer-widget .tx-token .tx-link {
     max-width: 70px !important;
   }
 }
