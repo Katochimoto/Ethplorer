@@ -35,14 +35,14 @@
 
         <div class="collapse navbar-collapse justify-content-end" id="navbar">
             <ul class="navbar-nav my-4 my-lg-0 mr-lg-2">
-                <li class="nav-item">
+                <li class="nav-item{% if active == 'top' %} active{% endif %}">
                     <a class="nav-link" href="/top?from=etop">Top Tokens</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item{% if active == 'chart' %} active{% endif %}">
                     <a class="nav-link" href="/index?from=etop">Index Chart</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Last Tx</a>
+                <li class="nav-item{% if active == 'last' %} active{% endif %}">
+                    <a class="nav-link" href="/last?from=etop">Last Tx</a>
                 </li>
                 <li class="nav-item">
                     <a
@@ -69,7 +69,7 @@
                         aria-expanded="false"
                     >More</a>
                     <div class="dropdown-menu dropdown-menu-lg-right mb-3" aria-labelledby="navbar-dropdown">
-                        <a class="dropdown-item" href="/widgets?from=ehomefoot">
+                        <a class="dropdown-item{% if active == 'widgets' %} active{% endif %}" href="/widgets?from=ehomefoot">
                             Widgets
                         </a>
                         <a class="dropdown-item" href="https://github.com/EverexIO/Ethplorer" target="_blank" rel="noopener nofollow">
@@ -98,17 +98,53 @@
                     </div>
                 </li>
             </ul>
+            {% if active %}
+            <form
+                id="nav-search-form"
+                class="form-inline my-2 my-md-0 mr-lg-2 flex-grow-1"
+                action="/search/"
+                method="POST"
+                novalidate
+            >
+                <div class="input-group input-group-sm flex-grow-1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                    </div>
+                    <input
+                        type="text"
+                        name="data"
+                        class="form-control"
+                        placeholder="Token name or symbol / TX hash / address"
+                        aria-label="Search"
+                        autocomplete="off"
+                        required
+                    />
+                </div>
+            </form>
+            {% endif %}
         </div>
 
-        <a
-            href="https://twitter.com/ethplorer"
-            class="btn btn-primary d-none d-lg-inline-block"
-            role="button"
-            target="_blank"
-            rel="noopener nofollow"
-        >
-            <i class="fab fa-twitter"></i>
-            Follow @ethplorer
-        </a>
+        {% if active %}
+            <a
+                href="https://twitter.com/ethplorer"
+                class="btn btn-primary btn-sm d-none d-lg-inline-block"
+                role="button"
+                target="_blank"
+                rel="noopener nofollow"
+            >
+                <i class="fab fa-twitter"></i>
+            </a>
+        {% else %}
+            <a
+                href="https://twitter.com/ethplorer"
+                class="btn btn-primary d-none d-lg-inline-block"
+                role="button"
+                target="_blank"
+                rel="noopener nofollow"
+            >
+                <i class="fab fa-twitter"></i>
+                Follow @ethplorer
+            </a>
+        {% endif %}
     </div>
 </nav>
