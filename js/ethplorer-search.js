@@ -63,24 +63,27 @@ EthplorerSearch = {
             }
         });
 
-        EthplorerSearch.el.autocomplete( "instance" )._renderItem = function(ul, res){
-            if(!res) return;
-            if('undefined' !== typeof(res[0])){
-                var address = res[2];
-                var text = (res[0] ? $('<span>').text(res[0]).html() : "")  + (res[1] ? (' (' + res[1] + ')') : '');
-                text = text.replace(new RegExp(EthplorerSearch.el.val(), 'ig'), "<b>$&</b>");
-                address = address.replace(new RegExp(EthplorerSearch.el.val(), 'ig'), "<b>$&</b>");
-                text += (' <div class="ui-menu-item-address">' + address + '</div>')
-                return $('<li class="ui-menu-item">').append(text).appendTo(ul);
-            }
-            if('undefined' !== typeof(res.more)){
-                return $('<li class="have-more ui-state-disabled">').append(res.more + ' results more...').appendTo(ul);
-            }
-            return $('<li class="not-found ui-state-disabled">').append('No results').appendTo(ul);
-        };
+        var autocomplete = EthplorerSearch.el.autocomplete('instance');
+        if (autocomplete) {
+            autocomplete._renderItem = function(ul, res){
+                if(!res) return;
+                if('undefined' !== typeof(res[0])){
+                    var address = res[2];
+                    var text = (res[0] ? $('<span>').text(res[0]).html() : "")  + (res[1] ? (' (' + res[1] + ')') : '');
+                    text = text.replace(new RegExp(EthplorerSearch.el.val(), 'ig'), "<b>$&</b>");
+                    address = address.replace(new RegExp(EthplorerSearch.el.val(), 'ig'), "<b>$&</b>");
+                    text += (' <div class="ui-menu-item-address">' + address + '</div>')
+                    return $('<li class="ui-menu-item">').append(text).appendTo(ul);
+                }
+                if('undefined' !== typeof(res.more)){
+                    return $('<li class="have-more ui-state-disabled">').append(res.more + ' results more...').appendTo(ul);
+                }
+                return $('<li class="not-found ui-state-disabled">').append('No results').appendTo(ul);
+            };
 
-        EthplorerSearch.el.autocomplete( "instance" )._resizeMenu = function(){
-            this.menu.element.outerWidth(this.element.outerWidth() - 6);
-        };
+            autocomplete._resizeMenu = function(){
+                this.menu.element.outerWidth(this.element.outerWidth() - 6);
+            };
+        }
     }
 };

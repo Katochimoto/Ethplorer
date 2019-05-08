@@ -13,6 +13,8 @@
   font-size: 16px;
   white-space: nowrap;
   border: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   &:not(:first-child) {
     border-top: 1px solid #d8d8d8;
