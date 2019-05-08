@@ -31,7 +31,10 @@ $(function () {
       $data.toggleClass('is-invalid', !isValid)
 
       if (!isValid) {
-        $data.trigger('focus')
+        $data
+          .select()
+          .next('.invalid-feedback')
+          .text(data ? 'Invalid Format' : 'No one field is filled')
       }
     })
     .on('input', 'input[name="data"]', function () {
