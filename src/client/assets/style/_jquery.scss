@@ -3,8 +3,9 @@
 @import "./jquery-ui.theme.css";
 
 .ui-autocomplete {
-  overflow: hidden;
-  border-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  background-color: $dropdown-bg;
 }
 
 .ui-menu-item {

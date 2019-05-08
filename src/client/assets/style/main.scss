@@ -165,13 +165,6 @@ main {
   display: inline-block;
 }
 
-.ui-autocomplete {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  margin-left: 3px;
-  margin-right: 3px;
-}
-
 @include media-breakpoint-up(md) {
   .powered-items > a {
     lost-column: 1/4;
