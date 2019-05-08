@@ -32,6 +32,10 @@ a.highlighted {
     border-bottom: 1px solid $secondary;
     // box-shadow: inset 0px -1px 0px 0px #eee;
   }
+
+  &.text-white-50 {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  }
 }
 
 .opacity-50 {
@@ -149,6 +153,28 @@ main {
 
 #token-txs-11 .txs.big-screen-table td .tx-amount  a:nth-child(2){
   max-width: 50px !important;
+}
+
+.powered-items {
+  @lost flexbox flex;
+  lost-utility: clearfix;
+}
+
+.powered-items > a {
+  lost-column: 1/2;
+  display: inline-block;
+}
+
+@include media-breakpoint-up(md) {
+  .powered-items > a {
+    lost-column: 1/4;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .powered-items > a {
+    lost-column: 1/6;
+  }
 }
 
 @include media-breakpoint-up(xl) {

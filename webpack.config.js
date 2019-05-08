@@ -103,7 +103,8 @@ const config = {
               plugins: function () {
                 return [
                   require('precss'),
-                  require('autoprefixer')
+                  require('autoprefixer'),
+                  require('lost'),
                 ]
               }
             }
