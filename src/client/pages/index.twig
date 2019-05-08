@@ -15,7 +15,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mb-5">
+<div class="container mb-4">
     <div class="row">
         <div class="col mb-4">
             <h1 class="mt-5 font-weight-bold">Ethereum Tokens Explorer</h1>
@@ -52,34 +52,32 @@
         </div>
     </div>
     <div class="row">
-        <div class="col mb-4 text-secondary">
+        <div class="col mb-4 text-white-50">
             <p class="h5">
                 Show your token traction and use token's API with Ethplorer widgets
             </p>
             <p class="h5 font-weight-bold">
-                <a href="/widgets?from=ehome" class="highlighted text-secondary">Get a widget</a>,
+                <a href="/widgets?from=ehome" class="highlighted text-white-50">Get a widget</a>,
                 <a
                     href="https://github.com/EverexIO/Ethplorer/wiki/Ethplorer-API"
-                    class="highlighted text-secondary"
+                    class="highlighted text-white-50"
                     rel="noopener noreferrer nofollow"
                     target="_blank"
                 >use API</a>
                 or
-                <a href="#samples" class="highlighted text-secondary">see samples</a>
+                <a href="#samples" class="highlighted text-white-50">see samples</a>
             </p>
         </div>
     </div>
     <div class="row">
-        <div class="col">
-            <div class="card bg-dark mb-4 text-center">
-                <div class="card-body px-0 pb-0">
-                    <h3 class="card-title">Top Tokens Activity</h3>
+        <div class="col-xl d-flex flex-column">
+            <div class="card flex-fill bg-dark mb-4">
+                <div class="card-body pb-0 px-0 pt-3">
+                    <h3 class="h5 card-title mx-3 font-weight-bold">Top Tokens Activity</h3>
                     <div id="token-top"></div>
                 </div>
-                <div class="card-footer">
-                    <a href="/top" class="text-primary">
-                        view top 50...
-                    </a>
+                <div class="card-footer text-center">
+                    <a href="/top" class="text-primary">view top 50...</a>
                 </div>
             </div>
 
@@ -94,35 +92,31 @@
                 </div>
             </div> #}
         </div>
-        <div class="col">
-            <div class="card mb-4 bg-transparent text-center border-0">
-                <div class="card-body px-0 pb-0">
-                    <h3 class="card-title">Ethereum Tokens Index</h3>
+        <div class="col-xl d-flex flex-column">
+            <div class="card flex-fill bg-dark mb-4">
+                <div class="card-body pb-0 px-0 pt-3">
+                    <h3 class="h5 card-title mx-3 font-weight-bold">Ethereum Tokens Index</h3>
                     <div id="token-pulse"></div>
                 </div>
-                <div class="card-footer">
-                    <a href="/index?from=homeWidget" class="text-primary">
-                        view full...
-                    </a>
+                <div class="card-footer text-center">
+                    <a href="/index?from=homeWidget" class="text-primary">view full...</a>
                 </div>
             </div>
 
-            <div class="card bg-dark text-center">
-                <div class="card-body px-0 pb-0">
-                    <h3 class="card-title">Recent token Transactions</h3>
+            <div class="card flex-fill bg-dark mb-4">
+                <div class="card-body pb-0 px-0 pt-3">
+                    <h3 class="h5 card-title mx-3 font-weight-bold">Recent token Transactions</h3>
                     <div id="token-last"></div>
                 </div>
-                <div class="card-footer">
-                    <a href="/last" class="text-primary">
-                        view more...
-                    </a>
+                <div class="card-footer text-center">
+                    <a href="/last" class="text-primary">view more...</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container mb-5">
+<div class="container mb-4">
     <h2 class="h4 card-title font-weight-bold text-center mb-3">
         About Ethplorer
     </h2>
@@ -159,11 +153,11 @@
     </div>
 </div>
 
-<div class="container mb-5">
+<div class="container mb-4">
     {% include '../components/samples.twig' %}
 </div>
 
-<div class="container mb-5">
+<div class="container mb-4">
     {% include '../components/powered.twig' %}
 </div>
 {% endblock %}
