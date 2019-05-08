@@ -182,6 +182,10 @@ main {
   #token-last {
     font-size: 14px;
   }
+
+  .ethplorer-widget .tx-amount a {
+    max-width: 70px !important;
+  }
 }
 
 @include media-breakpoint-up(lg) {
