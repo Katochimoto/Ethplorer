@@ -1,6 +1,7 @@
 {% extends "./layout.twig" %}
+{% set page = 'top-weekly' %}
 
-{% block page %}top-weekly{% endblock %}
+{% block page %}{{page}}{% endblock %}
 
 {% block title %}
     Top 50 Ethereum Tokens - Weekly
@@ -12,10 +13,6 @@
     <meta name="og:title" content="Top 50 Ethereum Tokens - Weekly" />
     <meta name="og:description" content="" />
     <meta name="og:image" content="{{ asset('../assets/images/bg2.jpg') }}" />
-{% endblock %}
-
-{% block navbar %}
-    {% include '../components/nav.twig' with { 'active': 'top-weekly' } %}
 {% endblock %}
 
 {% block content %}
@@ -37,13 +34,5 @@
         </div>
     </div>
 </div>
-<div class="mt-auto position-relative text-center mb-4">
-    <header class="container">
-        <h2 class="py-4 text-center">See also</h2>
-    </header>
-    <section class="container">
-        <p><a href="/last" class="highlighted"><b>Recent Token operations monitor</b></a></p>
-        <p><a href="/widgets" class="highlighted"><b>Token Widgets and Charts <nobr>for your website</nobr></b></a></p>
-    </section>
-</div>
+{% include '../components/see-also.twig' with { 'active': page } %}
 {% endblock %}

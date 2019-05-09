@@ -1,6 +1,7 @@
 {% extends "./layout.twig" %}
+{% set page = 'chart' %}
 
-{% block page %}chart{% endblock %}
+{% block page %}{{page}}{% endblock %}
 
 {% block title %}
     Ethplorer — Ethereum Tokens Index. Market Cap and Operations historical chart
@@ -12,10 +13,6 @@
     <meta name="og:title" content="Ethplorer — Ethereum Tokens Index. Market Cap and Operations historical chart" />
     <meta name="og:description" content="" />
     <meta name="og:image" content="{{ asset('../assets/images/bg2.jpg') }}" />
-{% endblock %}
-
-{% block navbar %}
-    {% include '../components/nav.twig' with { 'active': 'chart' } %}
 {% endblock %}
 
 {% block content %}
@@ -36,14 +33,5 @@
         </div>
     </div>
 </div>
-<div class="mt-auto position-relative text-center mb-4">
-    <header class="container">
-        <h2 class="py-4 text-center">See also</h2>
-    </header>
-    <section class="container">
-        <p><a href="/top" class="highlighted"><b>Top Ethereum Tokens Activity</b></a></p>
-        <p><a href="/last" class="highlighted"><b>Recent Token operations monitor</b></a></p>
-        <p><a href="/widgets" class="highlighted"><b>Token Widgets and Charts <nobr>for your website</nobr></b></a></p>
-    </section>
-</div>
+{% include '../components/see-also.twig' with { 'active': page } %}
 {% endblock %}

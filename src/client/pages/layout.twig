@@ -22,9 +22,7 @@
         {% include '../components/fb-pixel.twig' %}
     </head>
     <body class="d-flex flex-column h-100">
-        {% block navbar %}
-            {% include '../components/nav.twig' %}
-        {% endblock %}
+        {% include '../components/nav.twig' with { 'active': block('page') } %}
         <main
             role="main"
             class="d-flex flex-column flex-fill flex-shrink-0 position-relative"

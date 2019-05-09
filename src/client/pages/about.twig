@@ -1,6 +1,7 @@
 {% extends "./layout.twig" %}
+{% set page = 'about' %}
 
-{% block page %}about{% endblock %}
+{% block page %}{{page}}{% endblock %}
 
 {% block title %}
     About Ethplorer — Ethereum Tokens Explorer and Data viewer
@@ -12,10 +13,6 @@
     <meta name="og:title" content="About Ethplorer — Ethereum Tokens Explorer and Data viewer" />
     <meta name="og:description" content="" />
     <meta name="og:image" content="{{ asset('../assets/images/bg2.jpg') }}" />
-{% endblock %}
-
-{% block navbar %}
-    {% include '../components/nav.twig' with { 'active': 'about' } %}
 {% endblock %}
 
 {% block content %}
@@ -56,24 +53,6 @@
         </div>
     </div>
 </div>
-<div class="mt-auto position-relative text-center mb-4">
-    <header class="container">
-        <h2 class="py-4 text-center">See also</h2>
-    </header>
-    <section class="container">
-        <p><a href="/last" class="highlighted"><b>Recent Token operations monitor</b></a></p>
-        <p><a href="/top" class="highlighted"><b>Top-50 Ethereum Tokens Activity</b></a></p>
-        <p><a href="/widgets" class="highlighted"><b>Token Widgets and Charts <nobr>for your website</nobr></b></a></p>
-    </section>
-</div>
-<div id="disqus_thread" class="container my-5"></div>
-<script>
-    (function () { // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-        s.async = true;
-        s.src = '//https-ethplorer-io.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
+{% include '../components/see-also.twig' with { 'active': page } %}
+{% include '../components/disqus.twig' %}
 {% endblock %}

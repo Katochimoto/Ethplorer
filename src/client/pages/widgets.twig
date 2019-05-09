@@ -1,6 +1,7 @@
 {% extends "./layout.twig" %}
+{% set page = 'widgets' %}
 
-{% block page %}widgets{% endblock %}
+{% block page %}{{page}}{% endblock %}
 
 {% block title %}
     Ethplorer - Widgets and Charts for Ethereum Tokens
@@ -14,10 +15,6 @@
     <meta name="og:title" content="Ethplorer - Widgets and Charts for Ethereum Tokens" />
     <meta name="og:description" content="" />
     <meta name="og:image" content="{{ asset('../assets/images/bg2.jpg') }}" />
-{% endblock %}
-
-{% block navbar %}
-    {% include '../components/nav.twig' with { 'active': 'widgets' } %}
 {% endblock %}
 
 {% block content %}
@@ -191,16 +188,8 @@
   </div>
 </div>
 
-<div id="disqus_thread" class="container my-5"></div>
-<script>
-    (function () { // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-        s.async = true;
-        s.src = '//https-ethplorer-io.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
+{% include '../components/see-also.twig' with { 'active': page } %}
+{% include '../components/disqus.twig' %}
 {% endblock %}
 
 {% block scripts %}

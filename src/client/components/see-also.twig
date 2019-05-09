@@ -1,0 +1,36 @@
+{%
+    set links = [
+        {
+            title: 'Top-50 Ethereum Tokens Activity',
+            href: '/top',
+            active: active == 'top'
+        },
+        {
+            title: 'Recent Token operations monitor',
+            href: '/last',
+            active: active == 'last'
+        },
+        {
+            title: 'Token Widgets and Charts <nobr>for your website</nobr>',
+            href: '/widgets',
+            active: active == 'widgets'
+        }
+    ]
+%}
+
+<div class="mt-auto position-relative text-center mb-4">
+    <header class="container">
+        <h2 class="py-4 text-center">See also</h2>
+    </header>
+    <section class="container">
+        {% for link in links %}
+            <p>
+                {% if link.active %}
+                    {{link.title|raw}}
+                {% else %}
+                    <a href="{{link.href}}" class="highlighted"><b>{{link.title|raw}}</b></a>
+                {% endif %}
+            </p>
+        {% endfor %}
+    </section>
+</div>

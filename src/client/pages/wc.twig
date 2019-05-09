@@ -1,6 +1,7 @@
 {% extends "./layout.twig" %}
+{% set page = 'wc' %}
 
-{% block page %}wc{% endblock %}
+{% block page %}{{page}}{% endblock %}
 
 {% block title %}
     Widgets and Charts for Ethereum Token
@@ -12,10 +13,6 @@
     <meta name="og:title" content="Widgets and Charts for Ethereum Token" />
     <meta name="og:description" content="" />
     <meta name="og:image" content="{{ asset('../assets/images/bg2.jpg') }}" />
-{% endblock %}
-
-{% block navbar %}
-    {% include '../components/nav.twig' with { 'active': 'wc' } %}
 {% endblock %}
 
 {% block content %}
