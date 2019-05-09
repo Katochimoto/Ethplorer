@@ -1,5 +1,7 @@
 import page from 'page'
 import { init as initSentry } from '@sentry/browser'
+import queryString from 'query-string'
+import storage from 'local-storage'
 import 'bootstrap'
 import './assets/style/main.scss'
 import './components/nav'
@@ -9,6 +11,33 @@ import './components/cookie-notify'
 
 initSentry({
   dsn: 'https://8d6dcaecdb6c4390b545e02c5b2e7116@ethplorer.io/erp'
+})
+
+page('*', (ctx, next) => {
+  ctx.query = queryString.parse(ctx.querystring)
+  ctx.hashQuery = queryString.parse(ctx.hash)
+
+  // showTx
+  const showTxEnum = ['all', 'eth', 'tokens']
+  let showTx = storage.get('showTx')
+  if (showTxEnum.indexOf(showTx) === -1) {
+    showTx = 'all'
+  }
+
+  if (
+    ctx.hashQuery.showTx &&
+    ctx.hashQuery.showTx !== showTx &&
+    showTxEnum.indexOf(ctx.hashQuery.showTx) !== -1
+  ) {
+    showTx = ctx.hashQuery.showTx
+    storage.set('showTx', showTx)
+  }
+
+  ctx.hashQuery.showTx = showTx
+  // /showTx
+
+  ctx.hashQueryString = queryString.stringify(ctx.hashQuery)
+  next()
 })
 
 page('/', () => import(
