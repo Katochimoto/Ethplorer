@@ -19,9 +19,7 @@ require 'vendor/autoload.php';
 $aConfig = require dirname(__FILE__) . '/service/config.php';
 
 $loader = new \Twig\Loader\FilesystemLoader('dist');
-$twig = new \Twig\Environment($loader, [
-    // 'cache' => __DIR__ . '/cache/compilation_cache',
-]);
+$twig = new \Twig\Environment($loader);
 
 $scriptAddon = isset($aConfig['scriptAddon']) ? $aConfig['scriptAddon'] : '';
 

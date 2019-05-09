@@ -16,7 +16,7 @@
         <meta name="og:type" content="website" />
         {% block meta %}{% endblock %}
 
-        <title>{{ block('title') }}</title>
+        <title>{{ block('title')|trim }}</title>
 
         <script src="/js/config.js"></script>
         {% include '../components/fb-pixel.twig' %}

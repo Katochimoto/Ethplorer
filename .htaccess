@@ -14,14 +14,24 @@ RewriteRule ^privacy$ /dist/privacy.html [L]
 RewriteRule ^privacy/$ /dist/privacy.html [L]
 RewriteRule ^top/weekly$ /dist/top-weekly.html [L]
 RewriteRule ^top/weekly/$ /dist/top-weekly.html [L]
-# RewriteRule ^widgets$ /dist/widgets.html [L]
-# RewriteRule ^widgets/$ /dist/widgets.html [L]
 RewriteRule ^widgets$ widgets.php [L]
 RewriteRule ^widgets/$ widgets.php [L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^js/config.js$ config.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^address/(.*) index.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^tx/(.*) index.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^search/(.*) index.php [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !^/dist/
@@ -50,17 +60,17 @@ RewriteRule ^(.*)/$ https://ethplorer.io/$1 [L,R=301]
 # RewriteRule ^vertical$ page2260238.html
 # RewriteRule ^vertical/$ page2260238.html
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^tx/(.*) index.php [L,QSA]
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^tx/(.*) index.php [L,QSA]
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^address/(.*) index.php [L,QSA]
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^address/(.*) index.php [L,QSA]
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^search/(.*) index.php [L,QSA]
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^search/(.*) index.php [L,QSA]
 
 Redirect 301 /about.html /about
 Redirect 301 /last.html /last

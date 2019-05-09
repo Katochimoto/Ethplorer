@@ -1,5 +1,5 @@
 import page from 'page'
-import * as Sentry from '@sentry/browser'
+import { init as initSentry } from '@sentry/browser'
 import 'bootstrap'
 import './assets/style/main.scss'
 import './components/nav'
@@ -7,7 +7,7 @@ import './components/note'
 import './components/modal-subscribe'
 import './components/cookie-notify'
 
-Sentry.init({
+initSentry({
   dsn: 'https://8d6dcaecdb6c4390b545e02c5b2e7116@ethplorer.io/erp'
 })
 
@@ -59,8 +59,25 @@ page('/privacy', () => import(
   './pages/privacy.js'
 ))
 
+page('/address/:address', ctx => import(
+  /* webpackChunkName: "page-address" */
+  /* webpackMode: "lazy" */
+  './pages/address.js'
+).then(address => address.init(ctx)))
+
+page('/tx/:tx', ctx => import(
+  /* webpackChunkName: "page-address" */
+  /* webpackMode: "lazy" */
+  './pages/address.js'
+).then(tx => tx.init(ctx)))
+
+page('/search/:search', ctx => import(
+  /* webpackChunkName: "page-address" */
+  /* webpackMode: "lazy" */
+  './pages/address.js'
+).then(search => search.init(ctx)))
+
 page({
   click: false,
   popstate: false,
-  hashbang: false,
 })

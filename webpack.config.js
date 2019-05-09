@@ -35,6 +35,16 @@ function page (name) {
   })
 }
 
+function tmpl (name) {
+  return new HtmlWebpackPlugin({
+    filename: name + '.twig',
+    template: 'pages/' + name + '.twig',
+    inject: 'body',
+    chunksSortMode: 'dependency',
+    alwaysWriteToDisk: true,
+  })
+}
+
 const config = {
   context: srcPath,
   entry: {
@@ -231,14 +241,10 @@ const config = {
     page('widgets'),
     page('about'),
     page('privacy'),
+    page('address'),
 
-    new HtmlWebpackPlugin({
-      filename: 'widgets.twig',
-      template: 'pages/widgets.twig',
-      inject: 'body',
-      chunksSortMode: 'dependency',
-      alwaysWriteToDisk: true,
-    }),
+    tmpl('widgets'),
+    tmpl('address'),
 
     new HtmlBeautifyPlugin({
       config: {

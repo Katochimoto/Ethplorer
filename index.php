@@ -14,7 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+require 'vendor/autoload.php';
 $aConfig = require dirname(__FILE__) . '/service/config.php';
+
+$uri = $_SERVER['REQUEST_URI'];
+// Uri to lowercase
+if (preg_match("/0x[A-Z]+/", $uri) && (FALSE === strpos($uri, '1dea4'))) {
+    header('Location: ' . strtolower($uri));
+    die();
+}
+
+$loader = new \Twig\Loader\FilesystemLoader('dist');
+$twig = new \Twig\Environment($loader);
+
+echo $twig->render('address.twig', [
+    'address' => '123'
+]);
+die();
+
+
+
+
+
+
+
+
+
+
+
+
 require dirname(__FILE__) . '/service/lib/ethplorer.php';
 $es = Ethplorer::db($aConfig);
 
@@ -24,14 +53,9 @@ $error = TRUE;
 $header = "";
 $aAddressInfo = array();
 $aTxInfo = array();
-$uri = $_SERVER['REQUEST_URI'];
+
 $title = '';
 
-// Uri to lowercase
-if(preg_match("/0x[A-Z]+/", $uri) && (FALSE === strpos($uri, '1dea4'))){
-    header("Location: " . strtolower($uri));
-    die();
-}
 if(FALSE !== strpos($uri, '?')){
     $uri = substr($uri, 0, strpos($uri, '?'));
 }

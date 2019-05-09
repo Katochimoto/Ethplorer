@@ -1,0 +1,34 @@
+{% extends "./layout.twig" %}
+{% set page = 'address' %}
+
+{% block page %}{{page}}{% endblock %}
+
+{% block title %}
+    {% verbatim %}
+        {{address}} - ethereum contract explorer - Ethplorer
+    {% endverbatim %}
+{% endblock %}
+
+{% block meta %}
+    <meta name="referrer" content="never" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="description" content="" />
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% include '../components/adsbygoogle.twig' %}
+</div>
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col mb-4 text-center text-xl-left">
+            {% verbatim %}
+                <h1 class="h3 mt-4">Address: {{address}}</h1>
+            {% endverbatim %}
+        </div>
+    </div>
+</div>
+
+{% include '../components/disqus.twig' %}
+{% endblock %}
