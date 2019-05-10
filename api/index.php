@@ -19,6 +19,17 @@
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
+// $referer = "https://ethplorer.io";
+// $opts = array(
+//     'http'=>array(
+//        'header'=>array("Referer: $referer\r\n")
+//     )
+// );
+// $context = stream_context_create($opts);
+$res = file_get_contents('https://api2.ethplorer.io' . substr($_SERVER['REQUEST_URI'], 4));
+echo $res;
+die();
+
 require dirname(__FILE__) . '/../service/lib/ethplorer.php';
 require dirname(__FILE__) . '/controller.php';
 

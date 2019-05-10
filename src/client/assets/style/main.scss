@@ -20,6 +20,16 @@ body {
   z-index: 1;
 }
 
+.nav-tabs {
+  & .nav-link {
+    color: $secondary;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
 .footer {
   background-color: #0d0d0d;
 }

@@ -1,5 +1,10 @@
 import $ from 'jquery'
-import { isAddress } from '@/utils'
+import widget from 'ethplorer-widget'
+import {
+  isAddress,
+  stripTags,
+  prepareToken,
+} from '@/utils'
 
 export function init (ctx) {
   fetchAddressData({
@@ -10,6 +15,38 @@ export function init (ctx) {
   })
   .then(data => {
     console.log(data)
+
+    if (data.token || (data.isContract && data.contract.isChainy)) {
+      const token = prepareToken(data.token)
+
+      if (data.isContract && data.contract.isChainy) {
+        token.name = 'Chainy';
+      }
+
+      widget.init('#token-price-history-grouped-widget', 'tokenPriceHistoryGrouped', {
+        theme: 'dark',
+        getCode: true,
+        address: ctx.params.data,
+        period: 730,
+        options: {
+          title: token.name && stripTags(token.name) || '',
+        },
+      })
+    } else {
+      widget.init('#token-price-history-grouped-widget', 'addressPriceHistoryGrouped', {
+        theme: 'dark',
+        getCode: true,
+        address: ctx.params.data,
+        period: 730,
+        showTx: ctx.hashQuery.showTx,
+      })
+    }
+
+    widget.loadGoogleControlCharts()
+
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
   })
 }
 

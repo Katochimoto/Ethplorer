@@ -34,6 +34,10 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^search/(.*) index.php [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*) /api/index.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !^/dist/
 RewriteCond %{REQUEST_URI} !^/api/
 RewriteRule ^(.*)$ /dist/$1 [L]
@@ -41,8 +45,8 @@ RewriteRule ^(.*)$ /dist/$1 [L]
 RewriteCond %{REQUEST_URI} ^/$
 RewriteRule ^(.*)$ /dist/$1 [L]
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)/$ https://ethplorer.io/$1 [L,R=301]
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^(.*)/$ https://ethplorer.io/$1 [L,R=301]
 # RewriteRule ^index$ page2354227.html
 # RewriteRule ^index/$ page2354227.html
 # RewriteRule ^last$ page627123.html

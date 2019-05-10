@@ -326,23 +326,23 @@ if (!empty($data)) {
                         </div>
                     </div>
                 <?php }else{ ?>
-                <style>
-                    #token-history-grouped-widget {
-                        margin-top: 0 !important;
-                        margin-bottom: 0 !important;
-                        padding: 0 !important;
-                        max-width: 86% !important;
-                        margin-left: auto;
-                        margin-right: auto;
-                    }
-                </style>
-                <div>
-                    <div class="hidden-xs col-sm-1"></div>
-                    <div class="col-xs-12 col-sm-10 token-history-grouped-widget">
-                        <div id="token-history-grouped-widget"></div>
+                    <style>
+                        #token-history-grouped-widget {
+                            margin-top: 0 !important;
+                            margin-bottom: 0 !important;
+                            padding: 0 !important;
+                            max-width: 86% !important;
+                            margin-left: auto;
+                            margin-right: auto;
+                        }
+                    </style>
+                    <div>
+                        <div class="hidden-xs col-sm-1"></div>
+                        <div class="col-xs-12 col-sm-10 token-history-grouped-widget">
+                            <div id="token-history-grouped-widget"></div>
+                        </div>
+                        <div class="hidden-xs col-sm-1"></div>
                     </div>
-                    <div class="hidden-xs col-sm-1"></div>
-                </div>
                 <?php } ?>
                 <script type="text/javascript">
                     if(typeof(eWgs) === 'undefined'){ var eWgs = []; }

@@ -49,7 +49,7 @@ ethplorerWidget = {
         if('undefined' === ethplorerWidget.eventsAdded){
             $(window).resize(ethplorerWidget.fixTilda);
             ethplorerWidget.eventsAdded = true;
-        }   
+        }
         if('undefined' !== typeof(ethplorerWidget.Type[type])){
             return new ethplorerWidget.Type[type](el, options, templates);
         }else{
@@ -292,7 +292,7 @@ ethplorerWidget = {
             ts *= 1000;
             function padZero(s){
                 return (s < 10) ? '0' + s : s.toString();
-            }        
+            }
             var res = '';
             var dt = new Date(ts);
             res += (dt.getFullYear() + '-' + padZero((dt.getMonth() + 1)) + '-' + padZero(dt.getDate()));
@@ -308,7 +308,7 @@ ethplorerWidget = {
             ts *= 1000;
             function padZero(s){
                 return (s < 10) ? '0' + s : s.toString();
-            }        
+            }
             var res = '';
             var dt = new Date(ts);
             res += (padZero(dt.getHours()) + ':' + padZero(dt.getMinutes()) + ':' + padZero(dt.getSeconds()));
@@ -357,11 +357,11 @@ ethplorerWidget = {
             cutZeroes = !!cutZeroes;
             withDecimals = !!withDecimals;
 //            decimals = decimals || (cutZeroes ? 0 : 2);
-            
+
             if((num.toString().indexOf("e+") > 0)){
                 return num.toString();
             }
-            
+
             if((num.toString().indexOf("e-") > 0) && withDecimals){
                 var parts = num.toString().split("e-");
                 var res = parts[0].replace('.', '');
@@ -448,9 +448,9 @@ ethplorerWidget.Type['tokenHistory'] = function(element, options, templates){
         loader: '<div class="txs-loading">Loading...</div>',
         debug: '<div class="txs-debug"><div class="txs-stop"></div></div>',
         // Big table row
-        bigScreenTable: '<tr>' + 
-                    '<td class="tx-field tx-date">%time%</td>' + 
-                    '<td class="tx-field tx-transfer"><span class="tx-send">from </span>%from%<span class="tx-send">to</span>%to%</td>' + 
+        bigScreenTable: '<tr>' +
+                    '<td class="tx-field tx-date">%time%</td>' +
+                    '<td class="tx-field tx-transfer"><span class="tx-send">from </span>%from%<span class="tx-send">to</span>%to%</td>' +
                     '<td class="tx-field tx-amount">%amount%</td>' +
                     '<td class="tx-field tx-token">%token%</td>' +
                 '</tr>',
@@ -472,7 +472,7 @@ ethplorerWidget.Type['tokenHistory'] = function(element, options, templates){
             this.templates[key] = templates[key];
         }
     }
-   
+
     this.refresh = function(obj){
         return function(){
             $.getJSON(obj.api, obj.getRequestParams(obj.ts ? {ts: obj.ts} : false), obj.refreshWidget);
@@ -567,7 +567,7 @@ ethplorerWidget.Type['tokenHistory'] = function(element, options, templates){
             this.el.append(txSmall);
 
             ethplorerWidget.appendEthplorerLink(this);
-            
+
             // Debug mode
             if(this.options.debug){
                 this.el.find(".txs-header").append(this.templates.debug);
@@ -678,7 +678,7 @@ ethplorerWidget.Type['topTokens'] = function(element, options, templates){
         }
     }
 
-    var row = '<tr>' + 
+    var row = '<tr>' +
         '<td class="tx-field">%position%</td>';
 
     var criteria = options.criteria ? options.criteria : false;
@@ -705,7 +705,7 @@ ethplorerWidget.Type['topTokens'] = function(element, options, templates){
             row += '<td class="tx-field">%name%</td>';
             row = row + '<td class="tx-field" title="%opCount% operations">%opCount%</td>' + '</tr>';
     }
-    
+
     this.templates.row = row;
 
     // Override default templates with custom
@@ -961,7 +961,7 @@ ethplorerWidget.Type['top'] = function(element, options, templates){
             }
         }
         if('undefined' === typeof(this.cache[this.options.criteria])){
-            this.el.html(ethplorerWidget.parseTemplate(this.templates.header, this.options) + this.templates.loader);        
+            this.el.html(ethplorerWidget.parseTemplate(this.templates.header, this.options) + this.templates.loader);
             $.getJSON(this.api, this.getRequestParams(), this.refreshWidget);
         }else{
             this.el.html(ethplorerWidget.parseTemplate(this.templates.header, this.options));
@@ -1072,7 +1072,7 @@ ethplorerWidget.Type['top'] = function(element, options, templates){
                 return function(){
                     if(!$(this).hasClass('ewSelected')){
                         _obj.el.find('.ewSelected').removeClass('ewSelected');
-                        $(this).addClass('ewSelected');                            
+                        $(this).addClass('ewSelected');
                         _obj.options.criteria = $(this).attr('data-criteria');
                         $('#widgetTopTokensSelect').val(_obj.options.criteria);
                         _obj.load(true);
@@ -1213,7 +1213,7 @@ ethplorerWidget.Type['tokenHistoryGrouped'] = function(element, options, templat
     if(options && options.address){
         this.api += ('/' + options.address.toString().toLowerCase());
     }
-    
+
     this.templates = {
         loader: '<div class="txs-loading">Loading...</div>',
     };
@@ -1223,13 +1223,13 @@ ethplorerWidget.Type['tokenHistoryGrouped'] = function(element, options, templat
     };
 
     this.getTooltip = function(date, cnt, cap){
-        var tooltipDateFormatter = new google.visualization.DateFormat({ 
+        var tooltipDateFormatter = new google.visualization.DateFormat({
             pattern: "MMM dd, yyyy '+UTC'"
         });
-        var numFormatter = new google.visualization.NumberFormat({ 
+        var numFormatter = new google.visualization.NumberFormat({
             pattern: "#,### K"
         });
-        var currencyFormatter = new google.visualization.NumberFormat({ 
+        var currencyFormatter = new google.visualization.NumberFormat({
             //pattern: '$ #,### B'
             pattern: '$ #,##0.0 B'
         });
@@ -1344,7 +1344,7 @@ ethplorerWidget.Type['tokenHistoryGrouped'] = function(element, options, templat
         }
 
         var data = google.visualization.arrayToDataTable(aData);
-        var tooltipFormatter = new google.visualization.DateFormat({ 
+        var tooltipFormatter = new google.visualization.DateFormat({
             pattern: "MMM dd, yyyy '+UTC'"
         });
         tooltipFormatter.format(data, 0);
@@ -1628,16 +1628,16 @@ ethplorerWidget.Type['tokenPriceHistoryGrouped'] = function(element, options, te
     };
 
     this.getTooltip = function(noPrice, date, low, open, close, high, operations, volume, convertedVolume, rate, diff, onlyPrice, avg, curDate){
-        var tooltipDateFormatter = new google.visualization.DateFormat({ 
+        var tooltipDateFormatter = new google.visualization.DateFormat({
             pattern: "MMM dd, yyyy '+UTC'"
         });
-        var numFormatter = new google.visualization.NumberFormat({ 
+        var numFormatter = new google.visualization.NumberFormat({
             pattern: "#,###"
         });
-        var currencyFormatter = new google.visualization.NumberFormat({ 
+        var currencyFormatter = new google.visualization.NumberFormat({
             pattern: '#,##0.00###'
         });
-        var avgFormatter = new google.visualization.NumberFormat({ 
+        var avgFormatter = new google.visualization.NumberFormat({
             pattern: '#,##0.00'
         });
         var tooltip = '<div style="display: block !important; text-align: left; opacity: 1 !important; color: #000000 !important; padding: 5px;">';
@@ -2199,13 +2199,13 @@ ethplorerWidget.Type['addressPriceHistoryGrouped'] = function(element, options, 
     };
 
     this.getTooltip = function(noPrice, date, balance, volume, txs, dteUpdated){
-        var tooltipDateFormatter = new google.visualization.DateFormat({ 
+        var tooltipDateFormatter = new google.visualization.DateFormat({
             pattern: "MMM dd, yyyy '+UTC'"
         });
-        var numFormatter = new google.visualization.NumberFormat({ 
+        var numFormatter = new google.visualization.NumberFormat({
             pattern: "#,###"
         });
-        var currencyFormatter = new google.visualization.NumberFormat({ 
+        var currencyFormatter = new google.visualization.NumberFormat({
             pattern: '#,##0'
         });
         var tooltip = '<div style="display: block !important; text-align: left; opacity: 1 !important; color: #000000 !important; padding: 5px;">';

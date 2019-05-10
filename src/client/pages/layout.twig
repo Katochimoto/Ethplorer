@@ -19,22 +19,23 @@
         <title>{{ block('title')|trim }}</title>
 
         <script src="/js/config.js"></script>
-        {% include '../components/fb-pixel.twig' %}
+        {% include '../templates/fb-pixel.twig' %}
     </head>
     <body class="d-flex flex-column h-100">
-        {% include '../components/nav.twig' with { 'active': block('page') } %}
+        {% include '../templates/nav.twig' with { 'active': block('page') } %}
         <main
             role="main"
             class="d-flex flex-column flex-fill flex-shrink-0 position-relative"
             data-page="{{ block('page') }}"
         >
-            {% include '../components/note.twig' %}
+            {% include '../templates/note.twig' %}
             {% block content %}{% endblock %}
         </main>
-        {% include '../components/foot.twig' %}
-        {% include '../components/cookie-notify.twig' %}
-        {% include '../components/modal-subscribe.twig' %}
-        {% include '../components/ga.twig' %}
+        {% include '../templates/foot.twig' %}
+        {% include '../templates/cookie-notify.twig' %}
+        {% include '../templates/modal-subscribe.twig' %}
+        {% include '../templates/ga.twig' %}
+        {{ block('jsExtensions') }}
     </body>
     {{ block('scripts') }}
 </html>

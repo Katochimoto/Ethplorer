@@ -307,11 +307,18 @@ const config = {
     ],
     port: 9001,
     publicPath: publicPath,
-    proxy: {},
     clientLogLevel: 'warning',
     open: true,
     openPage: '',
     writeToDisk: true,
+    proxy: {
+      '/api': {
+          target: 'https://api2.ethplorer.io',
+          changeOrigin: true,
+          pathRewrite: {'^/api' : ''},
+          // secure: false,
+      },
+    },
   }
 }
 
