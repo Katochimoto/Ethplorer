@@ -2,12 +2,19 @@ import $ from 'jquery'
 import { isAddress } from '@/utils'
 
 export function init (ctx) {
-  const address = ctx.params.address
-  const query = ctx.hashQuery
-  const queryString = ctx.hashQueryString
-  const debug = ctx.query.debug
+  fetchAddressData({
+    data: ctx.params.address,
+    page: ctx.hashQueryString,
+    debugId: ctx.query.debug,
+    showTx: ctx.hashQuery.showTx,
+  })
+  .then(data => {
+    console.log(data)
+  })
+}
 
-  if (!isAddress(address)) {
+function fetchAddressData (params) {
+  if (!isAddress(params.data)) {
     return Promise.reject(new Error('Invalid address format'))
   }
 
@@ -17,16 +24,10 @@ export function init (ctx) {
       url: '/service/service.php',
       dataType: 'json',
       cache: false,
-      data: {
-        data: address,
-        page: queryString,
-        debugId: debug,
-        showTx: query.showTx,
-      },
+      data: params,
     })
     .then(data => {
-      // Ethplorer.requestDebug = data.debug
-      resolve()
+      resolve(data)
     }, () => {
       reject()
     })
