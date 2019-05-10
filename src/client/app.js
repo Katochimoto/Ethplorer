@@ -88,19 +88,19 @@ page('/privacy', () => import(
   './pages/privacy.js'
 ))
 
-page('/address/:address', ctx => import(
+page('/address/:data', ctx => import(
   /* webpackChunkName: "page-address" */
   /* webpackMode: "lazy" */
   './pages/address.js'
 ).then(address => address.init(ctx)))
 
-page('/tx/:tx', ctx => import(
+page('/tx/:data', ctx => import(
   /* webpackChunkName: "page-address" */
   /* webpackMode: "lazy" */
   './pages/address.js'
 ).then(tx => tx.init(ctx)))
 
-page('/search/:search', ctx => import(
+page('/search/:data', ctx => import(
   /* webpackChunkName: "page-address" */
   /* webpackMode: "lazy" */
   './pages/address.js'

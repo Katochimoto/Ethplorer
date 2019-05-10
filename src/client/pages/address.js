@@ -3,7 +3,7 @@ import { isAddress } from '@/utils'
 
 export function init (ctx) {
   fetchAddressData({
-    data: ctx.params.address,
+    data: ctx.params.data,
     page: ctx.hashQueryString,
     debugId: ctx.query.debug,
     showTx: ctx.hashQuery.showTx,

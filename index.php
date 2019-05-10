@@ -109,6 +109,7 @@ $loader = new \Twig\Loader\FilesystemLoader('dist');
 $twig = new \Twig\Environment($loader);
 
 echo $twig->render('address.twig', [
+    'error' => $error,
     'page' => $page,
     'data' => $data,
     'title' => $title,
