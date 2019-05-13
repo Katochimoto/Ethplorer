@@ -1,4 +1,12 @@
 <div class="my-4 alert alert-light text-center">
-    <h1 class="h4 m-0 py-1 text-dark">{{header}}</h1>
-    {% if address %}<div class="text-secondary">{{address}}</div>{% endif %}
+    {% if not data.isContract or (data.contract and data.contract.isChainy) %}
+        <h1 class="h4 m-0 py-1 text-dark">Address: {{data.address}}</h1>
+    {% elseif data.isContract and data.token %}
+        <h1 class="h4 m-0 py-1 text-dark">
+            {{token.type}} {{token.name}}
+        </h1>
+        <div class="text-secondary">{{token.checksumAddress}}</div>
+    {% else %}
+        <h1 class="h4 m-0 py-1 text-dark">{{header}}</h1>
+    {% endif %}
 </div>

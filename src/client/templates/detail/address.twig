@@ -5,11 +5,13 @@
             <h3 class="h4">Invalid request</h1>
         </div>
     </div>
-{% elseif data %}
+{% elseif data and token %}
     <div class="row">
         <div class="col">
             {% include '@components/detail/header.twig' with {
-                'header': header
+                'header': header,
+                'data': data,
+                'token': token,
             } %}
         </div>
     </div>

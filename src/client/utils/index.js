@@ -128,6 +128,7 @@ export function formatNum (num, withDecimals /* = false */, decimals /* = 2 */, 
 
 export function prepareToken ({
   address = '',
+  checksumAddress = '',
   name = '',
   decimals = 0,
   symbol = '',
@@ -139,10 +140,12 @@ export function prepareToken ({
   estimatedDecimals = false,
   totalIn,
   totalOut,
+  type = '',
 } = {}) {
   const token = {
     prepared,
     address,
+    checksumAddress,
     decimals,
     symbol,
     totalSupply,
@@ -153,6 +156,7 @@ export function prepareToken ({
     totalOut,
     name,
     owner,
+    type,
   }
 
   if (token.prepared) {
@@ -161,6 +165,8 @@ export function prepareToken ({
 
   token.name = encodeTags(token.name || 'N/A')
   token.owner = token.owner === '0x' ? '' : token.owner
+  token.checksumAddress = toChecksumAddress(token.address)
+  token.type = address.toLowerCase() !== '0x55d34b686aa8c04921397c5807db9ecedba00a4c' ? 'Token' : 'Contract'
 
   // if(Ethplorer.Config.tokens && ('undefined' !== typeof(Ethplorer.Config.tokens[token.address]))){
   //   for(var property in Ethplorer.Config.tokens[token.address]){

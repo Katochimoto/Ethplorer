@@ -18,12 +18,17 @@ export function init (ctx) {
     showTx: ctx.hashQuery.showTx,
   })
   .then(data => {
+    const token = data.token && prepareToken(data.token)
+
     console.log(data)
+    console.log(token)
+
     try {
       const $app = document.getElementById('app')
       $app.innerHTML = template({
         ...window.__DATA__,
-        data
+        data,
+        token,
       });
     } catch (e) {
       debugger
@@ -31,7 +36,7 @@ export function init (ctx) {
 
 
     // if (data.token || (data.isContract && data.contract.isChainy)) {
-    //   const token = prepareToken(data.token)
+    //
     //   const title = (data.isContract && data.contract.isChainy) ?
     //     'Chainy' :
     //     (token.name && stripTags(token.name) || '')
