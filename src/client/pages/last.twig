@@ -17,7 +17,7 @@
 
 {% block content %}
 <div class="container">
-    {% include '../templates/adsbygoogle.twig' %}
+    {% include '@components/adsbygoogle.twig' %}
 </div>
 
 <div class="container">
@@ -39,5 +39,5 @@
         </div>
     </div>
 </div>
-{% include '../templates/see-also.twig' with { 'active': page } %}
+{% include '@components/see-also.twig' with { 'active': page } %}
 {% endblock %}

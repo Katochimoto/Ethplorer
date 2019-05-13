@@ -106,12 +106,13 @@ if (!$title) {
 
 
 $loader = new \Twig\Loader\FilesystemLoader('dist');
+$loader->addPath(dirname(__FILE__) . '/src/client/templates', 'components');
 $twig = new \Twig\Environment($loader);
 
 echo $twig->render('address.twig', [
     'error' => $error,
     'page' => $page,
-    'data' => $data,
+    // 'data' => $data,
     'title' => $title,
     'header' => $header,
 ]);

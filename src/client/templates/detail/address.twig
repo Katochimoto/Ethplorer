@@ -1,0 +1,52 @@
+{% if error %}
+    <div class="row">
+        <div class="col mb-4 text-center text-danger">
+            <h1 class="h2 mt-4">ERROR</h1>
+            <h3 class="h4">Invalid request</h1>
+        </div>
+    </div>
+{% elseif data %}
+    <div class="row">
+        <div class="col">
+            {% include '@components/detail/header.twig' with {
+                'header': header
+            } %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col mb-4">
+            <div id="token-price-history-grouped-widget"></div>
+        </div>
+    </div>
+    {# <div class="alert alert-danger text-center mb-4" role="alert">
+        A simple danger alert—check it out!
+    </div> #}
+    <div class="row">
+        <div class="col-md mb-4">
+            {% include '@components/detail/information.twig' %}
+        </div>
+        <div class="col-md mb-4">
+            {% include '@components/detail/balances.twig' %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col mb-4">
+            {% include '@components/detail/transfers.twig' %}
+        </div>
+    </div>
+
+    {% include '@components/disqus.twig' %}
+{% else %}
+    <div class="loader text-center">
+        <div class="loader-wrapper">
+            <div class="dot-loader">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+        <div class="loader-text">search in progress...</div>
+    </div>
+{% endif %}

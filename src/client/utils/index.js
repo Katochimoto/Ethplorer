@@ -1,5 +1,6 @@
 import $ from 'jquery'
 import BigNumber from 'bignumber.js'
+import { keccak256 } from 'js-sha3'
 
 BigNumber.config({ ERRORS: false })
 
@@ -204,4 +205,31 @@ export function prepareToken ({
 
   token.prepared = true
   return token
+}
+
+export function isHexPrefixed (str) {
+  str = String(str || '')
+  return str.slice(0, 2) === '0x'
+}
+
+export function stripHexPrefix (str) {
+  str = String(str || '')
+  return isHexPrefixed(str) ? str.slice(2) : str
+}
+
+export function toChecksumAddress (address) {
+  address = String(address || '')
+  address = stripHexPrefix(address).toLowerCase()
+  const hash = keccak256(address).toString('hex')
+  let ret = '0x'
+
+  for (let i = 0; i < address.length; i++) {
+    if (parseInt(hash[i], 16) >= 8) {
+      ret += address[i].toUpperCase()
+    } else {
+      ret += address[i]
+    }
+  }
+
+  return ret
 }

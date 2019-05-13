@@ -76,26 +76,50 @@ const config = {
       },
       {
         test: /\.twig$/,
-        use: [
+        oneOf: [
           {
-            loader: 'html-loader',
-            options: {
-              interpolate: true,
-              attrs: [
-                'img:src',
-              ],
-            },
-          },
-          {
-            loader: 'twig-html-loader',
-            options: {
-              functions: {
-                asset: function (file) {
-                  return "${require('" + file + "')}"
+            resourceQuery: /component/,
+            use: [
+              {
+                loader: 'twig-loader',
+                options: {
+                  twigOptions: {
+                    functions: {
+                      asset: function (file) {
+                        return "${require('" + file + "')}"
+                      },
+                    },
+                    namespaces: {
+                      components: path.join(srcPath, 'templates'),
+                    },
+                  },
                 },
               },
-            },
+            ],
           },
+
+          {
+            use: [
+              {
+                loader: 'html-loader',
+                options: { interpolate: true },
+              },
+              {
+                loader: 'twig-html-loader',
+                options: {
+                  functions: {
+                    asset: function (file) {
+                      return "${require('" + file + "')}"
+                    },
+                  },
+                  namespaces: {
+                    components: path.join(srcPath, 'templates'),
+                  },
+                },
+              },
+            ],
+          },
+
         ],
       },
       {
@@ -308,7 +332,7 @@ const config = {
     port: 9001,
     publicPath: publicPath,
     clientLogLevel: 'warning',
-    open: true,
+    open: false,
     openPage: '',
     writeToDisk: true,
     proxy: {

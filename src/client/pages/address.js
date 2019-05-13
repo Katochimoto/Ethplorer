@@ -4,49 +4,63 @@ import {
   isAddress,
   stripTags,
   prepareToken,
+  toChecksumAddress,
 } from '@/utils'
+import template from '../templates/detail/address.twig?component'
 
 export function init (ctx) {
+  const address = ctx.params.data
+
   fetchAddressData({
-    data: ctx.params.data,
+    data: address,
     page: ctx.hashQueryString,
     debugId: ctx.query.debug,
     showTx: ctx.hashQuery.showTx,
   })
   .then(data => {
     console.log(data)
-
-    if (data.token || (data.isContract && data.contract.isChainy)) {
-      const token = prepareToken(data.token)
-
-      if (data.isContract && data.contract.isChainy) {
-        token.name = 'Chainy';
-      }
-
-      widget.init('#token-price-history-grouped-widget', 'tokenPriceHistoryGrouped', {
-        theme: 'dark',
-        getCode: true,
-        address: ctx.params.data,
-        period: 730,
-        options: {
-          title: token.name && stripTags(token.name) || '',
-        },
-      })
-    } else {
-      widget.init('#token-price-history-grouped-widget', 'addressPriceHistoryGrouped', {
-        theme: 'dark',
-        getCode: true,
-        address: ctx.params.data,
-        period: 730,
-        showTx: ctx.hashQuery.showTx,
-      })
+    try {
+      const $app = document.getElementById('app')
+      $app.innerHTML = template({
+        ...window.__DATA__,
+        data
+      });
+    } catch (e) {
+      debugger
     }
 
-    widget.loadGoogleControlCharts()
 
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-    })
+    // if (data.token || (data.isContract && data.contract.isChainy)) {
+    //   const token = prepareToken(data.token)
+    //   const title = (data.isContract && data.contract.isChainy) ?
+    //     'Chainy' :
+    //     (token.name && stripTags(token.name) || '')
+
+    //   widget.init('#token-price-history-grouped-widget', 'tokenPriceHistoryGrouped', {
+    //     theme: 'dark',
+    //     getCode: true,
+    //     address: address,
+    //     period: 730,
+    //     options: { title },
+    //   })
+    // } else {
+    //   widget.init('#token-price-history-grouped-widget', 'addressPriceHistoryGrouped', {
+    //     theme: 'dark',
+    //     getCode: true,
+    //     address: address,
+    //     period: 730,
+    //     showTx: ctx.hashQuery.showTx,
+    //   })
+    // }
+
+    // widget.loadGoogleControlCharts()
+
+    // $(function () {
+    //   $('[data-toggle="tooltip"]').tooltip()
+    // })
+  })
+  .catch(error => {
+
   })
 }
 
@@ -64,7 +78,10 @@ function fetchAddressData (params) {
       data: params,
     })
     .then(data => {
-      resolve(data)
+      resolve({
+        ...data,
+        address: toChecksumAddress(params.data),
+      })
     }, () => {
       reject()
     })

@@ -188,8 +188,8 @@
   </div>
 </div>
 
-{% include '../templates/see-also.twig' with { 'active': page } %}
-{% include '../templates/disqus.twig' %}
+{% include '@components/see-also.twig' with { 'active': page } %}
+{% include '@components/disqus.twig' %}
 {% endblock %}
 
 {% block scripts %}
