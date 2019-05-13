@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import diff from 'diffhtml'
 import widget from 'ethplorer-widget'
 import {
   isAddress,
@@ -18,22 +19,17 @@ export function init (ctx) {
     showTx: ctx.hashQuery.showTx,
   })
   .then(data => {
-    const token = data.token && prepareToken(data.token)
+    const token = prepareToken(data)
 
     console.log(data)
     console.log(token)
 
-    try {
-      const $app = document.getElementById('app')
-      $app.innerHTML = template({
-        ...window.__DATA__,
-        data,
-        token,
-      });
-    } catch (e) {
-      debugger
-    }
-
+    diff.innerHTML(document.getElementById('app'), template({
+      ...window.__DATA__,
+      data,
+      token,
+      config: window.Ethplorer && window.Ethplorer.Config || {},
+    }))
 
     // if (data.token || (data.isContract && data.contract.isChainy)) {
     //
@@ -65,7 +61,7 @@ export function init (ctx) {
     // })
   })
   .catch(error => {
-
+    debugger
   })
 }
 
@@ -86,6 +82,7 @@ function fetchAddressData (params) {
       resolve({
         ...data,
         address: toChecksumAddress(params.data),
+        checksumAddress: toChecksumAddress(params.data),
       })
     }, () => {
       reject()

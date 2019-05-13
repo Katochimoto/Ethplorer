@@ -650,9 +650,6 @@ if (!empty($data)) {
                             <div class="block-header"><h3>Token <span class="address-token-name"></span> Information</h3></div>
                             <table class="table">
                             <tr>
-                                <td colspan="2" id="address-token-description" class="list-field"></td>
-                            </tr>
-                            <tr>
                                 <td>Symbol</td>
                                 <td id="address-token-symbol" class="list-field"></td>
                             </tr>

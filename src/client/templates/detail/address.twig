@@ -26,10 +26,25 @@
     </div> #}
     <div class="row">
         <div class="col-md mb-4">
-            {% include '@components/detail/information.twig' %}
+            {% include '@components/detail/contract-information.twig' with {
+                'data': data,
+                'token': token,
+            } %}
         </div>
         <div class="col-md mb-4">
-            {% include '@components/detail/balances.twig' %}
+            {% if data.isContract and data.token %}
+                {% include '@components/detail/token-information.twig' with {
+                    'data': data,
+                    'token': token,
+                    'config': config,
+                } %}
+            {% else %}
+                {% include '@components/detail/balances.twig' with {
+                    'data': data,
+                    'token': token,
+                    'config': config,
+                } %}
+            {% endif %}
         </div>
     </div>
 

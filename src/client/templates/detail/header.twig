@@ -1,12 +1,18 @@
-<div class="my-4 alert alert-light text-center">
-    {% if not data.isContract or (data.contract and data.contract.isChainy) %}
-        <h1 class="h4 m-0 py-1 text-dark">Address: {{data.address}}</h1>
-    {% elseif data.isContract and data.token %}
-        <h1 class="h4 m-0 py-1 text-dark">
-            {{token.type}} {{token.name}}
-        </h1>
-        <div class="text-secondary">{{token.checksumAddress}}</div>
-    {% else %}
-        <h1 class="h4 m-0 py-1 text-dark">{{header}}</h1>
-    {% endif %}
+<div class="my-4 alert alert-light text-center d-flex justify-content-center align-items-center">
+    <div>
+        {% if not data.isContract or (data.contract and data.contract.isChainy) %}
+            <h1 class="h4 m-0 py-1 text-dark">Address: {{data.address}}</h1>
+        {% elseif data.isContract and data.token %}
+            <h1 class="h4 m-0 py-1 text-dark">
+                {{token.type}} {{token.name}}
+            </h1>
+            <div class="text-secondary">{{token.checksumAddress}}</div>
+        {% else %}
+            <h1 class="h4 m-0 py-1 text-dark">{{header}}</h1>
+        {% endif %}
+    </div>
+
+    <button type="button" class="btn btn-link text-primary position-absolute qrcode" data-address="{{data.checksumAddress}}">
+        <i class="fa fa-qrcode"></i>
+    </button>
 </div>

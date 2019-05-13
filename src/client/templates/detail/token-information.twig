@@ -1,0 +1,62 @@
+<div class="card border-0">
+    <div class="card-header text-dark py-2 d-flex align-items-center justify-content-between">
+        <h3 class="h4 p-0 m-0">Token {{token.name}} Information</h3>
+        {% if config.updateLink %}
+        <div>
+            <a href="{{config.updateLink}}" target="_blank" class="text-primary">Update</a>
+        </div>
+        {% endif %}
+    </div>
+    <table class="table table-borderless table-striped m-0 table-dark table-sm">
+        <tbody>
+            {% if token.symbol %}
+            <tr>
+                <th scope="row" width="1">Symbol</th>
+                <td>{{token.symbol}}</td>
+            </tr>
+            {% endif %}
+            {% if token.price %}
+            <tr>
+                <th scope="row" width="1">Price</th>
+                <td>{{token.price}}</td>
+            </tr>
+            {% endif %}
+            {% if token.totalSupply %}
+            <tr>
+                <th scope="row" width="1" class="text-nowrap">Total Supply</th>
+                <td>{{token.totalSupply}}</td>
+            </tr>
+            {% endif %}
+            {% if token.decimals %}
+            <tr>
+                <th scope="row" width="1">Decimals</th>
+                <td>{{token.decimals}}</td>
+            </tr>
+            {% endif %}
+            {% if token.owner %}
+            <tr>
+                <th scope="row" width="1">Owner</th>
+                <td>{{token.owner}}</td>
+            </tr>
+            {% endif %}
+            {% if token.transfersCount %}
+            <tr>
+                <th scope="row" width="1">Transfers</th>
+                <td>{{token.transfersCount}}</td>
+            </tr>
+            {% endif %}
+            {% if token.issuancesCount %}
+            <tr>
+                <th scope="row" width="1">Issuances</th>
+                <td>{{token.issuancesCount}}</td>
+            </tr>
+            {% endif %}
+            {% if token.holdersCount %}
+            <tr>
+                <th scope="row" width="1">Holders</th>
+                <td>{{token.holdersCount}}</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>

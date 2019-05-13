@@ -126,47 +126,37 @@ export function formatNum (num, withDecimals /* = false */, decimals /* = 2 */, 
     return res;
 }
 
-export function prepareToken ({
-  address = '',
-  checksumAddress = '',
-  name = '',
-  decimals = 0,
-  symbol = '',
-  owner = '',
-  totalSupply = 0,
-  prepared = false,
-  createdAt = false,
-  createdTx = false,
-  estimatedDecimals = false,
-  totalIn,
-  totalOut,
-  type = '',
-} = {}) {
-  const token = {
-    prepared,
-    address,
-    checksumAddress,
-    decimals,
-    symbol,
-    totalSupply,
-    createdAt,
-    createdTx,
-    estimatedDecimals,
-    totalIn,
-    totalOut,
-    name,
-    owner,
-    type,
+export function prepareToken (data) {
+  if (!data.token) {
+    return
   }
 
-  if (token.prepared) {
-    return token
+  /*
+  {
+  ! address = '',
+  ! checksumAddress = '',
+  ! name = '',
+  ! decimals = 0,
+  ! symbol = '',
+  ! owner = '',
+  ! totalSupply = 0,
+  createdAt = false,
+  createdTx = false,
+  ! estimatedDecimals = false,
+  ! totalIn,
+  ! totalOut,
+  ! type = '',
+  }
+  */
+
+  const token = {
+    ...data.token
   }
 
   token.name = encodeTags(token.name || 'N/A')
   token.owner = token.owner === '0x' ? '' : token.owner
   token.checksumAddress = toChecksumAddress(token.address)
-  token.type = address.toLowerCase() !== '0x55d34b686aa8c04921397c5807db9ecedba00a4c' ? 'Token' : 'Contract'
+  token.type = token.address.toLowerCase() !== '0x55d34b686aa8c04921397c5807db9ecedba00a4c' ? 'Token' : 'Contract'
 
   // if(Ethplorer.Config.tokens && ('undefined' !== typeof(Ethplorer.Config.tokens[token.address]))){
   //   for(var property in Ethplorer.Config.tokens[token.address]){
@@ -209,7 +199,6 @@ export function prepareToken ({
     token.totalOut = token.totalOut + ' ' + token.symbol
   }
 
-  token.prepared = true
   return token
 }
 

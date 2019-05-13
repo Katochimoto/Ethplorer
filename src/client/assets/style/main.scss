@@ -177,6 +177,10 @@ main {
   display: inline-block;
 }
 
+.btn.qrcode {
+  right: 0;
+}
+
 @include media-breakpoint-up(md) {
   .powered-items > a {
     lost-column: 1/4;

@@ -1,5 +1,7 @@
 <div class="card border-0">
-    <h3 class="h4 card-header text-dark py-2">Address Information</h3>
+    <h3 class="h4 card-header text-dark py-2">
+        {% if data.isContract %}Contract{% else %}Address{% endif %} Information
+    </h3>
     <table class="table table-borderless table-striped m-0 table-dark table-sm">
         <tbody>
             <tr>
