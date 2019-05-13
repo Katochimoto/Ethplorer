@@ -81,7 +81,7 @@ function fetchAddressData (params) {
     .then(data => {
       resolve({
         ...data,
-        address: toChecksumAddress(params.data),
+        address: params.data,
         checksumAddress: toChecksumAddress(params.data),
       })
     }, () => {

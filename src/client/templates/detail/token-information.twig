@@ -11,49 +11,49 @@
         <tbody>
             {% if token.symbol %}
             <tr>
-                <th scope="row" width="1">Symbol</th>
+                <th scope="row">Symbol</th>
                 <td>{{token.symbol}}</td>
             </tr>
             {% endif %}
             {% if token.price %}
             <tr>
-                <th scope="row" width="1">Price</th>
-                <td>{{token.price}}</td>
+                <th scope="row">Price</th>
+                <td>{{ token.price|price }}</td>
             </tr>
             {% endif %}
             {% if token.totalSupply %}
             <tr>
-                <th scope="row" width="1" class="text-nowrap">Total Supply</th>
+                <th scope="row" class="text-nowrap">Total Supply</th>
                 <td>{{token.totalSupply}}</td>
             </tr>
             {% endif %}
             {% if token.decimals %}
             <tr>
-                <th scope="row" width="1">Decimals</th>
+                <th scope="row">Decimals</th>
                 <td>{{token.decimals}}</td>
             </tr>
             {% endif %}
             {% if token.owner %}
             <tr>
-                <th scope="row" width="1">Owner</th>
-                <td>{{token.owner}}</td>
+                <th scope="row">Owner</th>
+                <td>{{ token.owner|ethplorer }}</td>
             </tr>
             {% endif %}
             {% if token.transfersCount %}
             <tr>
-                <th scope="row" width="1">Transfers</th>
+                <th scope="row">Transfers</th>
                 <td>{{token.transfersCount}}</td>
             </tr>
             {% endif %}
             {% if token.issuancesCount %}
             <tr>
-                <th scope="row" width="1">Issuances</th>
+                <th scope="row">Issuances</th>
                 <td>{{token.issuancesCount}}</td>
             </tr>
             {% endif %}
             {% if token.holdersCount %}
             <tr>
-                <th scope="row" width="1">Holders</th>
+                <th scope="row">Holders</th>
                 <td>{{token.holdersCount}}</td>
             </tr>
             {% endif %}

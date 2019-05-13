@@ -997,8 +997,10 @@ Ethplorer = {
             }
 
             var fields = [
-                'token', 'token.name', 'token.price', 'token.description', 'token.owner', 'token.totalSupply', 'token.totalIn', 'token.totalOut', 'token.decimals', 'token.symbol',
-                'token.txsCount', 'token.transfersCount', 'token.issuancesCount', 'token.holdersCount', 'token.createdAt', 'token.createdTx'
+                'token', 'token.name', 'token.price', 'token.description',
+                'token.owner', 'token.totalSupply', 'token.totalIn', 'token.totalOut', 'token.decimals', 'token.symbol',
+                'token.txsCount', 'token.transfersCount', 'token.issuancesCount', 'token.holdersCount',
+                'token.createdAt', 'token.createdTx'
             ];
 
             $('#tab-issuances').show();

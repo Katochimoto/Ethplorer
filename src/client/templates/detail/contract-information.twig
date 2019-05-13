@@ -5,11 +5,13 @@
     <table class="table table-borderless table-striped m-0 table-dark table-sm">
         <tbody>
             <tr>
-                <th scope="row" width="1">Address</th>
+                <th scope="row">
+                    {% if data.isContract %}Contract{% else %}Address{% endif %}
+                </th>
                 <td></td>
             </tr>
             <tr>
-                <th scope="row">Created At</th>
+                <th scope="row" class="text-nowrap">Created At</th>
                 <td></td>
             </tr>
             <tr>
@@ -17,7 +19,7 @@
                 <td></td>
             </tr>
             <tr>
-                <th scope="row">Create Tx</th>
+                <th scope="row" class="text-nowrap">Create Tx</th>
                 <td></td>
             </tr>
             <tr>
@@ -25,11 +27,11 @@
                 <td></td>
             </tr>
             <tr>
-                <th scope="row">Total In</th>
+                <th scope="row" class="text-nowrap">Total In</th>
                 <td></td>
             </tr>
             <tr>
-                <th scope="row">Total Out</th>
+                <th scope="row" class="text-nowrap">Total Out</th>
                 <td></td>
             </tr>
             <tr>
