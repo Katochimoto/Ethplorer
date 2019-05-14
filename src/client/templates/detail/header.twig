@@ -12,7 +12,11 @@
         {% endif %}
     </div>
 
-    <button type="button" class="btn btn-link text-primary position-absolute qrcode" data-address="{{data.checksumAddress}}">
+    <button
+        type="button"
+        class="btn btn-link text-primary position-absolute"
+        data-qrcode="{{data.checksumAddress}}"
+    >
         <i class="fa fa-qrcode"></i>
     </button>
 </div>

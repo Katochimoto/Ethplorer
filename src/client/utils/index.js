@@ -1,6 +1,7 @@
 import $ from 'jquery'
 import BigNumber from 'bignumber.js'
 import { keccak256 } from 'js-sha3'
+import config from 'ethplorer-config'
 
 BigNumber.config({ ERRORS: false })
 
@@ -131,24 +132,6 @@ export function prepareToken (data) {
     return
   }
 
-  /*
-  {
-  ! address = '',
-  ! checksumAddress = '',
-  ! name = '',
-  ! decimals = 0,
-  ! symbol = '',
-  ! owner = '',
-  ! totalSupply = 0,
-  createdAt = false,
-  createdTx = false,
-  ! estimatedDecimals = false,
-  ! totalIn,
-  ! totalOut,
-  ! type = '',
-  }
-  */
-
   const token = {
     ...data.token
   }
@@ -158,11 +141,11 @@ export function prepareToken (data) {
   token.checksumAddress = toChecksumAddress(token.address)
   token.type = token.address.toLowerCase() !== '0x55d34b686aa8c04921397c5807db9ecedba00a4c' ? 'Token' : 'Contract'
 
-  // if(Ethplorer.Config.tokens && ('undefined' !== typeof(Ethplorer.Config.tokens[token.address]))){
-  //   for(var property in Ethplorer.Config.tokens[token.address]){
-  //     token[property] = Ethplorer.Config.tokens[token.address][property];
-  //   }
-  // }
+  if (config.tokens && config.tokens[token.address]) {
+    for (const property in config.tokens[token.address]) {
+      token[property] = config.tokens[token.address][property]
+    }
+  }
 
   token.decimals = parseFloat(toBig(token.decimals).toString())
   token.totalSupply = toBig(token.totalSupply)
@@ -206,6 +189,85 @@ export function prepareToken (data) {
     data.contract.txsCount > token.txsCount
   ) {
     token.txsCount = data.contract.txsCount
+  }
+
+  if (data.isContract) {
+    // Read description from tx
+    if (data.contract && data.contract.code) {
+      const json = parseJData(data.contract.code)
+      if (json && json.description) {
+        token.description = json.description
+      }
+    }
+
+    // Read from config
+    if (config.tokens && config.tokens[token.address] && config.tokens[token.address].description) {
+      token.description = config.tokens[token.address].description
+    }
+
+    token.description = encodeTags(token.description || '')
+      .replace(/http[s]?\:\/\/[^\s]*/g, '<a href="$&" target="_blank" rel="noopener nofollow">$&</a>')
+      .replace(/~~~(.*)~~~\n?/g, '<h4>$1</h4>')
+      .replace(/\n/g, '<br/>')
+
+    let socials = []
+
+    if (token.website) {
+      socials.push(`<i class="fa fa-globe" title="Website" style="width:20px;"></i> <a href="${token.website}" target="_blank" rel="noopener nofollow">${token.website}</a>`)
+    }
+
+    if (token.facebook) {
+      socials.push(`<i class="fab fa-facebook-f" title="Facebook" style="width:20px;"></i> <a href="https://facebook.com/${token.facebook}" target="_blank" rel="noopener nofollow">${token.facebook}</a>`)
+    }
+
+    if (token.twitter) {
+      socials.push(`<i class="fab fa-twitter" title="Twitter" style="width:20px;"></i> <a href="https://twitter.com/${token.twitter}" target="_blank" rel="noopener nofollow">${token.twitter}</a>`)
+    }
+
+    if (token.reddit) {
+      socials.push(`<i class="fab fa-reddit-alien" title="Reddit" style="width:20px;"></i> <a href="https://reddit.com/r/${token.reddit}" target="_blank" rel="noopener nofollow">${token.reddit}</a>`)
+    }
+
+    if (token.telegram) {
+      socials.push(`<i class="fab fa-telegram" title="Telegram" style="width:20px;"></i> <a href="${token.telegram}" target="_blank" rel="noopener nofollow">Join Channel</a>`)
+    }
+
+    socials = socials.join('<br/>')
+
+    if (socials) {
+      token.description = token.description ?
+        (token.description + '<br/><br/>' + socials) :
+        socials
+    }
+
+    if (token.links) {
+      token.links = token.links
+        .replace(/http[s]?\:\/\/[^\s]*/g, '<a href="$&" target="_blank" rel="noopener nofollow">$&</a>')
+        .replace(/\n/g, '<br/>')
+
+      token.description = token.description ?
+        (token.description + '<br/><br/>' + token.links) :
+        token.links
+    }
+
+    if (data.pager && data.pager.transfers) {
+      token.transfersCount = data.pager.transfers.total
+    }
+
+    if (data.pager && data.pager.issuances) {
+      token.issuancesCount = ''
+      if (data.pager.issuances.total) {
+        token.issuancesCount = data.pager.issuances.total
+      }
+    }
+
+    if (data.pager && data.pager.holders) {
+      token.holdersCount = data.pager.holders.total
+    }
+
+    if (data.contract && data.contract.txsCount && data.contract.txsCount > token.txsCount) {
+      token.txsCount = data.contract.txsCount
+    }
   }
 
   return token
@@ -360,4 +422,61 @@ export function formatNumWidget (num, withDecimals /* = false */, decimals /* = 
   }
   res = res.replace(/\.$/, '');
   return res + postfix;
+}
+
+export function parseJData (hex) {
+  var str = hex2ascii(hex.slice(8)).replace('{{', '{').replace(/^[^{]+/, '');
+  var res = false;
+  var i1 = str.indexOf('{');
+  var i2 = str.lastIndexOf('}');
+  if(i1 >= 0 && i2 >= 0 && i1 < i2){
+      var jstr = str.substr(i1, i2 - i1 + 1);
+      try {
+          res = JSON.parse(jstr);
+      }catch(e){}
+      if(res){
+          var rrr = ascii2hex(jstr);
+          rrr = hex2utf(rrr);
+          res = JSON.parse(rrr);
+      }
+  }
+  var fullStr = hex2ascii(hex);
+  if(!res && (fullStr.indexOf("Issuance") > 0)){
+      res = {description: fullStr.substr(fullStr.indexOf("Issuance")).replace(/\\n/g, "\n").replace(/\\u0000/g, "")};
+  }
+  return res;
+}
+
+export function ascii2hex (text) {
+  var res = []
+
+  for (var i = 0; i < text.length; i++) {
+    var hex = Number(text.charCodeAt(i)).toString(16)
+    res.push(hex)
+  }
+
+  return res.join('')
+}
+
+export function hex2ascii (data) {
+  let res = ''
+
+  try {
+    res = data.match(/.{2}/g).map(function(v){
+      return String.fromCharCode(parseInt(v, 16))
+    }).join('')
+  } catch(e) {}
+
+  return res
+}
+
+export function hex2utf (data) {
+  var res = ''
+
+  try {
+    var uri = data.toLowerCase().replace(/[0-9a-f]{2}/g, '%$&')
+    res = decodeURIComponent(uri)
+  } catch(e) {}
+
+  return res
 }

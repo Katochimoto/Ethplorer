@@ -1,6 +1,11 @@
 <div class="card border-0">
     <div class="card-header text-dark py-2 d-flex align-items-center justify-content-between">
-        <h3 class="h4 p-0 m-0">Token {{token.name}} Information</h3>
+        <div class="d-flex align-items-center">
+            {% if token.image %}
+                <img src="{{token.image}}" class="token-logo" align="left" />
+            {% endif %}
+            <h3 class="h4 p-0 m-0">Token {{token.name}} Information</h3>
+        </div>
         {% if config.updateLink %}
         <div>
             <a href="{{config.updateLink}}" target="_blank" class="text-primary">Update</a>

@@ -177,7 +177,7 @@ main {
   display: inline-block;
 }
 
-.btn.qrcode {
+.btn[data-qrcode] {
   right: 0;
 }
 

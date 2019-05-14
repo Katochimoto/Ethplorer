@@ -67,6 +67,7 @@ const config = {
     'ethplorer-widget': 'ethplorerWidget',
     'ethplorer-search': 'EthplorerSearch',
     'ethplorer-note': 'EthplorerNote',
+    'ethplorer-config': 'ethplorerConfig',
   },
   module: {
     rules: [
