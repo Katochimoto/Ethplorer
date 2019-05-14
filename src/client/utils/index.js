@@ -1,4 +1,7 @@
 import $ from 'jquery'
+import merge from 'lodash/merge'
+import map from 'lodash/map'
+import cloneDeep from 'lodash/cloneDeep'
 import BigNumber from 'bignumber.js'
 import { keccak256 } from 'js-sha3'
 import config from 'ethplorer-config'
@@ -127,15 +130,12 @@ export function formatNum (num, withDecimals /* = false */, decimals /* = 2 */, 
     return res;
 }
 
-export function prepareToken (data) {
-  if (!data.token) {
+export function prepareToken (token, data = {}) {
+  if (!token) {
     return
   }
 
-  const token = {
-    ...data.token
-  }
-
+  token = cloneDeep(token || {})
   token.name = encodeTags(token.name || 'N/A')
   token.owner = token.owner === '0x' ? '' : token.owner
   token.checksumAddress = toChecksumAddress(token.address)
@@ -300,8 +300,8 @@ export function toChecksumAddress (address) {
   return ret
 }
 
-export function getEthplorerLink (data, text, isContract) {
-  text = text || data
+export function getEthplorerLink (data, text, isContract, attrs = {}) {
+  text = String(text || data || '')
   if (!/^0x/.test(data)) {
     return text
   }
@@ -310,7 +310,7 @@ export function getEthplorerLink (data, text, isContract) {
     text = encodeTags(text)
   }
 
-  return `${isContract ? 'Contract ' : ''}<a href="/${isTx(data) ? 'tx' : 'address'}/${data}">${text}</a>`
+  return `${isContract ? 'Contract ' : ''}<a href="/${isTx(data) ? 'tx' : 'address'}/${data}" ${objToAttrs(attrs)}>${text}</a>`
 }
 
 export function getEtherscanLink (data, text, isContract) {
@@ -479,4 +479,76 @@ export function hex2utf (data) {
   } catch(e) {}
 
   return res
+}
+
+/**
+ * Turns a JavaScript object into a string containing HTML attributes.
+ * @param {object} object The object to turn into attributes.
+ * @param {object} options Allows you to configure stuff. See README or code.
+ * @returns {string} Returns an HTML attribute string!
+ */
+export function objToAttrs (object, options) {
+  options = merge({}, {
+    assignment: '=',
+    quote: '"',
+    separator: ' '
+  }, options)
+
+  return map(object, function (value, argument) {
+    argument = argument.replace(/[A-Z]/g, function (letter) {
+      return '-' + letter.toLowerCase()
+    })
+
+    if (argument && argument.charAt(0) === '_') {
+      return ''
+    }
+
+    if ('checked,compact,declare,defer,disabled,ismap,multiple,nohref,noresize,noshade,nowrap,readonly,selected'.indexOf(argument) !== -1) {
+      return argument
+    }
+
+    const quote = options.quote
+
+    if (typeof value === 'string') {
+      value = value.replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+    }
+
+    return argument + options.assignment + quote + value + quote
+  }).join(options.separator)
+}
+
+export function getHistDiffPriceString (histPrice, currPrice) {
+  var diffTag = '';
+  if (histPrice) { // && Ethplorer.showHistoricalPrice
+    var diff = round(pdiff(currPrice, histPrice), 2)
+    var cls = getDiffClass(diff)
+    diff = formatNum(diff, true, 2, true, true)
+    diffTag = '<span class="' + cls + '">(' + diff + '%)</span>'
+  }
+  return diffTag
+}
+
+export function pdiff (a, b) {
+  var res = 100;
+  if(a !== b){
+      if(a && b){
+          res = (a / b) * 100 - 100;
+      }else{
+          res *= ((a - b) < 0) ? -1 : 1;
+      }
+  }else{
+      res = 0;
+  }
+  return res;
+}
+
+export function getDiffClass (value) {
+  if (value === 0 || 'undefined' === typeof value) {
+      return 'diff-zero'
+  }
+  return value > 0 ? 'diff-up' : 'diff-down';
 }

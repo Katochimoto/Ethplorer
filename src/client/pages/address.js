@@ -82,7 +82,8 @@ function fetchAddressData (params) {
         checksumAddress: toChecksumAddress(params.data),
       }
 
-      data.token = prepareToken(data)
+      data.srcToken = data.token
+      data.token = prepareToken(data.token, data)
       resolve(data)
     }, () => {
       reject()

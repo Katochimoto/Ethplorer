@@ -181,6 +181,13 @@ main {
   right: 0;
 }
 
+.hash-from-to {
+  max-width: 40vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 @include media-breakpoint-up(md) {
   .powered-items > a {
     lost-column: 1/4;

@@ -49,11 +49,17 @@
         </div>
     </div>
 
+    {% if not data.contract or not data.contract.isChainy %}
     <div class="row">
         <div class="col mb-4">
-            {% include '@components/detail/transfers.twig' %}
+            {% include '@components/detail/token-transfers.twig' with {
+                'data': data,
+                'token': token,
+                'config': config,
+            } %}
         </div>
     </div>
+    {% endif %}
 
     {% include '@components/disqus.twig' %}
 {% elseif error %}

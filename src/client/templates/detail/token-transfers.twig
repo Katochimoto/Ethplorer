@@ -14,7 +14,9 @@
     </div>
     <div class="card-body text-dark p-0">
         <div class="d-flex align-items-center justify-content-between">
-            <h3 class="h4 card-title py-2 px-3 m-0">Transfers</h3>
+            <h3 class="h4 card-title py-2 px-3 m-0">
+                Token {{token.name}} Transfers
+            </h3>
             <form class="form-inline p-2 justify-content-end">
                 <div class="form-group">
                     <div class="form-check form-check-inline">
@@ -40,10 +42,50 @@
 
         <table class="table table-borderless table-striped m-0 table-dark table-sm">
             <tbody>
-                <tr>
-                    <th scope="row" width="1"></th>
-                    <td></td>
-                </tr>
+                {% for tx in data.transfers %}
+                    <tr>
+                        <td class="d-none d-sm-table-cell">
+                            {{ tx.transactionHash|ethplorer(data, 'no-contract', tx.timestamp|localdate(false), {
+                                'title': tx.timestamp|localdate
+                            }) }}
+                        </td>
+                        <td>
+                            <div class="hash-from-to">
+                                <span class="d-inline d-sm-none">
+                                    Date:&nbsp;{{ tx.timestamp|localdate(false) }}<br/>
+                                </span>
+                                {% if not data.token %}
+                                    <span class="address-token-inline">
+                                        Token:&nbsp;{{ txToken(tx, data) }}<br/>
+                                    </span>
+                                {% endif %}
+                                <span class="d-inline d-sm-none">
+                                    Value:&nbsp;{{ txQty(tx, data) }}<br/>
+                                </span>
+                                <span>
+                                    Tx:&nbsp;{{ tx.transactionHash|ethplorer(data, 'no-contract') }}<br/>
+                                </span>
+                                {% if tx.from %}
+                                    <span>
+                                        From:&nbsp;{{ txFrom(tx, data) }}<br/>
+                                    </span>
+                                    <span>
+                                        To:&nbsp;{{ txTo(tx, data) }}<br/>
+                                    </span>
+                                {% else %}
+                                    <span>
+                                        Address:&nbsp;{{ txAddress(tx, data) }}<br/>
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="text-right d-none d-sm-table-cell">
+                            {{ txQty(tx, data) }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td class="text-center">No transfers found</td></tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

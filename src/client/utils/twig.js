@@ -8,6 +8,10 @@ import {
   getEtherscanLink,
   ts2date,
   getDiffString,
+  prepareToken,
+  isSafari,
+  toBig,
+  getHistDiffPriceString,
 } from '@/utils'
 
 Twig.extendFilter('int', value => formatNum(value))
@@ -60,7 +64,7 @@ Twig.extendFilter('ether-full', (value, [data]) => {
   return res
 })
 
-Twig.extendFilter('ethplorer', (value, [data, options]) => {
+Twig.extendFilter('ethplorer', (value, [data, options, text, attrs]) => {
   if (!value) {
     return ''
   }
@@ -68,8 +72,8 @@ Twig.extendFilter('ethplorer', (value, [data, options]) => {
   data = data || {}
   data.contracts = data.contracts || []
   options = Array.isArray(options) ? options : [options]
+  text = text || value
 
-  let text = value
   if (text && isAddress(text)) {
     text = toChecksumAddress(value)
   }
@@ -77,7 +81,8 @@ Twig.extendFilter('ethplorer', (value, [data, options]) => {
   return getEthplorerLink(
     value,
     text,
-    options.includes('no-contract') ? false : data.contracts.includes(value)
+    options.includes('no-contract') ? false : data.contracts.includes(value),
+    attrs
   )
 })
 
@@ -97,12 +102,12 @@ Twig.extendFilter('etherscan', (value, [data, options]) => {
   )
 })
 
-Twig.extendFilter('localdate', value => {
+Twig.extendFilter('localdate', (value, [withGMT]) => {
   if (!value) {
     return ''
   }
 
-  return ts2date(value, true)
+  return ts2date(value, withGMT)
 })
 
 Twig.extendFilter('price', value => {
@@ -126,4 +131,128 @@ Twig.extendFilter('price', value => {
   return value
 })
 
+Twig.extendFunction('txQty', function (tx, data) {
+  const txToken = tx.isEth ?
+    ({
+      address: '0x0000000000000000000000000000000000000000',
+      name: 'Ethereum',
+      decimals: 18,
+      symbol: 'ETH',
+      totalSupply: 0,
+      price: data.ethPrice,
+    }) :
+    prepareToken(data.srcToken || data.tokens[tx.contract], data)
 
+  let qty = parseFloat(tx.value)
+
+  if (!tx.isEth) {
+    const k = Math.pow(10, txToken.decimals)
+    if (isSafari()) {
+      qty = qty / k
+    } else {
+      qty = parseFloat(toBig(tx.value).div(k).toString())
+    }
+  }
+
+  let value = formatNum(qty, true, txToken.decimals, 2) + ' ' +
+    (tx.isEth ? '<i class="fab fa-ethereum"></i> ' : '') +
+    txToken.symbol
+
+  const address = data.address.toLowerCase()
+  if (tx.from === address && tx.to !== address) {
+    value = '-' + value
+  }
+
+  if (!tx.from && tx.address) {
+    value = (tx.type && ('burn' === tx.type)) ? '-' + value + '<br>&#128293;&nbsp;Burn' : value + '<br>&#9874;&nbsp;Issuance'
+  }
+
+  var pf = parseFloat(value.replace(/\,/g, '').split(' ')[0])
+  var usdPrice = ''
+
+  if (pf) {
+    let price = tx.usdPrice
+    // Fill the tx.usdPrice if tx age less 10 minutes, because of delay price update scripts
+    if (!tx.usdPrice && txToken.price && txToken.price.rate && ((new Date().getTime()/1000 - tx.timestamp ) / 60 < 10)) {
+      price = txToken.price.rate
+    }
+
+    if (txToken.price && txToken.price.rate) {
+      const usdval = formatNum(Math.abs(round(pf * txToken.price.rate, 2)), true, 2, true)
+      value = value + '<br/><span class="transfer-usd" title="now">$&nbsp;' + usdval +
+        getHistDiffPriceString(price, txToken.price.rate) + '</span>'
+    }
+
+    if (price) { //  && Ethplorer.showHistoricalPrice
+      var hint = 'estimated at tx date'
+      var totalHistoryPrice = formatNum(Math.abs(round(pf * price, 2)), true, 2, true)
+      var historyPrice = formatNum(Math.abs(round(price, 2)), true, 2, true)
+
+      if (historyPrice === '0.00') {
+        historyPrice = '>0.00'
+      }
+
+      usdPrice = '<span class="historical-price"  title="' + hint + '">~$&nbsp;'
+        + totalHistoryPrice +'<span class="mrgnl-10">@&nbsp;'+ historyPrice +'</span></span>'
+    }
+  }
+
+  if (usdPrice) {
+    value += '<br/>' + usdPrice
+  }
+
+  return value
+})
+
+Twig.extendFunction('txToken', function (tx, data) {
+  const txToken = tx.isEth ?
+    ({
+      address: '0x0000000000000000000000000000000000000000',
+      name: 'Ethereum',
+      decimals: 18,
+      symbol: 'ETH',
+      totalSupply: 0,
+      price: data.ethPrice,
+    }) :
+    prepareToken(data.srcToken || data.tokens[tx.contract], data)
+
+  return getEthplorerLink(tx.contract, txToken.name, false)
+})
+
+Twig.extendFunction('txFrom', function (tx, data) {
+  if (!tx.from) {
+    return ''
+  }
+
+  const address = data.address.toLowerCase()
+
+  if (tx.from === address) {
+    return `<span class="same-address">${address}</span>`
+  }
+
+  return getEthplorerLink(tx.from)
+})
+
+Twig.extendFunction('txTo', function (tx, data) {
+  if (!tx.to) {
+    return ''
+  }
+
+  const address = data.address.toLowerCase()
+
+  if (tx.to === address) {
+    return `<span class="same-address">${address}</span>`
+  }
+
+  return getEthplorerLink(tx.to)
+})
+
+Twig.extendFunction('txAddress', function (tx, data) {
+  const address = data.address.toLowerCase()
+
+  if (tx.address === address) {
+    return `<span class="same-address">${address}</span>`
+  }
+
+  return tx.address
+})

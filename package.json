@@ -55,6 +55,7 @@
         "js-cookie": "2.2.0",
         "js-sha3": "0.8.0",
         "local-storage": "2.0.0",
+        "lodash": "^4.17.11",
         "page": "1.11.4",
         "popper.js": "1.15.0",
         "query-string": "6.5.0",
