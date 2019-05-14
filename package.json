@@ -57,6 +57,7 @@
         "local-storage": "2.0.0",
         "page": "1.11.4",
         "popper.js": "1.15.0",
-        "query-string": "6.5.0"
+        "query-string": "6.5.0",
+        "twig": "^1.13.3"
     }
 }

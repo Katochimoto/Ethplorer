@@ -19,15 +19,12 @@ export function init (ctx) {
     showTx: ctx.hashQuery.showTx,
   })
   .then(data => {
-    const token = prepareToken(data)
-
     console.log(data)
-    console.log(token)
 
     diff.innerHTML(document.getElementById('app'), template({
       ...window.__DATA__,
-      data,
-      token,
+      data: data,
+      token: data.token,
       config: window.Ethplorer && window.Ethplorer.Config || {},
     }))
 
@@ -79,11 +76,14 @@ function fetchAddressData (params) {
       data: params,
     })
     .then(data => {
-      resolve({
+      data = {
         ...data,
         address: params.data,
         checksumAddress: toChecksumAddress(params.data),
-      })
+      }
+
+      data.token = prepareToken(data)
+      resolve(data)
     }, () => {
       reject()
     })

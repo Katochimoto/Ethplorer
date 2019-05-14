@@ -1,9 +1,12 @@
+import './assets/style/main.scss'
+
 import page from 'page'
 import { init as initSentry } from '@sentry/browser'
 import queryString from 'query-string'
 import storage from 'local-storage'
 import 'bootstrap'
-import './assets/style/main.scss'
+import '@/utils/twig'
+
 import './templates/nav'
 import './templates/note'
 import './templates/modal-subscribe'

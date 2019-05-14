@@ -36,7 +36,7 @@
             {% if token.owner %}
             <tr>
                 <th scope="row">Owner</th>
-                <td>{{ token.owner|ethplorer }}</td>
+                <td>{{ token.owner|ethplorer(data) }}</td>
             </tr>
             {% endif %}
             {% if token.transfersCount %}

@@ -621,6 +621,7 @@ if (!empty($data)) {
                                 <a class="expand-btn">Expand</a>
                             </div>
                         </div>
+
                         <div class="block" id="address-chainy-info">
                             <div class="block-header">
                                 <img src="/images/chainy.png?new" class="token-logo" align="left">
@@ -646,6 +647,7 @@ if (!empty($data)) {
                             </tr>
                             </table>
                         </div>
+
                         <div class="block" id="address-token-details">
                             <div class="block-header"><h3>Token <span class="address-token-name"></span> Information</h3></div>
                             <table class="table">
@@ -691,6 +693,7 @@ if (!empty($data)) {
                             </tr>
                             </table>
                         </div>
+
                     </div>
                     <div class="col-xs-12">
                         <ul class="nav nav-tabs">

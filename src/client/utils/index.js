@@ -199,6 +199,15 @@ export function prepareToken (data) {
     token.totalOut = token.totalOut + ' ' + token.symbol
   }
 
+  if (
+    data.isContract &&
+    data.contract &&
+    data.contract.txsCount &&
+    data.contract.txsCount > token.txsCount
+  ) {
+    token.txsCount = data.contract.txsCount
+  }
+
   return token
 }
 
@@ -227,4 +236,128 @@ export function toChecksumAddress (address) {
   }
 
   return ret
+}
+
+export function getEthplorerLink (data, text, isContract) {
+  text = text || data
+  if (!/^0x/.test(data)) {
+    return text
+  }
+
+  if (text.indexOf('<') >= 0 || text.indexOf('>') >= 0) {
+    text = encodeTags(text)
+  }
+
+  return `${isContract ? 'Contract ' : ''}<a href="/${isTx(data) ? 'tx' : 'address'}/${data}">${text}</a>`
+}
+
+export function getEtherscanLink (data, text, isContract) {
+  text = text || data
+  text = encodeTags(text)
+
+  if (!/^0x/.test(data)) {
+    return text
+  }
+
+  return isContract ? `Contract ${text}` : text
+}
+
+export function ts2date (ts, withGMT = true) {
+  ts *= 1000
+  function padZero(s) {
+    return (s < 10) ? '0' + s : s.toString()
+  }
+
+  const dt = new Date(ts)
+  let res = ''
+  res += (dt.getFullYear() + '-' + padZero((dt.getMonth() + 1)) + '-' + padZero(dt.getDate()))
+  res += ' '
+  res += (padZero(dt.getHours()) + ':' + padZero(dt.getMinutes()) + ':' + padZero(dt.getSeconds()))
+
+  if (withGMT) {
+    res += (' (' + getTZOffset() + ')');
+  }
+
+  return res;
+}
+
+export function getTZOffset () {
+  const offset = -Math.round(new Date().getTimezoneOffset() / 60)
+  return 'GMT' + (offset > 0 ? '+' : '-') + offset
+}
+
+export function getDiffString (diff) {
+  if ('undefined' === typeof diff) {
+      return '--'
+  }
+  let str = '' //(diff > 0 ? '+' : '');
+  str += formatNumWidget(diff, true, 2, true, true) + '%'
+  return str
+}
+
+/**
+ * Number formatter (separates thousands with comma, adds zeroes to decimal part).
+ *
+ * @param {int} num
+ * @param {bool} withDecimals
+ * @param {int} decimals
+ * @param {bool} cutZeroes
+ * @returns {string}
+ */
+export function formatNumWidget (num, withDecimals /* = false */, decimals /* = 2 */, cutZeroes /* = false */, withPostfix /* = false */, numLimitPostfix /* = 999999 */) {
+  var postfix = '';
+  if (withPostfix) {
+    if(!numLimitPostfix) numLimitPostfix = 999999;
+    if(Math.abs(num) > 999 && Math.abs(num) <= numLimitPostfix){
+      num = num / 1000;
+      postfix = ' K';
+    } else if(Math.abs(num) > numLimitPostfix){
+      num = num / 1000000;
+      postfix = ' M';
+    }
+  }
+  function padZero(s, len){
+    while(s.length < len) s += '0';
+    return s;
+  }
+  if(('object' === typeof(num)) && ('undefined' !== typeof(num.c))){
+    num = parseFloat(toBig(num).toString());
+  }
+  cutZeroes = !!cutZeroes;
+  withDecimals = !!withDecimals;
+  // decimals = decimals || (cutZeroes ? 0 : 2);
+
+  if((num.toString().indexOf("e+") > 0)){
+    return num.toString();
+  }
+
+  if((num.toString().indexOf("e-") > 0) && withDecimals){
+    var parts = num.toString().split("e-");
+    var res = parts[0].replace('.', '');
+    for(var i=1; i<parseInt(parts[1]); i++){
+      res = '0' + res;
+    }
+    return '0.' + res;
+  }
+
+  if(withDecimals){
+    num = round(num, decimals);
+  }
+  var parts = num.toString().split('.');
+  var res = parts[0].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  var zeroCount = cutZeroes ? 0 : decimals;
+  if(withDecimals && decimals){
+    if(parts.length > 1){
+      res += '.';
+      var tail = parts[1].substring(0, decimals);
+      if(tail.length < zeroCount){
+        tail = padZero(tail, zeroCount);
+      }
+      res += tail;
+    }else{
+      res += padZero('.', parseInt(zeroCount) + 1);
+    }
+  }
+  res = res.replace(/\.$/, '');
+  return res + postfix;
 }

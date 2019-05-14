@@ -1,11 +1,4 @@
-{% if error %}
-    <div class="row">
-        <div class="col mb-4 text-center text-danger">
-            <h1 class="h2 mt-4">ERROR</h1>
-            <h3 class="h4">Invalid request</h1>
-        </div>
-    </div>
-{% elseif data and token %}
+{% if data and token %}
     <div class="row">
         <div class="col">
             {% include '@components/detail/header.twig' with {
@@ -26,12 +19,16 @@
     </div> #}
     <div class="row">
         <div class="col-md mb-4">
-            {% include '@components/detail/contract-information.twig' with {
+            {% include '@components/detail/information.twig' with {
                 'data': data,
                 'token': token,
             } %}
         </div>
         <div class="col-md mb-4">
+            {% if data.isContract and data.contract and data.contract.isChainy %}
+                {% include '@components/detail/chainy-information.twig' %}
+            {% endif %}
+
             {% if data.isContract and data.token %}
                 {% include '@components/detail/token-information.twig' with {
                     'data': data,
@@ -55,6 +52,13 @@
     </div>
 
     {% include '@components/disqus.twig' %}
+{% elseif error %}
+    <div class="row">
+        <div class="col mb-4 text-center text-danger">
+            <h1 class="h2 mt-4">ERROR</h1>
+            <h3 class="h4">Invalid request</h1>
+        </div>
+    </div>
 {% else %}
     <div class="loader text-center">
         <div class="loader-wrapper">
