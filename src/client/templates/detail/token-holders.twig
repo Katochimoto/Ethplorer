@@ -1,33 +1,12 @@
 <div class="card-body text-dark p-0">
     <div class="d-flex align-items-center justify-content-between">
         <h3 class="h4 card-title py-2 px-3 m-0">
-            Token {{token.name}} Transfers
+            Token {{token.name}} Holders
         </h3>
-        <form class="form-inline p-2 justify-content-end">
-            <div class="form-group">
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label" for="inlineCheckbox1">
-                        ETH
-                        <sup class="text-danger mx-1">new</sup>
-                    </label>
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label" for="inlineCheckbox2">
-                        Tokens
-                        <sup class="text-danger mx-1">new</sup>
-                    </label>
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control form-control-sm" placeholder="Filter by address or hash">
-            </div>
-        </form>
     </div>
     <table class="table table-borderless table-striped m-0 table-dark table-sm">
         <tbody>
-            {% for tx in data.transfers %}
+            {% for tx in data.qwe %}
                 <tr>
                     <td class="d-none d-sm-table-cell">
                         {{ tx.transactionHash|ethplorer(data, 'no-contract', tx.timestamp|localdate(false), {
@@ -69,7 +48,7 @@
                     </td>
                 </tr>
             {% else %}
-                <tr><td class="text-center">No transfers found</td></tr>
+                <tr><td class="text-center">No holders found</td></tr>
             {% endfor %}
         </tbody>
     </table>
