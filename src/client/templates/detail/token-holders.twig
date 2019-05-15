@@ -1,21 +1,26 @@
 <div class="card-body text-dark p-0">
-    <div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center justify-content-between bg-white">
         <h3 class="h4 card-title py-2 px-3 m-0">
-            Token {{token.name}} Holders
+            Token {{data.token.name}} Holders
         </h3>
     </div>
-    <table class="table table-borderless table-striped m-0 table-dark table-sm">
+    <table
+        class="{{ classnames({
+            'table table-borderless table-striped m-0 table-dark table-sm bg-transparent': true,
+            'opacity-50': data.loading,
+        }) }}"
+    >
         <tbody>
             {% for key, holder in data.holders %}
                 <tr>
                     <td class="text-right token-holders-key">{{key}}</td>
-                    <td class="d-none d-sm-table-cell token-holders-address">
+                    <td class="d-none d-sm-table-cell align-middle token-holders-address">
                         {{ holder.address|ethplorer(data, 'no-contract') }}
                     </td>
-                    <td class="d-none d-sm-table-cell text-right token-holders-balance">
+                    <td class="d-none d-sm-table-cell text-right align-middle token-holders-balance">
                         {{ holder.balance|holderBalance(data) }}
                     </td>
-                    <td class="d-none d-sm-table-cell w-50 token-holders-share">
+                    <td class="d-none d-sm-table-cell w-50 align-middle token-holders-share">
                         <div class="clearfix pr-5">
                             <div class="token-holders-gauge" style="width:{{holder.share}}%;"></div>
                             <div class="token-holders-gauge-value">&nbsp;{{holder.share}}%</div>
@@ -36,22 +41,10 @@
         </tbody>
     </table>
 </div>
-<div class="card-footer d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center">
-        <select class="form-control form-control-sm w-auto mr-3">
-            <option>10</option>
-            <option>25</option>
-            <option>50</option>
-            <option>100</option>
-        </select>
-    </div>
-    <nav aria-label="...">
-        <ul class="pagination pagination-sm m-0">
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-        </ul>
-    </nav>
-</div>
+{% include '@components/detail/pagination.twig' with {
+    'ctx': ctx,
+    'pager': data.pager.holders,
+    'config': config,
+    'className': 'card-footer bg-white',
+    'name': 'holders',
+} %}

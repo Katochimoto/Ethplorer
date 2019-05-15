@@ -4,9 +4,9 @@
             <h1 class="h4 m-0 py-1 text-dark">Address: {{data.checksumAddress}}</h1>
         {% elseif data.isContract and data.token %}
             <h1 class="h4 m-0 py-1 text-dark">
-                {{token.type}} {{token.name}}
+                {{data.token.type}} {{data.token.name}}
             </h1>
-            <span class="text-secondary">{{token.checksumAddress}}</span>
+            <span class="text-secondary">{{data.token.checksumAddress}}</span>
         {% else %}
             <h1 class="h4 m-0 py-1 text-dark">{{header}}</h1>
         {% endif %}

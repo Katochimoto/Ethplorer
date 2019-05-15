@@ -1,3 +1,4 @@
+import classnames from 'classnames'
 import Twig from 'twig'
 import {
   formatNum,
@@ -282,4 +283,40 @@ Twig.extendFunction('txAddress', function (tx, data) {
   }
 
   return tx.address
+})
+
+Twig.extendFunction('generatePageRange', function (ctx, config, pager) {
+  const pageSize = ctx.getStateParam('pageSize')
+  const { page, records, total } = pager
+
+  if (!records) {
+    return []
+  }
+
+  const pageCount = Math.ceil(records / pageSize)
+  const delta = 4
+  const range = []
+
+  for (let i = Math.max(2, (page - delta)); i <= Math.min((pageCount - 1), (page + delta)); i += 1) {
+    range.push(i)
+  }
+
+  if ((page - delta) > 2) {
+    range.unshift('...')
+  }
+
+  if ((page + delta) < (pageCount - 1)) {
+    range.push('...')
+  }
+
+  range.unshift(1)
+  if (pageCount !== 1) {
+    range.push(pageCount)
+  }
+
+  return range
+})
+
+Twig.extendFunction('classnames', function (...args) {
+  return classnames(...args)
 })

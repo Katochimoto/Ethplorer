@@ -1,60 +1,77 @@
-<div class="card border-0">
-    <div class="card-header bg-white">
+{% set activeTab = ctx.getStateParam('tab', 'tab-transfers') %}
+
+<div class="card border-0 bg-transparent">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
         <ul id="token-tabs" class="nav nav-tabs card-header-tabs" role="tablist">
             <li class="nav-item">
                 <a
-                    class="nav-link active"
+                    class="{{ classnames({
+                        'nav-link': true,
+                        'active': activeTab == 'tab-transfers',
+                        'disabled': data.loading,
+                    }) }}"
                     id="transfers-tab"
                     href="#transfers"
                     role="tab"
                     data-toggle="tab"
                     aria-controls="transfers"
-                    aria-selected="true"
+                    aria-selected="{% if activeTab == 'tab-transfers' %}true{% else %}false{% endif %}"
                 >Transfers</a>
             </li>
             <li class="nav-item">
                 <a
-                    class="nav-link"
+                    class="{{ classnames({
+                        'nav-link': true,
+                        'active': activeTab == 'tab-issuances',
+                        'disabled': data.loading,
+                    }) }}"
                     id="issuances-tab"
                     href="#issuances"
                     role="tab"
                     data-toggle="tab"
                     aria-controls="issuances"
-                    aria-selected="false"
+                    aria-selected="{% if activeTab == 'tab-issuances' %}true{% else %}false{% endif %}"
                 >Issuances</a>
             </li>
             <li class="nav-item">
                 <a
-                    class="nav-link"
+                    class="{{ classnames({
+                        'nav-link': true,
+                        'active': activeTab == 'tab-holders',
+                        'disabled': data.loading,
+                    }) }}"
                     id="holders-tab"
                     href="#holders"
                     role="tab"
                     data-toggle="tab"
                     aria-controls="holders"
-                    aria-selected="false"
+                    aria-selected="{% if activeTab == 'tab-holders' %}true{% else %}false{% endif %}"
                 >Holders</a>
             </li>
         </ul>
+        {% if data.loading %}
+            <i class="fas fa-spinner fa-lg fa-spin text-dark"></i>
+        {% endif %}
     </div>
     <div id="token-tabsContent" class="tab-content">
-        <div class="tab-pane fade show active" id="transfers" role="tabpanel" aria-labelledby="transfers-tab">
+        <div class="tab-pane fade{% if activeTab == 'tab-transfers' %} show active{% endif %}" id="transfers" role="tabpanel" aria-labelledby="transfers-tab">
             {% include '@components/detail/token-transfers.twig' with {
+                'ctx': ctx,
                 'data': data,
-                'token': token,
                 'config': config,
             } %}
         </div>
-        <div class="tab-pane fade" id="issuances" role="tabpanel" aria-labelledby="issuances-tab">
+        <div class="tab-pane fade{% if activeTab == 'tab-issuances' %} show active{% endif %}" id="issuances" role="tabpanel" aria-labelledby="issuances-tab">
             {% include '@components/detail/token-issuances.twig' with {
+                'ctx': ctx,
                 'data': data,
-                'token': token,
                 'config': config,
             } %}
         </div>
-        <div class="tab-pane fade" id="holders" role="tabpanel" aria-labelledby="holders-tab">
+        <div class="tab-pane fade{% if activeTab == 'tab-holders' %} show active{% endif %}" id="holders" role="tabpanel" aria-labelledby="holders-tab">
             {% include '@components/detail/token-holders.twig' with {
+                'ctx': ctx,
                 'data': data,
-                'token': token,
                 'config': config,
             } %}
         </div>

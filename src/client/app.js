@@ -19,27 +19,58 @@ initSentry({
 page('*', (ctx, next) => {
   ctx.query = queryString.parse(ctx.querystring)
   ctx.hashQuery = queryString.parse(ctx.hash)
-
-  // showTx
-  const showTxEnum = ['all', 'eth', 'tokens']
-  let showTx = storage.get('showTx')
-  if (showTxEnum.indexOf(showTx) === -1) {
-    showTx = 'all'
-  }
-
-  if (
-    ctx.hashQuery.showTx &&
-    ctx.hashQuery.showTx !== showTx &&
-    showTxEnum.indexOf(ctx.hashQuery.showTx) !== -1
-  ) {
-    showTx = ctx.hashQuery.showTx
-    storage.set('showTx', showTx)
-  }
-
-  ctx.hashQuery.showTx = showTx
-  // /showTx
-
   ctx.hashQueryString = queryString.stringify(ctx.hashQuery)
+
+  ctx.setStateParam = (name, value) => {
+    ctx.hashQuery[name] = value
+    ctx.hashQueryString = queryString.stringify(ctx.hashQuery)
+    ctx.state.path = `${ctx.path}${ctx.hashQueryString ? `#${ctx.hashQueryString}` : ''}`
+    ctx.canonicalPath = ctx.state.path
+    ctx.hash = ctx.hashQueryString
+    window.location.hash = ctx.hashQueryString
+    ctx.save()
+  }
+
+  ctx.getStateParam = (name, defaultValue) => {
+    let value = ctx.hashQuery[name] || defaultValue
+
+    if (name === 'showTx') {
+      const showTxEnum = ['all', 'eth', 'tokens']
+      const storeValue = storage.get(name)
+      value = ctx.hashQuery[name] || storeValue || defaultValue || 'all'
+      if (!showTxEnum.includes(value)) {
+        value = 'all'
+      }
+
+      if (
+        ctx.hashQuery[name] &&
+        ctx.hashQuery[name] !== storeValue &&
+        showTxEnum.includes(ctx.hashQuery[name])
+      ) {
+        storage.set(name, value)
+      }
+    }
+
+    if (name === 'pageSize') {
+      const pageSizeEnum = [10, 25, 50, 100]
+      const storeValue = parseInt(storage.get(name), 10) || 0
+      value = parseInt(ctx.hashQuery[name] || storeValue || defaultValue) || 10
+      if (!pageSizeEnum.includes(value)) {
+        value = 10
+      }
+
+      if (
+        ctx.hashQuery[name] &&
+        ctx.hashQuery[name] !== storeValue &&
+        pageSizeEnum.includes(ctx.hashQuery[name])
+      ) {
+        storage.set(name, value)
+      }
+    }
+
+    return value
+  }
+
   next()
 })
 
@@ -96,6 +127,12 @@ page('/address/:data', ctx => import(
   /* webpackMode: "lazy" */
   './pages/address.js'
 ).then(address => address.init(ctx)))
+
+page.exit('/address/:data', ctx => import(
+  /* webpackChunkName: "page-address" */
+  /* webpackMode: "lazy" */
+  './pages/address.js'
+).then(address => address.destroy(ctx)))
 
 page('/tx/:data', ctx => import(
   /* webpackChunkName: "page-address" */

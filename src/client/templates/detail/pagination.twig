@@ -1,0 +1,48 @@
+{% set pageSize = ctx.getStateParam('pageSize') %}
+
+<div class="{{className}} d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+        <select
+            class="form-control form-control-sm w-auto mr-3"
+            name="pageSize"
+            {% if data.loading %}disabled{% endif %}
+        >
+            {% for p in [10, 25, 50, 100] %}
+                <option
+                    value="{{p}}"
+                    {% if pageSize == p %}selected{% endif %}
+                >{{p}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination pagination-sm m-0">
+            {% for page in generatePageRange(ctx, config, pager) %}
+                <li
+                    class="{{ classnames({
+                        'page-item': true,
+                        'active': page == pager.page,
+                        'disabled': data.loading or page == '...',
+                    }) }}"
+                    {% if page == pager.page %}aria-current="page"{% endif %}
+                >
+                    {% if page == pager.page %}
+                        <span class="page-link">
+                            {{page}}
+                            <span class="sr-only">(current)</span>
+                        </span>
+                    {% elseif page == '...' %}
+                        <span class="page-link">{{page}}</span>
+                    {% else %}
+                        <a
+                            class="page-link"
+                            href="#"
+                            data-name="{{name}}"
+                            data-page="{{page}}"
+                        >{{page}}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+</div>

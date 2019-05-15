@@ -1,10 +1,15 @@
 <div class="card-body text-dark p-0">
-    <div class="d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center justify-content-between bg-white">
         <h3 class="h4 card-title py-2 px-3 m-0">
-            Token {{token.name}} Issuances
+            Token {{data.token.name}} Issuances
         </h3>
     </div>
-    <table class="table table-borderless table-striped m-0 table-dark table-sm">
+    <table
+        class="{{ classnames({
+            'table table-borderless table-striped m-0 table-dark table-sm bg-transparent': true,
+            'opacity-50': data.loading,
+        }) }}"
+    >
         <tbody>
             {% for tx in data.issuances|txValue %}
                 <tr>
@@ -16,28 +21,10 @@
         </tbody>
     </table>
 </div>
-<div class="card-footer d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center">
-        <select class="form-control form-control-sm w-auto mr-3">
-            <option>10</option>
-            <option>25</option>
-            <option>50</option>
-            <option>100</option>
-        </select>
-    </div>
-    <nav aria-label="...">
-        <ul class="pagination pagination-sm m-0">
-            <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active" aria-current="page">
-            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
-</div>
+{% include '@components/detail/pagination.twig' with {
+    'ctx': ctx,
+    'pager': data.pager.issuances,
+    'config': config,
+    'className': 'card-footer bg-white',
+    'name': 'issuances',
+} %}
