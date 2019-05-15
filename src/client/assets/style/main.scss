@@ -8,6 +8,7 @@
 @import "~bootstrap/scss/bootstrap";
 
 @import "loader";
+@import "token-holders";
 
 body {
   -webkit-text-size-adjust: none;
@@ -186,6 +187,14 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+td.list-field {
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 1px;
+  width: 80%;
+  text-overflow: ellipsis;
 }
 
 @include media-breakpoint-up(md) {

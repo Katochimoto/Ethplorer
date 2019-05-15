@@ -14,6 +14,10 @@ import {
   getHistDiffPriceString,
 } from '@/utils'
 
+Twig.extendFilter('txValue', value => {
+  return value
+})
+
 Twig.extendFilter('int', value => formatNum(value))
 
 Twig.extendFilter('float', value => formatNum(value, true))
@@ -129,6 +133,29 @@ Twig.extendFilter('price', value => {
     + getDiffString(rate.diff30d) +'</span></span>'
 
   return value
+})
+
+Twig.extendFilter('holderBalance', (balance, [data]) => {
+  if (data.token.decimals) {
+    balance = balance / Math.pow(10, data.token.decimals)
+  }
+
+  balance = formatNum(balance, true, data.token.decimals, true)
+
+  if (data.token.symbol) {
+    balance = balance + ' ' + data.token.symbol
+  }
+
+  if (data.token.price && data.token.price.rate) {
+    let pf = parseFloat(balance.replace(/\,/g,'').split(' ')[0])
+    if (pf) {
+      pf = round(pf * data.token.price.rate, 2)
+      const usdval = formatNum(Math.abs(pf), true, 2, true)
+      balance = balance + '<br><span class="transfer-usd">$&nbsp;' + usdval + '</span>'
+    }
+  }
+
+  return balance
 })
 
 Twig.extendFunction('txQty', function (tx, data) {

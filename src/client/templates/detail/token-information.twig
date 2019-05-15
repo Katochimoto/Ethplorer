@@ -17,49 +17,49 @@
             {% if token.symbol %}
             <tr>
                 <th scope="row">Symbol</th>
-                <td>{{token.symbol}}</td>
+                <td class="list-field">{{token.symbol}}</td>
             </tr>
             {% endif %}
             {% if token.price %}
             <tr>
                 <th scope="row">Price</th>
-                <td>{{ token.price|price }}</td>
+                <td class="list-field">{{ token.price|price }}</td>
             </tr>
             {% endif %}
             {% if token.totalSupply %}
             <tr>
                 <th scope="row" class="text-nowrap">Total Supply</th>
-                <td>{{token.totalSupply}}</td>
+                <td class="list-field">{{token.totalSupply}}</td>
             </tr>
             {% endif %}
             {% if token.decimals %}
             <tr>
                 <th scope="row">Decimals</th>
-                <td>{{token.decimals}}</td>
+                <td class="list-field">{{token.decimals}}</td>
             </tr>
             {% endif %}
             {% if token.owner %}
             <tr>
                 <th scope="row">Owner</th>
-                <td>{{ token.owner|ethplorer(data) }}</td>
+                <td class="list-field">{{ token.owner|ethplorer(data) }}</td>
             </tr>
             {% endif %}
             {% if token.transfersCount %}
             <tr>
                 <th scope="row">Transfers</th>
-                <td>{{token.transfersCount}}</td>
+                <td class="list-field">{{token.transfersCount}}</td>
             </tr>
             {% endif %}
             {% if token.issuancesCount %}
             <tr>
                 <th scope="row">Issuances</th>
-                <td>{{token.issuancesCount}}</td>
+                <td class="list-field">{{token.issuancesCount}}</td>
             </tr>
             {% endif %}
             {% if token.holdersCount %}
             <tr>
                 <th scope="row">Holders</th>
-                <td>{{token.holdersCount}}</td>
+                <td class="list-field">{{token.holdersCount}}</td>
             </tr>
             {% endif %}
         </tbody>

@@ -6,45 +6,28 @@
     </div>
     <table class="table table-borderless table-striped m-0 table-dark table-sm">
         <tbody>
-            {% for tx in data.qwe %}
+            {% for key, holder in data.holders %}
                 <tr>
-                    <td class="d-none d-sm-table-cell">
-                        {{ tx.transactionHash|ethplorer(data, 'no-contract', tx.timestamp|localdate(false), {
-                            'title': tx.timestamp|localdate
-                        }) }}
+                    <td class="text-right token-holders-key">{{key}}</td>
+                    <td class="d-none d-sm-table-cell token-holders-address">
+                        {{ holder.address|ethplorer(data, 'no-contract') }}
                     </td>
-                    <td>
-                        <div class="hash-from-to">
-                            <span class="d-inline d-sm-none">
-                                Date:&nbsp;{{ tx.timestamp|localdate(false) }}<br/>
-                            </span>
-                            {% if not data.token %}
-                                <span class="address-token-inline">
-                                    Token:&nbsp;{{ txToken(tx, data) }}<br/>
-                                </span>
-                            {% endif %}
-                            <span class="d-inline d-sm-none">
-                                Value:&nbsp;{{ txQty(tx, data) }}<br/>
-                            </span>
-                            <span>
-                                Tx:&nbsp;{{ tx.transactionHash|ethplorer(data, 'no-contract') }}<br/>
-                            </span>
-                            {% if tx.from %}
-                                <span>
-                                    From:&nbsp;{{ txFrom(tx, data) }}<br/>
-                                </span>
-                                <span>
-                                    To:&nbsp;{{ txTo(tx, data) }}<br/>
-                                </span>
-                            {% else %}
-                                <span>
-                                    Address:&nbsp;{{ txAddress(tx, data) }}<br/>
-                                </span>
-                            {% endif %}
+                    <td class="d-none d-sm-table-cell text-right token-holders-balance">
+                        {{ holder.balance|holderBalance(data) }}
+                    </td>
+                    <td class="d-none d-sm-table-cell w-50 token-holders-share">
+                        <div class="clearfix pr-5">
+                            <div class="token-holders-gauge" style="width:{{holder.share}}%;"></div>
+                            <div class="token-holders-gauge-value">&nbsp;{{holder.share}}%</div>
                         </div>
                     </td>
-                    <td class="text-right d-none d-sm-table-cell">
-                        {{ txQty(tx, data) }}
+                    <td class="d-sm-none token-holders-group">
+                        {{ holder.address|ethplorer(data, 'no-contract') }}<br/>
+                        {{ holder.balance|holderBalance(data) }}
+                        <div class="clearfix pr-5">
+                            <div class="token-holders-gauge" style="width:{{holder.share}}%;"></div>
+                            <div class="token-holders-gauge-value">&nbsp;{{holder.share}}%</div>
+                        </div>
                     </td>
                 </tr>
             {% else %}
@@ -64,17 +47,11 @@
     </div>
     <nav aria-label="...">
         <ul class="pagination pagination-sm m-0">
-            <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>
             <li class="page-item"><a class="page-link" href="#">1</a></li>
             <li class="page-item active" aria-current="page">
-            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
             </li>
             <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-            </li>
         </ul>
     </nav>
 </div>

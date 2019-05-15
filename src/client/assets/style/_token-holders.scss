@@ -1,0 +1,58 @@
+.token-holders-key {
+  max-width: 50px;
+  width: 50px;
+}
+
+.token-holders-address {
+  max-width: 200px;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.token-holders-balance {
+  max-width: 120px;
+  width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.token-holders-share {
+  white-space: nowrap;
+}
+
+.token-holders-gauge {
+  position: relative;
+  background-color: white;
+  opacity: 0.8;
+  height: 20px;
+  float: left;
+}
+
+.token-holders-gauge-value {
+  position:relative;
+  width:0px;
+  height: 20px;
+  float: left;
+}
+
+.token-holders-group {
+  max-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@include media-breakpoint-up(md) {
+  .token-holders-balance {
+    max-width: 220px;
+    width: 220px;
+  }
+
+  .token-holders-address {
+    max-width: 250px;
+    width: 250px;
+  }
+}
