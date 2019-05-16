@@ -14,12 +14,13 @@
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="og:type" content="website" />
-        {% block meta %}{% endblock %}
+        {{ block('meta') }}
 
         <title>{{ block('title')|trim }}</title>
 
         <script src="/js/config.js"></script>
         {% include '@components/fb-pixel.twig' %}
+        {{ block('head') }}
     </head>
     <body class="d-flex flex-column h-100">
         {% include '@components/nav.twig' with { 'active': block('page') } %}

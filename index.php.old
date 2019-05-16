@@ -14,93 +14,112 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 require 'vendor/autoload.php';
-$aConfig = require dirname(__FILE__) . '/service/config.php';
 require dirname(__FILE__) . '/service/lib/ethplorer.php';
-/**
- * @var Ethplorer
- */
-$es = Ethplorer::db($aConfig);
+$aConfig = require dirname(__FILE__) . '/service/config.php';
 
-$codeVersion = isset($aConfig['codeVersion']) ? $aConfig['codeVersion'] : "220";
-
-$error = TRUE;
-$header = "";
-$aAddressInfo = array();
-$aTxInfo = array();
 $uri = $_SERVER['REQUEST_URI'];
-$title = '';
 
-// Uri to lowercase
-if(preg_match("/0x[A-Z]+/", $uri) && (FALSE === strpos($uri, '1dea4'))){
-    header("Location: " . strtolower($uri));
+if (preg_match("/0x[A-Z]+/", $uri) && strpos($uri, '1dea4') === FALSE) {
+    header('Location: ' . strtolower($uri));
     die();
 }
-if(FALSE !== strpos($uri, '?')){
-    $uri = substr($uri, 0, strpos($uri, '?'));
-}
-$rParts = explode('/', $uri);
-foreach($rParts as $i => $part){
-    $rParts[$i] = strtolower($part);
-}
-if(3 === count($rParts)){
-    if(('tx' === $rParts[1]) && $es->isValidTransactionHash($rParts[2])){
-        $header = "Transaction hash: " . $rParts[2];
+
+$path = strtolower(trim(parse_url($uri, PHP_URL_PATH), '/'));
+list($page, $data) = explode('/', $path, 2);
+
+$error = TRUE;
+$header = '';
+$title = '';
+
+if ($page && $data) {
+    $es = Ethplorer::db($aConfig);
+
+    if ($page === 'tx' && $es->isValidTransactionHash($data)) {
         $error = FALSE;
-        $aTxInfo = $es->getTransactionInfo($rParts[2]);
-        if(isset($aTxInfo['token']) && isset($aTxInfo['token']['name'])){
+        $header = 'Transaction hash: ' . $data;
+
+        $aTxInfo = $es->getTransactionInfo($data);
+        if (isset($aTxInfo['token']) && isset($aTxInfo['token']['name'])) {
             $title .= $aTxInfo['token']['name'] . ' token transfer';
-            if(isset($aTxInfo['opValue'])){
+            if (isset($aTxInfo['opValue'])) {
                 $title .= ' for ' . $aTxInfo['opValue'];
             }
-            if(isset($aTxInfo['token']['symbol'])){
+            if (isset($aTxInfo['token']['symbol'])) {
                 $title .= ' [' . $aTxInfo['token']['symbol'] . ']';
             }
-            $title .= ' - ' . $rParts[2] . ' - transaction hash | by Ethplorer';
-        }else if(isset($aTxInfo['tx']) && isset($aTxInfo['tx']['value'])){
-            $title .= 'Ethereum transaction for ' . $aTxInfo['tx']['value'] . ' [ETH] - ' . $rParts[2] . ' - transaction hash | by Ethplorer';
+            $title .= ' - ' . $data . ' - transaction hash | by Ethplorer';
+        } else if (isset($aTxInfo['tx']) && isset($aTxInfo['tx']['value'])) {
+            $title .= 'Ethereum transaction for ' . $aTxInfo['tx']['value'] . ' [ETH] - ' . $data . ' - transaction hash | by Ethplorer';
         }
-    }
-    if(('address' === $rParts[1]) && $es->isValidAddress($rParts[2])){
-        $header = "Address: " . $rParts[2];
-        $address = $rParts[2];
+
+    } else if ($page === 'address' && $es->isValidAddress($data)) {
         $error = FALSE;
-        $aAddressInfo = $es->getAddressInfo($rParts[2]);
-        $checksumAddress = $es->getChecksumAddress($rParts[2]);
-        if(isset($aAddressInfo['token'])){
-            if(isset($aAddressInfo['token']['symbol'])){
+        $header = 'Address: ' . $data;
+
+        $aAddressInfo = $es->getAddressInfo($data);
+        $checksumAddress = $es->getChecksumAddress($data);
+        if (isset($aAddressInfo['token'])) {
+            if (isset($aAddressInfo['token']['symbol'])) {
                 $title .= '[' . $aAddressInfo['token']['symbol'] . ']';
             }
-            if(isset($aAddressInfo['token']['name'])){
+            if (isset($aAddressInfo['token']['name'])) {
                 $title .= ' ' . $aAddressInfo['token']['name'];
-                if(strpos($aAddressInfo['token']['name'], ' Token') === false){
+                if (strpos($aAddressInfo['token']['name'], ' Token') === false) {
                     $title .= ' Token';
                 }
                 $title .= ' viewer';
             }
-            if(isset($aAddressInfo['token']['price']) && isset($aAddressInfo['token']['price']['rate'])){
+            if (isset($aAddressInfo['token']['price']) && isset($aAddressInfo['token']['price']['rate'])) {
                 $title .= ' and price chart';
             }
             $title .= ' - Ethereum contract address ' . $checksumAddress . ' | Ethplorer';
             $aAddressInfo['title'] = $title;
-        }else if(isset($aAddressInfo['contract'])){
+        } else if (isset($aAddressInfo['contract'])) {
             $title .= $checksumAddress . ' - ethereum contract explorer - Ethplorer';
-        }else{
+        } else {
             $title .= $checksumAddress . ' - ethereum address history, charts and balances explorer - Ethplorer';
         }
-    }
-    if(('token' === $rParts[1]) && $es->isValidAddress($rParts[2])){
-        $header = "Token address: " . $rParts[2];
+
+    } else if ($page === 'token' && $es->isValidAddress($data)) {
         $error = FALSE;
+        $header = 'Token address: ' . $data;
     }
 }
-if($error){
+
+if ($error) {
     header('HTTP/1.0 404 Not Found', true, 404);
-    if(isset($rParts[1]) && !$rParts[1]){
+    if (empty($page)) {
         header('Location:/');
         die();
     }
 }
+
+if (!$title) {
+    $title = 'Ethplorer';
+    if ($header) {
+        $title .= ': ' . $header;
+    }
+}
+
+
+
+$loader = new \Twig\Loader\FilesystemLoader('dist');
+$loader->addPath(dirname(__FILE__) . '/src/client/templates', 'components');
+$twig = new \Twig\Environment($loader);
+
+echo $twig->render('address.twig', [
+    'error' => $error,
+    'page' => $page,
+    // 'data' => $data,
+    'title' => $title,
+    'header' => $header,
+]);
+die();
+
+
+$codeVersion = isset($aConfig['codeVersion']) ? $aConfig['codeVersion'] : "220";
 $testWidget = true;
 if(isset($_GET['test'])){
     $testWidget = true;
@@ -110,12 +129,10 @@ if(isset($_GET['debug']) && $_GET['debug']){
     $debugId = $_GET['debug'];
     $debugEnabled = true;
 }
-
 $withEth = false;
 if((isset($_GET['withEth']) && (bool)$_GET['withEth']) || (isset($_GET['witheth']) && (bool)$_GET['witheth'])){
     $withEth = true;
 }
-
 $hasNotes = isset($aConfig['adv']) && count($aConfig['adv']);
 
 $sentryURL = false;
@@ -135,36 +152,9 @@ function includeLocal($name){
 }
 
 $csvExport = '';
-if(is_array($rParts) && isset($rParts[2])){
-    $csvExport = ' <span class="export-csv-spinner"><i class="fa fa-spinner fa-spin"></i> Export...</span><span class="export-csv"><a class="download text-primary" rel="nofollow" target="_blank" href="/service/exportcsv.php?data=' . $rParts[2] . '">Export as CSV</a></span>';
+if (!empty($data)) {
+    $csvExport = ' <span class="export-csv-spinner"><i class="fa fa-spinner fa-spin"></i> Export...</span><span class="export-csv"><a class="download" rel="nofollow" target="_blank" href="/service/exportcsv.php?data=' . $data . '">Export as CSV</a></span>';
 }
-if(!$title){
-    $title = 'Ethplorer';
-    if($header){
-        $title .= ": " . $header;
-    }
-}
-
-$loader = new \Twig\Loader\FilesystemLoader('dist');
-// $loader->addPath(dirname(__FILE__) . '/src/client/templates', 'components');
-$twig = new \Twig\Environment($loader);
-
-echo $twig->render('address.twig', [
-    'error' => $error,
-    'title' => $title,
-    'header' => $header,
-    'testWidget' => $testWidget,
-    'csvExport' => $csvExport,
-    'debugEnabled' => $debugEnabled,
-    'debugId' => $debugId,
-    'address' => isset($address) ? $address : false,
-    'withEth' => $withEth,
-    'scriptAddon' => $aConfig['scriptAddon'],
-    'ads' => includeLocal('ads'),
-    'head' => includeLocal('head'),
-    'bottom' => includeLocal('bottom'),
-]);
-die();
 
 ?><!DOCTYPE html>
 <html>
@@ -337,23 +327,23 @@ die();
                         </div>
                     </div>
                 <?php }else{ ?>
-                <style>
-                    #token-history-grouped-widget {
-                        margin-top: 0 !important;
-                        margin-bottom: 0 !important;
-                        padding: 0 !important;
-                        max-width: 86% !important;
-                        margin-left: auto;
-                        margin-right: auto;
-                    }
-                </style>
-                <div>
-                    <div class="hidden-xs col-sm-1"></div>
-                    <div class="col-xs-12 col-sm-10 token-history-grouped-widget">
-                        <div id="token-history-grouped-widget"></div>
+                    <style>
+                        #token-history-grouped-widget {
+                            margin-top: 0 !important;
+                            margin-bottom: 0 !important;
+                            padding: 0 !important;
+                            max-width: 86% !important;
+                            margin-left: auto;
+                            margin-right: auto;
+                        }
+                    </style>
+                    <div>
+                        <div class="hidden-xs col-sm-1"></div>
+                        <div class="col-xs-12 col-sm-10 token-history-grouped-widget">
+                            <div id="token-history-grouped-widget"></div>
+                        </div>
+                        <div class="hidden-xs col-sm-1"></div>
                     </div>
-                    <div class="hidden-xs col-sm-1"></div>
-                </div>
                 <?php } ?>
                 <script type="text/javascript">
                     if(typeof(eWgs) === 'undefined'){ var eWgs = []; }
@@ -631,6 +621,7 @@ die();
                                 <a class="expand-btn">Expand</a>
                             </div>
                         </div>
+
                         <div class="block" id="address-chainy-info">
                             <div class="block-header">
                                 <img src="/images/chainy.png?new" class="token-logo" align="left">
@@ -656,12 +647,10 @@ die();
                             </tr>
                             </table>
                         </div>
+
                         <div class="block" id="address-token-details">
                             <div class="block-header"><h3>Token <span class="address-token-name"></span> Information</h3></div>
                             <table class="table">
-                            <tr>
-                                <td colspan="2" id="address-token-description" class="list-field"></td>
-                            </tr>
                             <tr>
                                 <td>Symbol</td>
                                 <td id="address-token-symbol" class="list-field"></td>
@@ -704,6 +693,7 @@ die();
                             </tr>
                             </table>
                         </div>
+
                     </div>
                     <div class="col-xs-12">
                         <ul class="nav nav-tabs">

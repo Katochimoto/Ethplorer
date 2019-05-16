@@ -68,6 +68,7 @@ const config = {
     'ethplorer-search': 'EthplorerSearch',
     'ethplorer-note': 'EthplorerNote',
     'ethplorer-config': 'ethplorerConfig',
+    'ethplorer': 'Ethplorer',
   },
   module: {
     rules: [

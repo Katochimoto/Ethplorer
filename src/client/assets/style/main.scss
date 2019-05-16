@@ -58,61 +58,6 @@ a.highlighted {
 main {
   position: relative;
   min-height: calc(100vh - 72px);
-
-  // background-position: center center;
-  // background-attachment: scroll;
-  // background-image:
-  //   linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
-  //   url("../images/bg2.jpg");
-  // background-size: cover;
-  // background-repeat: no-repeat;
-
-  // &[data-page="index"],
-  // &[data-page="widgets"] {
-  //   background: none !important;
-
-  //   &::before {
-  //     content: "";
-  //     display: block;
-  //     position: absolute;
-  //     z-index: 0;
-  //     top: 0;
-  //     right: 0;
-  //     left: 0;
-  //     height: 285px;
-  //     pointer-events: none;
-  //     background-image:
-  //       linear-gradient(to bottom, rgba(13,31,46,1), rgba(0,0,0,1)),
-  //       url("../images/bg.jpg");
-  //     background-position: center center;
-  //     background-attachment: scroll;
-  //     background-size: cover;
-  //     background-repeat: no-repeat;
-  //     pointer-events: none;
-  //     z-index: -1;
-  //   }
-
-  //   &::after {
-  //     content: "";
-  //     display: block;
-  //     position: absolute;
-  //     z-index: 0;
-  //     bottom: 0;
-  //     right: 0;
-  //     left: 0;
-  //     height: 370px;
-  //     pointer-events: none;
-  //     background-image:
-  //     linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.7)),
-  //       url("../images/bg.jpg");
-  //     background-position: center center;
-  //     background-attachment: scroll;
-  //     background-size: cover;
-  //     background-repeat: no-repeat;
-  //     pointer-events: none;
-  //     z-index: -1;
-  //   }
-  // }
 }
 
 .ethplorer-widget {
@@ -176,25 +121,6 @@ main {
 .powered-items > a {
   lost-column: 1/2;
   display: inline-block;
-}
-
-.btn[data-qrcode] {
-  right: 0;
-}
-
-.hash-from-to {
-  max-width: 40vw;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-td.list-field {
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: 1px;
-  width: 80%;
-  text-overflow: ellipsis;
 }
 
 @include media-breakpoint-up(md) {

@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import BigNumber from './bignumber'
+import { keccak_256 } from './sha3.min'
+import QRCode from './qrcode.min'
+import ethplorerWidget from 'ethplorer-widget'
 
 Ethplorer = {
     debug: false,
@@ -62,7 +66,7 @@ Ethplorer = {
         Ethplorer.showTx = Ethplorer.Storage.get('showTx', 'all');
         var showTxHash = window.location.hash.substr(1);
         if(showTxHash){
-            aShowTxHash = showTxHash.split('=');
+            const aShowTxHash = showTxHash.split('=');
             if(aShowTxHash.length > 1 && (aShowTxHash[0] == 'showTx') && (['all', 'eth', 'tokens'].indexOf(aShowTxHash[1]) >= 0)){
                 Ethplorer.showTx = aShowTxHash[1];
                 Ethplorer.Storage.set('showTx', aShowTxHash[1]);
@@ -93,7 +97,7 @@ Ethplorer = {
             $('#tx-details-block').hide();
         });
         $(document).on('click', '[data-toggle="tab"]', function(){
-            Ethplorer.Nav.set('tab', $(this).parent().attr('id'));
+            Ethplorer.Nav.set('tab', $(this).attr('id'));
             var activeTab = Ethplorer.getActiveTab();
             if(activeTab){
                 if(activeTab != 'transfers'){
@@ -167,8 +171,8 @@ Ethplorer = {
                 Ethplorer.reloadTab(false, true);
             }
         });
-        $('.nav-tabs li a').click(function(){
-            var tabName = $(this).parent().attr('id').replace('tab-', '');
+        $('.nav-tabs .nav-link').click(function(){
+            var tabName = $(this).attr('id').replace('tab-', '');
             if(('undefined' !== typeof(Ethplorer.reloadTabs)) && (Ethplorer.reloadTabs.indexOf(tabName) >= 0)){
                 Ethplorer.reloadTab(tabName, false);
             }
@@ -243,7 +247,7 @@ Ethplorer = {
         this.Utils.initScrollable();
     },
     getActiveTab: function(){
-        var tab = ($('.nav-tabs:visible li.active').length) ? $('.nav-tabs:visible li.active').attr('id').replace('tab-', '') : false;
+        var tab = ($('.nav-tabs:visible .nav-link.active').length) ? $('.nav-tabs:visible .nav-link.active').attr('id').replace('tab-', '') : false;
         if(!tab){
             if($('#address-transfers:visible').length){
                 tab = 'transfers';
@@ -639,15 +643,15 @@ Ethplorer = {
                     }else if(op.from && op.to){
                         var from = '<span class="cuttable-address">from ' + op.from + '</span>';
                         var to = '<span class="cuttable-address">to ' + op.to + '</span>';
-                        opParties = from + '<br class="show_small"> ' + to;
+                        opParties = from + '<br class="d-inline d-sm-none"> ' + to;
                     }
                     if(multiop){
                         var row = $(
                             '<tr data-op-idx="' + pos + '">' +
                             '<td><a class="dashed">Details</a></td>' +
                             '<td><span class="dash_on_hover">' + op.type.toString().toUpperCase() +
-                            '<span class="show_small"> ' + op.value + ' ' + op.symbol + '</span>' +
-                            '<br class="show_small"> ' + opParties + '</span></td>' +
+                            '<span class="d-inline d-sm-none"> ' + op.value + ' ' + op.symbol + '</span>' +
+                            '<br class="d-inline d-sm-none"> ' + opParties + '</span></td>' +
                             '<td class="text-right"><span class="dash_on_hover">' + op.value + '</span></td>' +
                             '<td><span class="dash_on_hover">' + op.symbol + '</span></td>' +
                             '<td></td>' +
@@ -896,16 +900,16 @@ Ethplorer = {
         if(data.isContract){
             Ethplorer.fillValues('address', data, ['contract', 'contract.creator']);
         }
-        var qrIcon = '<a style="float:right;position:relative;" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
+        var qrIcon = '<a style="float:right;position:relative;" class="text-primary" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
         if(data.isContract && data.token){
 
-            qrIcon = '<a style="float:right;position:relative;line-height:48px;" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
+            qrIcon = '<a style="float:right;position:relative;line-height:48px;" class="text-primary" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
             $('#address-token-details').show();
             var oToken = Ethplorer.prepareToken(data.token);
             // oToken.address = oToken.address;
             // QUESTION: need explanation
             var ttype = (address.toLowerCase() !== "0x55d34b686aa8c04921397c5807db9ecedba00a4c") ? 'Token ' : 'Contract ';
-            $('#ethplorer-path').html(qrIcon + ttype + oToken.name + '<br><small>' + Ethplorer.Utils.toChecksumAddress(oToken.address) + '</small>');
+            $('#ethplorer-path').html(qrIcon + ttype + oToken.name + '<br><small class="text-secondary">' + Ethplorer.Utils.toChecksumAddress(oToken.address) + '</small>');
             titleAdd = ttype + oToken.name + (oToken.symbol ? (' [' + oToken.symbol + ']') : '' ) + ' Information';
             // Read description from tx
             if(data.contract && data.contract.code){
@@ -1370,9 +1374,9 @@ Ethplorer = {
                     }
                     value +=  usdPrice;
                     divData.html(
-                        '<span class="show_small">Date:&nbsp;' + date + '<br></span>' +
+                        '<span class="d-inline d-sm-none">Date:&nbsp;' + date + '<br></span>' +
                         (!data.token ? ('<span class="address-token-inline">Token:&nbsp;' + token + '<br></span>') : '') +
-                        '<span class="show_small ' + rowClass + '">Value:&nbsp;' + value + '</span>' +
+                        '<span class="d-inline d-sm-none ' + rowClass + '">Value:&nbsp;' + value + '</span>' +
                         'Tx:&nbsp;' + Ethplorer.Utils.getEthplorerLink(tx.transactionHash) + '<br>' +
                         (from ? ('From:&nbsp;' + from + '<br>To:&nbsp;' + to) : ('Address:&nbsp;' + _address))
                     );
@@ -1530,11 +1534,11 @@ Ethplorer = {
                 }
 
                 var address = Ethplorer.Utils.getEthplorerLink(holder['address'], holder['address'], false);
-                var shareDiv = '<div><div class="holder-gauge" style="width:' + holder['share'] + '%;"></div><div class="holder-gauge-value">&nbsp;' + holder['share'] + '%</div></div>'
+                var shareDiv = '<div class="clearfix mr-5"><div class="holder-gauge" style="width:' + holder['share'] + '%;"></div><div class="holder-gauge-value mr-n5">&nbsp;' + holder['share'] + '%</div></div>'
                 var page = (data.pager && data.pager.holders) ? data.pager.holders.page : 1;
                 var add = (page - 1) * Ethplorer.pageSize;
                 row.append('<td>' + (add + i + 1) + '</td><td class="hide-small">' + address + '</td><td class="hide-small"></td><td class="hide-small">' + balance + '</td><td class="hide-small">' + shareDiv + '</td>');
-                row.append('<td class="show_small"><div class="holder_small">' + address + '<br />' + balance + '<br />' + shareDiv + '</div></td>');
+                row.append('<td class="d-table-cell d-sm-none"><div class="holder_small">' + address + '<br />' + balance + '<br />' + shareDiv + '</div></td>');
                 table.append(row);
             }
             if(totalShare > 100){
@@ -1646,7 +1650,7 @@ Ethplorer = {
 
         container.parents('.block').find('.total-records').empty();
 
-        var pageSizeSelect = $('<SELECT class="pageSize">');
+        var pageSizeSelect = $('<SELECT class="pageSize form-control form-control-sm w-auto d-inline my-2 ml-2 ml-sm-3 float-left">');
         var sizes = [10, 25, 50, 100];
         for(var i=0; i<4; i++){
             var option = $('<OPTION>');
@@ -1675,7 +1679,7 @@ Ethplorer = {
         }(container, pageData));
 
         var pager = $('<UL>');
-        pager.addClass('pagination pagination-sm');
+        pager.addClass('pagination pagination-sm my-2 mr-2 mr-sm-3 float-right');
         setTimeout(function(_container, _count, _total){
             return function(){
                 var str = Ethplorer.Utils.formatNum(_count) + ' total';
@@ -1705,7 +1709,7 @@ Ethplorer = {
                 if((i <= 1) || ((i <= 5) &&(currentPage <= 4)) || ((i >= (pages - 4)) &&(currentPage >= (pages - 3))) || (i >= (pages)) || ((i >= (currentPage - 1)) && (i <= (currentPage + 1)))){
                     var page = $('<LI>');
                     page.addClass('page-item');
-                    var link = $('<a>');
+                    var link = $('<a class="page-link text-decoration-none">');
                     link.html(i);
                     if(i === currentPage){
                         page.addClass('active');
@@ -1729,7 +1733,7 @@ Ethplorer = {
                     var page = $('<LI>');
                     page.addClass('page-item');
                     lastPage = false;
-                    var splitter = $('<a>');
+                    var splitter = $('<span class="page-link">');
                     splitter.html('...');
                     page.append(splitter);
                     page.addClass('disabled');
@@ -1961,7 +1965,7 @@ Ethplorer = {
     showTableLoader: function(){
         $('.filter-box').addClass('processing');
         $('.paginationFooter, .notFoundRow').parents('.table').addClass('unclickable');
-        $('.total-records:visible').html('<i class="table-loading fa fa-spinner fa-spin fa-2x"></i>');
+        $('.total-records:visible').html('<i class="table-loading fa fa-spinner fa-spin fa-lg"></i>');
         $('.nav-tabs').addClass('unclickable');
     },
     hideTableLoader: function(){
@@ -2040,7 +2044,7 @@ Ethplorer = {
         init: function(){
             var hash = document.location.hash.replace(/^\#/, '');
             if(hash){
-                aParts = hash.split('&');
+                const aParts = hash.split('&');
                 for(var i=0; i<aParts.length; i++){
                     var part = aParts[i];
                     if(part.indexOf('=') > 0){
