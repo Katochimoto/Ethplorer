@@ -955,7 +955,7 @@ Ethplorer = {
             }
             $('.address-token-name').html(oToken.name);
             if(Ethplorer.Config.updateLink){
-                $('.address-token-name:eq(0)').append('<a href="' + Ethplorer.Config.updateLink + '" target="_blank" class="token-update">Update</a>')
+                $('.address-token-name:eq(0)').append('<a href="' + Ethplorer.Config.updateLink + '" target="_blank" class="token-update text-primary">Update</a>')
             }
 
             Ethplorer.drawHolders(srcAddress, data);
@@ -1182,17 +1182,17 @@ Ethplorer = {
                 $('#filter_list').hide();
             }else{
                 if(Ethplorer.showTx && data.token){
-                    // $('.filter-box').prepend(`
-                    // <style>
-                    //     @media screen and (max-width: 992px) {
-                    //         .filter-box.in-tabs {text-align: right !important; margin-top: 10px !important; height: 15px !important;}
-                    //         .filter-box.in-tabs .filter-form {width: 100% !important;}
-                    //         .filter-box.in-tabs #filter_list {width: 100% !important;}
-                    //     }
-                    //     @media screen and (max-width: 379px) {
-                    //         .filter-box.in-tabs {height: 40px !important;}
-                    //     }
-                    // </style>`);
+                    $('.filter-box').prepend(`
+                    <style>
+                        @media screen and (max-width: 992px) {
+                            .filter-box.in-tabs {text-align: right !important; margin-top: 10px !important; height: 15px !important;}
+                            .filter-box.in-tabs .filter-form {width: 100% !important;}
+                            .filter-box.in-tabs #filter_list {width: 100% !important;}
+                        }
+                        @media screen and (max-width: 379px) {
+                            .filter-box.in-tabs {height: 40px !important;}
+                        }
+                    </style>`);
                 }
                 $('#filter_list').show();
             }
@@ -1308,10 +1308,10 @@ Ethplorer = {
                 </span>`;
 
             if(!data.token){
-                // $('.filter-form').prepend('<style>@media screen and (max-width: 501px) {.filter-box.out-of-tabs{height: 35px !important;}}</style>' + showTxChecks);
+                $('.filter-form').prepend('<style>@media screen and (max-width: 501px) {.filter-box.out-of-tabs{height: 35px !important;}}</style>');
                 $('.filter-form').prepend(showTxChecks);
             }else{
-                // $('.filter-box').prepend('<style>.filter-box.in-tabs .filter-form{width: auto !important;} @media screen and (max-width: 501px) {.filter-box.out-of-tabs{height: 35px !important;}} @media screen and (max-width: 432px) {.filter-box.in-tabs{height: 35px !important;}}</style>' + showTxChecks);
+                $('.filter-box').prepend('<style>.filter-box.in-tabs .filter-form{width: auto !important;} @media screen and (max-width: 501px) {.filter-box.out-of-tabs{height: 35px !important;}} @media screen and (max-width: 432px) {.filter-box.in-tabs{height: 35px !important;}}</style>');
                 $('.filter-box').prepend(showTxChecks);
             }
         }
@@ -1558,7 +1558,7 @@ Ethplorer = {
                 var page = (data.pager && data.pager.holders) ? data.pager.holders.page : 1;
                 var add = (page - 1) * Ethplorer.pageSize;
                 row.append('<td>' + (add + i + 1) + '</td><td class="d-none d-md-table-cell">' + address + '</td><td class="d-none d-md-table-cell"></td><td class="d-none d-md-table-cell">' + balance + '</td><td class="d-none d-md-table-cell">' + shareDiv + '</td>');
-                row.append('<td class="d-table-cell d-sm-none"><div class="holder_small">' + address + '<br />' + balance + '<br />' + shareDiv + '</div></td>');
+                row.append('<td class="d-table-cell d-md-none w-100"><div class="holder_small">' + address + '<br />' + balance + '<br />' + shareDiv + '</div></td>');
                 table.append(row);
             }
             if(totalShare > 100){

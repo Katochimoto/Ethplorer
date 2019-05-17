@@ -740,10 +740,10 @@ a.dashed {
     height: 50px;
     margin-top: -50px;
 
-    & .filter-form {
-      width: 300px;
-      float: right;
-    }
+    // & .filter-form {
+    //   width: 300px;
+    //   float: right;
+    // }
   }
 
   &.processing {
@@ -1081,13 +1081,16 @@ li.ui-menu-item.have-more {
   display: none;
 }
 
+.address-token-name {
+  display: flex;
+  align-items: center;
+}
+
 a.token-update {
   position: absolute;
   right: 0px;
   margin-right: 30px;
   font-size: 14px;
-  top: 37px;
-  color: #337ab7 !important;
 }
 
 .adsbygoogle {
