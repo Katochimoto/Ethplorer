@@ -4,6 +4,7 @@ import $ from 'jquery'
 import page from 'page'
 import { init as initSentry } from '@sentry/browser'
 import 'bootstrap'
+import { sendDOMGa } from '@/utils'
 
 import './templates/nav'
 import './templates/note'
@@ -87,22 +88,14 @@ page({
 
 $(function () {
   $(document)
-    .on('click', 'a[data-ga][target="_blank"]', event => setDOMGa(event.currentTarget))
-    .on('submit', 'form[data-ga][target="_blank"]', event => setDOMGa(event.currentTarget))
-})
-
-function setDOMGa (target) {
-  if (!window.ga) {
-    return
-  }
-
-  const $target = $(target)
-  const page = $target.closest('main[data-page]').data('page')
-  const [ category, action, label ] = $target.data('ga').split(':', 3)
-
-  if (page && label) {
-    window.ga('send', 'event', category, action, label, {
-      page,
+    .on('click', 'a[data-ga]', event => {
+      const $target = $(event.currentTarget)
+      if (
+        $target.attr('target') === '_blank' ||
+        $target.attr('href').charAt(0) === '#'
+      ) {
+        sendDOMGa(event.currentTarget)
+      }
     })
-  }
-}
+    .on('submit', 'form[data-ga][target="_blank"]', event => sendDOMGa(event.currentTarget))
+})

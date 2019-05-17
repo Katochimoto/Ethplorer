@@ -8,6 +8,22 @@ import config from 'ethplorer-config'
 
 BigNumber.config({ ERRORS: false })
 
+export function sendDOMGa (target) {
+  if (!window.ga) {
+    return
+  }
+
+  const $target = $(target)
+  const page = $target.closest('body[data-page]').data('page')
+  const [ category, action, label ] = $target.data('ga').split(':', 3)
+
+  if (page && label) {
+    window.ga('send', 'event', category, action, label, {
+      page,
+    })
+  }
+}
+
 export function isAddress (address) {
   return /^0x[0-9a-f]{40}$/.test(address)
 }

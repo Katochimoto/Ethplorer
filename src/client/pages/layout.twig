@@ -22,12 +22,11 @@
         {% include '@components/fb-pixel.twig' %}
         {{ block('head') }}
     </head>
-    <body class="d-flex flex-column h-100">
+    <body class="d-flex flex-column h-100" data-page="{{ block('page') }}">
         {% include '@components/nav.twig' with { 'active': block('page') } %}
         <main
             role="main"
             class="d-flex flex-column flex-fill flex-shrink-0 position-relative"
-            data-page="{{ block('page') }}"
         >
             {% include '@components/note.twig' %}
             {% block content %}{% endblock %}

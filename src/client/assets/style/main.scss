@@ -148,15 +148,16 @@ main {
   table-layout: auto !important;
 }
 
-main[data-page="top"] {
+body[data-page="top"] {
   & #token-top {
     background-blend-mode: darken;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 7px;
+    font-weight: bold;
   }
 }
 
-main[data-page="last"] {
+body[data-page="last"] {
   & #token-last {
     max-width: 70%;
     font-size: 16px;
