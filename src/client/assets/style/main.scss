@@ -150,6 +150,10 @@ main {
   .powered-items > a {
     lost-column: 1/6;
   }
+
+  #nav-search-form {
+    max-width: 315px;
+  }
 }
 
 @include media-breakpoint-up(xl) {
@@ -160,13 +164,14 @@ main {
 
   .ethplorer-widget .tx-amount .tx-link,
   .ethplorer-widget .tx-token .tx-link {
-    max-width: 70px !important;
+    max-width: 50px !important;
   }
 }
 
-@include media-breakpoint-up(lg) {
-  #nav-search-form {
-    max-width: 315px;
+@include media-breakpoint-up(xxl) {
+  .ethplorer-widget .tx-amount .tx-link,
+  .ethplorer-widget .tx-token .tx-link {
+    max-width: 80px !important;
   }
 }
 
