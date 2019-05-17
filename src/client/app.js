@@ -1,5 +1,6 @@
 import './assets/style/main.scss'
 
+import $ from 'jquery'
 import page from 'page'
 import { init as initSentry } from '@sentry/browser'
 import 'bootstrap'
@@ -82,4 +83,18 @@ page('/search/:data', ctx => import(
 page({
   click: false,
   popstate: false,
+})
+
+$(function () {
+  $(document).on('click', 'a[data-ga]', event => {
+    if (window.ga) {
+      const page = $(event.currentTarget).closest('main[data-page]').data('page')
+      const [ category, action, label ] = $(event.currentTarget).data('ga').split(':', 3)
+      if (page && label) {
+        window.ga('send', 'event', category, action, label, {
+          page,
+        })
+      }
+    }
+  })
 })
