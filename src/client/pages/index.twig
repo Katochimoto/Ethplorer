@@ -29,6 +29,7 @@
                 action="/search/"
                 method="POST"
                 novalidate
+                data-ga="navigation:submit:search"
             >
                 <input type="hidden" name="from" value="homeSearch" />
                 <div class="mr-sm-3 mb-2 mb-sm-0 flex-grow flex-fill">
@@ -56,15 +57,24 @@
                 Show your token traction and use token's API with Ethplorer widgets
             </p>
             <p class="h5 font-weight-bold">
-                <a href="/widgets?from=ehome" class="highlighted text-white-50">Get a widget</a>,
+                <a
+                    href="/widgets?from=ehome"
+                    class="highlighted text-white-50"
+                    data-ga="navigation:click:widgets"
+                >Get a widget</a>,
                 <a
                     href="https://github.com/EverexIO/Ethplorer/wiki/Ethplorer-API"
                     class="highlighted text-white-50"
                     rel="noopener nofollow"
                     target="_blank"
+                    data-ga="navigation:click:api"
                 >use API</a>
                 or
-                <a href="#samples" class="highlighted text-white-50">see samples</a>
+                <a
+                    href="#samples"
+                    class="highlighted text-white-50"
+                    data-ga="navigation:click:samples"
+                >see samples</a>
             </p>
         </div>
     </div>
@@ -76,7 +86,7 @@
                     <div id="token-top"></div>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="/top" class="text-primary">view top 50...</a>
+                    <a href="/top" class="text-primary" data-ga="navigation:click:top">view top 50...</a>
                 </div>
             </div>
 
@@ -98,7 +108,7 @@
                     <div id="token-pulse"></div>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="/index?from=homeWidget" class="text-primary">view full...</a>
+                    <a href="/index?from=homeWidget" class="text-primary" data-ga="navigation:click:index">view full...</a>
                 </div>
             </div>
 
@@ -108,7 +118,7 @@
                     <div id="token-last"></div>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="/last" class="text-primary">view more...</a>
+                    <a href="/last" class="text-primary" data-ga="navigation:click:last">view more...</a>
                 </div>
             </div>
         </div>
@@ -133,6 +143,7 @@
                 <a
                     href="/address/0xd47297cdcf36eed17305d6a5471c6cd482c7e91c"
                     class="highlighted text-white-50"
+                    data-ga="navigation:click:address_portfolio"
                 ><b>Track portfolio</b></a>
                 for any Ethereum address with historical balance charts and transactions.
             </p>
@@ -145,6 +156,7 @@
                     class="highlighted text-white-50"
                     target="_blank"
                     rel="noopener nofollow"
+                    data-ga="navigation:click:api"
                 ><b>Explore</b></a>
                 marketing possibilities with token API and display widgets.
             </p>

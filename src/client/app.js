@@ -86,15 +86,23 @@ page({
 })
 
 $(function () {
-  $(document).on('click', 'a[data-ga]', event => {
-    if (window.ga) {
-      const page = $(event.currentTarget).closest('main[data-page]').data('page')
-      const [ category, action, label ] = $(event.currentTarget).data('ga').split(':', 3)
-      if (page && label) {
-        window.ga('send', 'event', category, action, label, {
-          page,
-        })
-      }
-    }
-  })
+  $(document)
+    .on('click', 'a[data-ga]', event => setDOMGa(event.currentTarget))
+    .on('submit', 'form[data-ga]', event => setDOMGa(event.currentTarget))
 })
+
+function setDOMGa (target) {
+  if (!window.ga) {
+    return
+  }
+
+  const $target = $(target)
+  const page = $target.closest('main[data-page]').data('page')
+  const [ category, action, label ] = $target.data('ga').split(':', 3)
+
+  if (page && label) {
+    window.ga('send', 'event', category, action, label, {
+      page,
+    })
+  }
+}

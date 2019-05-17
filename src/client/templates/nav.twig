@@ -36,13 +36,13 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbar">
             <ul class="navbar-nav my-4 my-lg-0 mr-lg-2 text-nowrap">
                 <li class="nav-item{% if active == 'top' %} active{% endif %}">
-                    <a class="nav-link" href="/top?from=etop">Top Tokens</a>
+                    <a class="nav-link" href="/top?from=etop" data-ga="navigation:click:top">Top Tokens</a>
                 </li>
                 <li class="nav-item{% if active == 'chart' %} active{% endif %}">
-                    <a class="nav-link" href="/index?from=etop">Index Chart</a>
+                    <a class="nav-link" href="/index?from=etop" data-ga="navigation:click:index">Index Chart</a>
                 </li>
                 <li class="nav-item{% if active == 'last' %} active{% endif %}">
-                    <a class="nav-link" href="/last?from=etop">Last Tx</a>
+                    <a class="nav-link" href="/last?from=etop" data-ga="navigation:click:last">Last Tx</a>
                 </li>
                 <li class="nav-item">
                     <a
@@ -50,12 +50,13 @@
                         href="https://github.com/EverexIO/Ethplorer/wiki/Ethplorer-API"
                         target="_blank"
                         rel="noopener nofollow"
+                        data-ga="navigation:click:api"
                     >
                         API
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#subscribe" data-toggle="modal" data-target="#modal-subscribe">
+                    <a class="nav-link" href="#subscribe" data-toggle="modal" data-target="#modal-subscribe" data-ga="navigation:click:subscribe">
                         Subscribe
                     </a>
                 </li>
@@ -67,32 +68,33 @@
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
+                        data-ga="navigation:click:more"
                     >More</a>
                     <div class="dropdown-menu dropdown-menu-lg-right mb-3" aria-labelledby="navbar-dropdown">
-                        <a class="dropdown-item{% if active == 'widgets' %} active{% endif %}" href="/widgets?from=ehomefoot">
+                        <a data-ga="navigation:click:widgets" class="dropdown-item{% if active == 'widgets' %} active{% endif %}" href="/widgets?from=ehomefoot">
                             Widgets
                         </a>
-                        <a class="dropdown-item" href="https://github.com/EverexIO/Ethplorer" target="_blank" rel="noopener nofollow">
+                        <a data-ga="navigation:click:sources" class="dropdown-item" href="https://github.com/EverexIO/Ethplorer" target="_blank" rel="noopener nofollow">
                             Sources
                         </a>
                         <a class="dropdown-item" href="https://github.com/EverexIO/Ethplorer/wiki/Ethplorer-API" target="_blank" rel="noopener nofollow">
                             API
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="https://github.com/EverexIO/Ethplorer/issues" target="_blank" rel="noopener nofollow">
+                        <a data-ga="navigation:click:issues" class="dropdown-item" href="https://github.com/EverexIO/Ethplorer/issues" target="_blank" rel="noopener nofollow">
                             Create Github Issue
                         </a>
-                        <a class="dropdown-item" href="https://twitter.com/ethplorer" target="_blank" rel="noopener nofollow">
+                        <a data-ga="navigation:click:twitter" class="dropdown-item" href="https://twitter.com/ethplorer" target="_blank" rel="noopener nofollow">
                             Twitter
                         </a>
-                        <a class="dropdown-item" href="https://www.reddit.com/r/ethplorer/" target="_blank" rel="noopener nofollow">
+                        <a data-ga="navigation:click:reddit" class="dropdown-item" href="https://www.reddit.com/r/ethplorer/" target="_blank" rel="noopener nofollow">
                             Reddit
                         </a>
-                        <a class="dropdown-item" href="http://bit.ly/ethp-contact" target="_blank" rel="noopener nofollow">
+                        <a data-ga="navigation:click:update_token_info" class="dropdown-item" href="http://bit.ly/ethp-contact" target="_blank" rel="noopener nofollow">
                             Update your token info
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="http://bit.ly/ethp-contact" target="_blank" rel="noopener nofollow">
+                        <a data-ga="navigation:click:contact" class="dropdown-item" href="http://bit.ly/ethp-contact" target="_blank" rel="noopener nofollow">
                             Contact
                         </a>
                     </div>
@@ -105,6 +107,7 @@
                 action="/search/"
                 method="POST"
                 novalidate
+                data-ga="navigation:submit:search"
             >
                 <div class="input-group input-group-sm flex-grow-1">
                     <div class="input-group-prepend">
@@ -131,6 +134,7 @@
                 role="button"
                 target="_blank"
                 rel="noopener nofollow"
+                data-ga="navigation:click:twitter"
             >
                 <i class="fab fa-twitter"></i>
             </a>
@@ -141,6 +145,7 @@
                 role="button"
                 target="_blank"
                 rel="noopener nofollow"
+                data-ga="navigation:click:twitter"
             >
                 <i class="fab fa-twitter"></i>
                 Follow @ethplorer

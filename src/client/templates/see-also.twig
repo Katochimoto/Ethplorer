@@ -3,17 +3,20 @@
         {
             title: 'Top-50 Ethereum Tokens Activity',
             href: '/top',
-            active: active == 'top'
+            active: active == 'top',
+            ga: 'navigation:click:top'
         },
         {
             title: 'Recent Token operations monitor',
             href: '/last',
-            active: active == 'last'
+            active: active == 'last',
+            ga: 'navigation:click:last'
         },
         {
             title: 'Token Widgets and Charts <nobr>for your website</nobr>',
             href: '/widgets',
-            active: active == 'widgets'
+            active: active == 'widgets',
+            ga: 'navigation:click:widgets'
         }
     ]
 %}
@@ -28,7 +31,11 @@
                 {% if link.active %}
                     {{link.title|raw}}
                 {% else %}
-                    <a href="{{link.href}}" class="highlighted"><b>{{link.title|raw}}</b></a>
+                    <a
+                        href="{{link.href}}"
+                        class="highlighted"
+                        data-ga="{{link.ga}}"
+                    ><b>{{link.title|raw}}</b></a>
                 {% endif %}
             </p>
         {% endfor %}
