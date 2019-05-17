@@ -271,6 +271,8 @@ $(function () {
     }
   )
 
+  widget.loadScript('https://www.gstatic.com/charts/loader.js', widget.loadGoogleCharts)
+
   $(document).on('click', 'button[data-code]', event => {
     const key = $(event.target).data('code')
     const description = $(event.target).data('description')
