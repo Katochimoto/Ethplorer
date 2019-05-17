@@ -98,4 +98,5 @@ $(function () {
       }
     })
     .on('submit', 'form[data-ga][target="_blank"]', event => sendDOMGa(event.currentTarget))
+    .on('click', 'button[type="button"]', event => sendDOMGa(event.currentTarget))
 })

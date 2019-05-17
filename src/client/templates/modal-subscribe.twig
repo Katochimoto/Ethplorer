@@ -12,9 +12,16 @@
             action="https://forms.tildacdn.com/procces/"
             method="POST"
             novalidate
+            data-ga="subscribe:submit:form"
         >
             <div class="modal-body text-dark">
-                <button type="button" class="close mt-n2" data-dismiss="modal" aria-label="Close">
+                <button
+                    type="button"
+                    class="close mt-n2"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    data-ga="subscribe:click:close"
+                >
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h5 class="modal-title h2 mb-2" id="modal-subscribe-title">
@@ -51,7 +58,12 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                    data-ga="subscribe:click:close"
+                >Close</button>
                 <button type="submit" class="btn btn-primary">
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display:none;"></span>
                     Subscribe

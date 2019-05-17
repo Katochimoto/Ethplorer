@@ -15,7 +15,7 @@ export function sendDOMGa (target) {
 
   const $target = $(target)
   const page = $target.closest('body[data-page]').data('page')
-  const [ category, action, label ] = $target.data('ga').split(':', 3)
+  const [ category, action, label ] = String($target.data('ga') || '').split(':', 3)
 
   if (page && label) {
     window.ga('send', 'event', category, action, label, {
