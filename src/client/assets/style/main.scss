@@ -45,6 +45,14 @@ body {
   z-index: -1;
 }
 
+.form-control.is-invalid + .input-group-append > .btn {
+  border-color: #dc3545;
+}
+
+.form-control.is-invalid {
+  padding-right: 30px;
+}
+
 a.highlighted {
   border-bottom: 1px solid $body-color;
   // box-shadow: inset 0px -1px 0px 0px $primary;
