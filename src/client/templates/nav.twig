@@ -111,19 +111,19 @@
                 novalidate
                 data-ga="navigation:submit:search"
             >
-                <div class="input-group input-group-sm flex-grow-1">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                    </div>
+                <div class="input-group input-group-sm flex-grow-1 shadow-sm-inner">
                     <input
                         type="text"
                         name="data"
-                        class="form-control"
+                        class="form-control border-right-0 z-index-negative"
                         placeholder="Token name or symbol / TX hash / address"
                         aria-label="Search"
                         autocomplete="off"
                         required
                     />
+                    <div class="input-group-append">
+                        <span class="input-group-text bg-transparent border-left-0"><i class="fas fa-search"></i></span>
+                    </div>
                 </div>
             </form>
             {% endif %}
@@ -132,7 +132,7 @@
         {% if internal %}
             <a
                 href="https://twitter.com/ethplorer"
-                class="btn btn-primary btn-sm d-none d-lg-inline-block"
+                class="btn btn-link btn-sm d-none d-lg-inline-block text-primary"
                 role="button"
                 target="_blank"
                 rel="noopener nofollow"

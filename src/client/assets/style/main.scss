@@ -37,6 +37,14 @@ body {
   background-color: #0d0d0d;
 }
 
+.shadow-sm-inner {
+  box-shadow: inset 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.z-index-negative {
+  z-index: -1;
+}
+
 a.highlighted {
   border-bottom: 1px solid $body-color;
   // box-shadow: inset 0px -1px 0px 0px $primary;
