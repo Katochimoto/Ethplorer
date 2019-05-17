@@ -87,8 +87,8 @@ page({
 
 $(function () {
   $(document)
-    .on('click', 'a[data-ga]', event => setDOMGa(event.currentTarget))
-    .on('submit', 'form[data-ga]', event => setDOMGa(event.currentTarget))
+    .on('click', 'a[data-ga][target="_blank"]', event => setDOMGa(event.currentTarget))
+    .on('submit', 'form[data-ga][target="_blank"]', event => setDOMGa(event.currentTarget))
 })
 
 function setDOMGa (target) {
