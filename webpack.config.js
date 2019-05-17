@@ -298,13 +298,13 @@ const config = {
         hash: true,
       },
       {
-        filepath: path.join(rootPath, 'js/ethplorer-search.js'),
+        filepath: path.join(srcPath, 'assets/js/ethplorer-search.js'),
         outputPath: 'js',
         publicPath: '/js',
         hash: true,
       },
       {
-        filepath: path.join(rootPath, 'js/ethplorer-note.js'),
+        filepath: path.join(srcPath, 'assets/js/ethplorer-note.js'),
         outputPath: 'js',
         publicPath: '/js',
         hash: true,

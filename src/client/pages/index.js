@@ -21,6 +21,8 @@ $(function () {
     header: ''
   })
 
+  widget.loadScript('https://www.gstatic.com/charts/loader.js', widget.loadGoogleCharts)
+
   $('#search-form')
     .on('submit', function (event) {
       event.preventDefault()

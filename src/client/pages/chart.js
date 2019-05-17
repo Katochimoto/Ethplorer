@@ -13,4 +13,6 @@ $(function () {
       height: 300,
     },
   })
+
+  widget.loadScript('https://www.google.com/jsapi', widget.loadGoogleControlCharts)
 })
