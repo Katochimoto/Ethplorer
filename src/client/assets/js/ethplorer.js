@@ -444,8 +444,6 @@ Ethplorer = {
         $('.token-operation-type').text(oOperation['type']);
         Ethplorer.fillValues('transfer', txData, ['operation', 'operation.from', 'operation.to']);
         if(oTx.blockNumber){
-            $('#txTokenStatus')[oOperation.success ? 'removeClass' : 'addClass']('text-danger');
-            $('#txTokenStatus')[oOperation.success ? 'addClass' : 'removeClass']('text-success');
             $('#txTokenStatus').html(oOperation.success ? 'Success' : 'Failed' + (oOperation.failedReason ? (': ' + Ethplorer.getTxErrorReason(oOperation.failedReason)) : ''));
             $('#operation-status').addClass(oOperation.success ? 'green' : 'red');
         }
@@ -479,15 +477,11 @@ Ethplorer = {
         Ethplorer.knownContracts = txData.contracts ? txData.contracts : [];
 
         if(oTx.blockNumber && !txData.pending){
-            $('#txEthStatus')[oTx.success ? 'removeClass' : 'addClass']('text-danger');
-            $('#txEthStatus')[oTx.success ? 'addClass' : 'removeClass']('text-success');
             $('#txEthStatus').html(oTx.success ? 'Success' : 'Failed' + (oTx.failedReason ? (': ' + Ethplorer.getTxErrorReason(oTx.failedReason)) : ''));
             $('#tx-status').addClass(oTx.success ? 'green' : 'red');
         } else if (oTx.blockNumber && txData.pending) {
-            $('#txEthStatus').removeClass('text-danger text-success');
             $('#txEthStatus').html('Processing');
         } else {
-            $('#txEthStatus').removeClass('text-danger text-success');
             $('#txEthStatus').html('Pending');
         }
 
@@ -648,7 +642,7 @@ Ethplorer = {
                     if(multiop){
                         var row = $(
                             '<tr data-op-idx="' + pos + '">' +
-                            '<td><a class="dashed">Details</a></td>' +
+                            '<td><a class="dashed text-decoration-none">Details</a></td>' +
                             '<td><span class="dash_on_hover">' + op.type.toString().toUpperCase() +
                             '<span class="d-inline d-sm-none"> ' + op.value + ' ' + op.symbol + '</span>' +
                             '<br class="d-inline d-sm-none"> ' + opParties + '</span></td>' +
@@ -706,15 +700,11 @@ Ethplorer = {
                 }
 
                 if(oTx.blockNumber && !txData.pending){
-                    $('#txTokenStatus')[oOperation.success ? 'removeClass' : 'addClass']('text-danger');
-                    $('#txTokenStatus')[oOperation.success ? 'addClass' : 'removeClass']('text-success');
                     $('#txTokenStatus').html(oOperation.success ? 'Success' : 'Failed' + (oOperation.failedReason ? (': ' + Ethplorer.getTxErrorReason(oOperation.failedReason)) : ''));
                     $('#operation-status').addClass(oOperation.success ? 'green' : 'red');
                 } else if (oTx.blockNumber && txData.pending) {
-                    $('#txTokenStatus').removeClass('text-danger text-success');
                     $('#txTokenStatus').html('Processing');
                 } else {
-                    $('#txTokenStatus').removeClass('text-danger text-success');
                     $('#txTokenStatus').html('Pending');
                 }
             }else{
@@ -732,17 +722,13 @@ Ethplorer = {
                     }
                 }
                 if(oTx.blockNumber){
-                    $('#txTokenStatus')[oTx.success ? 'removeClass' : 'addClass']('text-danger');
-                    $('#txTokenStatus')[oTx.success ? 'addClass' : 'removeClass']('text-success');
                     $('#txTokenStatus').html(oTx.success ? 'Success' : 'Failed' + (oTx.failedReason ? (': ' + Ethplorer.getTxErrorReason(oTx.failedReason)) : ''));
                     $('#operation-status').addClass(oTx.success ? 'green' : 'red');
                 }
             }
             if(!oTx.blockNumber && txData.pending){
-                $('#txTokenStatus').removeClass('text-danger text-success');
                 $('#txTokenStatus').html('Pending');
             } else if (oTx.blockNumber && txData.pending) {
-                $('#txTokenStatus').removeClass('text-danger text-success');
                 $('#txTokenStatus').html('Processing');
             }
             Ethplorer.fillValues('transfer', txData, ['tx', 'tx.timestamp']);
@@ -786,15 +772,11 @@ Ethplorer = {
                 Ethplorer.fillValues('transfer', txData, ['tx', 'tx.timestamp']);
 
                 if(oTx.blockNumber && !txData.pending){
-                    $('#txTokenStatus')[txData.operation.success ? 'removeClass' : 'addClass']('text-danger');
-                    $('#txTokenStatus')[txData.operation.success ? 'addClass' : 'removeClass']('text-success');
                     $('#txTokenStatus').html(txData.operation.success ? 'Success' : 'Failed');
                     $('#operation-status').addClass(txData.operation.success ? 'green' : 'red');
                 } else if (oTx.blockNumber && txData.pending) {
-                    $('#operation-status').removeClass('text-danger text-success');
                     $('#txTokenStatus').html('Processing');
                 } else {
-                    $('#operation-status').removeClass('text-danger text-success');
                     $('#txTokenStatus').html('Pending');
                 }
             }
@@ -1200,7 +1182,17 @@ Ethplorer = {
                 $('#filter_list').hide();
             }else{
                 if(Ethplorer.showTx && data.token){
-                    $('.filter-box').prepend('<style>@media screen and (max-width: 992px) { .filter-box.in-tabs {text-align: right !important; margin-top: 10px !important; height: 15px !important;} .filter-box.in-tabs .filter-form {width: 100% !important;} .filter-box.in-tabs #filter_list {width: 100% !important;} } @media screen and (max-width: 379px) {.filter-box.in-tabs {height: 40px !important;} }</style>');
+                    // $('.filter-box').prepend(`
+                    // <style>
+                    //     @media screen and (max-width: 992px) {
+                    //         .filter-box.in-tabs {text-align: right !important; margin-top: 10px !important; height: 15px !important;}
+                    //         .filter-box.in-tabs .filter-form {width: 100% !important;}
+                    //         .filter-box.in-tabs #filter_list {width: 100% !important;}
+                    //     }
+                    //     @media screen and (max-width: 379px) {
+                    //         .filter-box.in-tabs {height: 40px !important;}
+                    //     }
+                    // </style>`);
                 }
                 $('#filter_list').show();
             }
@@ -1287,12 +1279,40 @@ Ethplorer = {
         var tableId = data.token ? 'address-token-transfers' : 'address-transfers';
         $('#' + tableId).find('.table').empty();
         if(Ethplorer.showTx && !$('#showTxEth').length){
-            var showTxChecks = '<span id="showTxChecks"><span style="color: white;vertical-align:middle;"><label for="showTxEth">ETH <sup class="diff-down">new</sup></label></span> <input onClick="Ethplorer.showTransfers(this, \'eth\');" id="showTxEth" type="checkbox" ' + ((Ethplorer.showTx == 'all' || Ethplorer.showTx == 'eth') ? 'checked="checked"' : '') + ' name="showTxEth" value="1" style="vertical-align: text-bottom;margin-right:5px;">' + ' <span style="color: white;vertical-align:middle;"><label for="showTxTokens">Tokens <sup class="diff-down">new</sup></label></span> <input onClick="Ethplorer.showTransfers(this, \'tokens\');" id="showTxTokens" type="checkbox" ' + ((Ethplorer.showTx == 'all' || Ethplorer.showTx == 'tokens') ? 'checked="checked"' : '') + ' name="showTxTokens" value="1" style="vertical-align: text-bottom;margin-right:5px;"></span>';
+            var showTxChecks = `
+                <span id="showTxChecks" class="d-inline-flex align-items-center mb-2">
+                    <span class="ml-2">
+                        <label class="m-0" for="showTxEth">ETH <sup class="diff-down">new</sup></label>
+                    </span>
+                    <input
+                        onClick="Ethplorer.showTransfers(this, 'eth');"
+                        id="showTxEth"
+                        type="checkbox"
+                        ${(Ethplorer.showTx == 'all' || Ethplorer.showTx == 'eth') ? 'checked="checked"' : ''}
+                        name="showTxEth"
+                        value="1"
+                        class="ml-1"
+                    />
+                    <span class="ml-2">
+                        <label class="m-0" for="showTxTokens">Tokens <sup class="diff-down">new</sup></label>
+                    </span>
+                    <input
+                        onClick="Ethplorer.showTransfers(this, 'tokens');"
+                        id="showTxTokens"
+                        type="checkbox"
+                        ${(Ethplorer.showTx == 'all' || Ethplorer.showTx == 'tokens') ? 'checked="checked"' : ''}
+                        name="showTxTokens"
+                        value="1"
+                        class="ml-1"
+                    />
+                </span>`;
 
             if(!data.token){
-                $('.filter-form').prepend('<style>@media screen and (max-width: 501px) {.filter-box.out-of-tabs{height: 35px !important;}}</style>' + showTxChecks);
+                // $('.filter-form').prepend('<style>@media screen and (max-width: 501px) {.filter-box.out-of-tabs{height: 35px !important;}}</style>' + showTxChecks);
+                $('.filter-form').prepend(showTxChecks);
             }else{
-                $('.filter-box').prepend('<style>.filter-box.in-tabs .filter-form{width: auto !important;} @media screen and (max-width: 501px) {.filter-box.out-of-tabs{height: 35px !important;}} @media screen and (max-width: 432px) {.filter-box.in-tabs{height: 35px !important;}}</style>' + showTxChecks);
+                // $('.filter-box').prepend('<style>.filter-box.in-tabs .filter-form{width: auto !important;} @media screen and (max-width: 501px) {.filter-box.out-of-tabs{height: 35px !important;}} @media screen and (max-width: 432px) {.filter-box.in-tabs{height: 35px !important;}}</style>' + showTxChecks);
+                $('.filter-box').prepend(showTxChecks);
             }
         }
         if(!data.transfers || !data.transfers.length){
@@ -1317,10 +1337,10 @@ Ethplorer = {
                         }
                     }
                     var row = $('<tr>');
-                    var tdDate = $('<td>').addClass('hide-small');
-                    var tdData = $('<td>');
+                    var tdDate = $('<td>').addClass('d-none d-md-table-cell');
+                    var tdData = $('<td>').addClass('w-100 w-md-auto');
                     var divData = $('<div>').addClass('hash-from-to');
-                    var tdQty = $('<td>').addClass('hide-small text-right');
+                    var tdQty = $('<td>').addClass('d-none d-md-table-cell text-right');
                     var date = Ethplorer.Utils.ts2date(tx.timestamp, false);
                     var value = Ethplorer.Utils.formatNum(qty, true, txToken.decimals, 2) + ' ' + (tx.isEth ? '<i class="fab fa-ethereum"></i> ' : '') + txToken.symbol;
                     var token = Ethplorer.Utils.getEthplorerLink(tx.contract, txToken.name, false);
@@ -1386,7 +1406,7 @@ Ethplorer = {
                     row.append(tdDate, tdData);
                     if(!data.token){
                         var tdToken = $('<td>');
-                        tdToken.addClass('address-token');
+                        tdToken.addClass('d-none d-lg-table-cell');
                         tdToken.html(token);
                         row.append(tdToken);
                     }
@@ -1537,7 +1557,7 @@ Ethplorer = {
                 var shareDiv = '<div class="clearfix mr-5"><div class="holder-gauge" style="width:' + holder['share'] + '%;"></div><div class="holder-gauge-value mr-n5">&nbsp;' + holder['share'] + '%</div></div>'
                 var page = (data.pager && data.pager.holders) ? data.pager.holders.page : 1;
                 var add = (page - 1) * Ethplorer.pageSize;
-                row.append('<td>' + (add + i + 1) + '</td><td class="hide-small">' + address + '</td><td class="hide-small"></td><td class="hide-small">' + balance + '</td><td class="hide-small">' + shareDiv + '</td>');
+                row.append('<td>' + (add + i + 1) + '</td><td class="d-none d-md-table-cell">' + address + '</td><td class="d-none d-md-table-cell"></td><td class="d-none d-md-table-cell">' + balance + '</td><td class="d-none d-md-table-cell">' + shareDiv + '</td>');
                 row.append('<td class="d-table-cell d-sm-none"><div class="holder_small">' + address + '<br />' + balance + '<br />' + shareDiv + '</div></td>');
                 table.append(row);
             }
@@ -1650,7 +1670,7 @@ Ethplorer = {
 
         container.parents('.block').find('.total-records').empty();
 
-        var pageSizeSelect = $('<SELECT class="pageSize form-control form-control-sm w-auto d-inline my-2 ml-2 ml-sm-3 float-left">');
+        var pageSizeSelect = $('<SELECT class="pageSize form-control form-control-sm w-auto d-inline mt-2 ml-2 ml-sm-3 float-left">');
         var sizes = [10, 25, 50, 100];
         for(var i=0; i<4; i++){
             var option = $('<OPTION>');
@@ -2477,8 +2497,10 @@ Ethplorer = {
 
                 $el.removeClass('hide-bottom-gr');
 
-                if ($child.outerHeight(true) < $el.outerHeight(true) || $child.outerHeight(true) - $el.outerHeight(true) + $child.position().top === 0){
-                    //bottom
+                if (
+                    $child.outerHeight(true) < $el.outerHeight(true) ||
+                    $child.outerHeight(true) - $el.outerHeight(true) + $child.position().top === 0
+                ) {
                     $el.addClass('hide-bottom-gr')
                 }
 

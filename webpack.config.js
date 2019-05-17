@@ -79,26 +79,26 @@ const config = {
       {
         test: /\.twig$/,
         oneOf: [
-          {
-            resourceQuery: /component/,
-            use: [
-              {
-                loader: 'twig-loader',
-                options: {
-                  twigOptions: {
-                    functions: {
-                      asset: function (file) {
-                        return "${require('" + file + "')}"
-                      },
-                    },
-                    namespaces: {
-                      components: path.join(srcPath, 'templates'),
-                    },
-                  },
-                },
-              },
-            ],
-          },
+          // {
+          //   resourceQuery: /component/,
+          //   use: [
+          //     {
+          //       loader: 'twig-loader',
+          //       options: {
+          //         twigOptions: {
+          //           functions: {
+          //             asset: function (file) {
+          //               return "${require('" + file + "')}"
+          //             },
+          //           },
+          //           namespaces: {
+          //             components: path.join(srcPath, 'templates'),
+          //           },
+          //         },
+          //       },
+          //     },
+          //   ],
+          // },
 
           {
             use: [

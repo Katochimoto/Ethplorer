@@ -88,8 +88,8 @@
                 </div>
 
                 <div class="row">
-                    <div class="col">
-                        <h1 id="ethplorer-path" class="text-dark">
+                    <div class="col mb-4">
+                        <h1 id="ethplorer-path" class="text-dark m-0 mt-2">
                             {{ header|raw }}
                         </h1>
                     </div>
@@ -108,7 +108,7 @@
                 {% endif %}
 
                 <div id="widget-block" style="display:none;" class="row">
-                    <div class="col token-price-history-grouped-widget">
+                    <div class="col token-price-history-grouped-widget mb-4">
                         <div id="token-price-history-grouped-widget"></div>
                     </div>
                 </div>
@@ -122,21 +122,28 @@
                     </div>
                 </div>
 
-                <div id="txDetails" class="content-page row">
-                    <div>
-                        <div class="col-xs-12 multiop">
+                <div id="txDetails" class="content-page">
+                    <div class="row mb-5">
+                        <div class="col multiop">
                             <div class="block">
                                 <div class="block-header text-dark">
-                                    <h3>Internal operations</h3>
+                                    <h3 class="h4">Internal operations</h3>
                                 </div>
-                                <div class="scrollable"><div class="scrollwrapper"><table class="table"></table></div></div>
+                                <div class="scrollable"><div class="scrollwrapper"><table class="table m-0"></table></div></div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="col-xs-12 col-md-6 chainy">
+                    <div class="row mb-4">
+                        <div class="col col-md-12 col-lg-6 chainy mb-4">
                             <div class="block">
-                                <div class="block-header text-dark"><h3><a href="/address/0xf3763c30dd6986b53402d41a8552b8f7f6a6089b" style="text-decoration: none;">Chainy</a> <span id="chainy-op"><span></h3></div>
-                                <table class="table">
+                                <div class="block-header text-dark">
+                                    <h3 class="h4">
+                                        <a href="/address/0xf3763c30dd6986b53402d41a8552b8f7f6a6089b" class="text-dark text-decoration-none mr-1">Chainy</a>
+                                        <span id="chainy-op"><span>
+                                    </h3>
+                                </div>
+                                <table class="table m-0">
                                 <tr>
                                     <td>URL</td>
                                     <td id="chainy-url" class="list-field"></td>
@@ -164,13 +171,19 @@
                                 </table>
                             </div>
                             <div class="text-center">
-                                <a class="tx-details-link">Transaction details</a>
+                                <a class="tx-details-link text-decoration-none">Transaction details</a>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-md-6 token-related" id="token-operation-block">
+
+                        <div class="col col-md-12 col-lg-6 token-related mb-4" id="token-operation-block">
                             <div class="block">
-                                <div class="block-header text-dark"><h3><span class="token-name"></span> <span class="token-operation-type"></span></h3></div>
-                                <table class="table">
+                                <div class="block-header text-dark">
+                                    <h3 class="h4">
+                                        <span class="token-name mr-1"></span>
+                                        <span class="token-operation-type"></span>
+                                    </h3>
+                                </div>
+                                <table class="table m-0">
                                 <tr class="blue">
                                     <td>Value</td>
                                     <td id="transfer-operation-value" class="list-field"></td>
@@ -205,14 +218,17 @@
                                 </tr>
                                 </table>
                             </div>
-                            <div class="text-center visible-md visible-lg visible-xl">
-                                <a class="tx-details-link">Transaction details</a>
+                            <div class="text-center d-none d-md-block">
+                                <a class="tx-details-link text-decoration-none">Transaction details</a>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-md-6 token-related" id="token-information-block">
+
+                        <div class="col col-md-12 col-lg-6 token-related mb-4" id="token-information-block">
                             <div class="block">
-                                <div class="block-header text-dark"><h3>Token <span class="token-name"></span> Information</h3></div>
-                                <table class="table">
+                                <div class="block-header text-dark">
+                                    <h3 class="h4">Token <span class="token-name mx-1"></span> Information</h3>
+                                </div>
+                                <table class="table m-0">
                                 <tr>
                                     <td>Contract</td>
                                     <td id="transaction-token-contract" class="list-field" data-type="ethplorer" data-options="no-contract"></td>
@@ -239,21 +255,22 @@
                                 </tr>
                                 </table>
                             </div>
-                            <div class="text-center hidden-md hidden-lg hidden-xl">
-                                <a class="tx-details-link">Transaction details</a>
+                            <div class="text-center d-block d-md-none">
+                                <a class="tx-details-link text-decoration-none">Transaction details</a>
                             </div>
                         </div>
                     </div>
-                    <div id="tx-details-block" style="display:none;">
-                        <div class="col-xs-12">
+
+                    <div id="tx-details-block" style="display:none;" class="row mb-5">
+                        <div class="col">
                             <div class="block">
                                 <div class="block-header text-dark">
-                                    <h3>Transaction details</h3>
+                                    <h3 class="h4">Transaction details</h3>
                                     <div class="tx-details-close">
                                         &times;
                                     </div>
                                 </div>
-                                <table class="table">
+                                <table class="table m-0">
                                 <tr>
                                     <td>Tx</td>
                                     <td id="transaction-tx-hash" class="list-field" data-type="etherscan"></td>
@@ -321,7 +338,7 @@
                                 <tr>
                                     <td>Input Data</td>
                                     <td class="text-right">
-                                        <a onclick="Ethplorer.convert('transaction-tx-input', this);" class="pre-switcher">ASCII</a>
+                                        <a onclick="Ethplorer.convert('transaction-tx-input', this);" class="pre-switcher text-primary">ASCII</a>
                                         <pre id="transaction-tx-input" class="list-field text-left" data-mode="hex"></pre>
                                     </td>
                                 </tr>
@@ -337,10 +354,10 @@
 
                 <div id="addressDetails" class="content-page">
                     <div class="row">
-                        <div class="col-md">
+                        <div class="col-lg mb-4">
                             <div class="block">
                                 <div class="block-header text-dark"><h3 class="h4"><span class="address-type"></span> Information</h3></div>
-                                <table class="table">
+                                <table class="table m-0">
                                 <tr>
                                     <td><span class="address-type"></span></td>
                                     <td id="address-address" data-type="etherscan" data-options="no-contract" class="list-field"></td>
@@ -380,14 +397,14 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md">
+                        <div class="col-lg mb-4">
                             <div class="block" id="address-token-balances">
                                 <div class="block-header text-dark">
                                     <h3 class="h4">Balances <sup><i class="fa fa-question-circle fa-xs" data-toggle="tooltip" data-placement="right" title="ETH&nbsp;+&nbsp;Tokens"></i></sup>
                                         <div id="address-balances-total"></div>
                                     </h3>
                                 </div>
-                                <div class="scrollable"><div class="scrollwrapper"><table class="table"></table></div></div>
+                                <div class="scrollable"><div class="scrollwrapper"><table class="table m-0"></table></div></div>
                                 <div class="text-center">
                                     <a class="expand-btn">Expand</a>
                                 </div>
@@ -397,7 +414,7 @@
                                     <img src="/images/chainy.png?new" class="token-logo" align="left">
                                     <h3 class="h4">Chainy Information</h3>
                                 </div>
-                                <table class="table">
+                                <table class="table m-0">
                                 <tr>
                                     <td style="padding-bottom: 12px;">
                                         Chainy is a smart contract which allows to create and read different kind of data in Ethereum blockchain:
@@ -419,7 +436,7 @@
                             </div>
                             <div class="block" id="address-token-details">
                                 <div class="block-header text-dark"><h3 class="h4">Token <span class="address-token-name"></span> Information</h3></div>
-                                <table class="table">
+                                <table class="table m-0">
                                 <tr>
                                     <td colspan="2" id="address-token-description" class="list-field"></td>
                                 </tr>
@@ -481,22 +498,24 @@
                                 </li>
                             </ul>
                             <div class="filter-box">
-                                <form class="filter-form">
-                                    <input id="filter_list" type="text" placeholder="Filter by address or hash">
-                                    <div class="filter-clear" title="Clear filter">&times;</div>
+                                <form class="filter-form d-flex align-items-center flex-wrap justify-content-end">
+                                    <span class="position-relative mb-2 ml-2">
+                                        <input id="filter_list" type="text" placeholder="Filter by address or hash">
+                                        <span class="filter-clear" title="Clear filter">&times;</span>
+                                    </span>
                                 </form>
                             </div>
                         </div>
                     </div>
                     <div class="tab-content" id="tokenTabsContent">
                         <div id="token-transfers-tab" class="tab-pane fade show active" role="tabpanel" aria-labelledby="tab-transfers">
-                            <div class="col-xs-12" id="address-token-transfers">
+                            <div class="col-xs-12 mb-4" id="address-token-transfers">
                                 <div class="block">
                                     <div class="block-header text-dark">
                                         <h3 class="h4">Token <span class="address-token-name"></span> Transfers</h3>
                                         <div class="total-records"></div>
                                     </div>
-                                    <table class="table"></table>
+                                    <table class="table m-0 layout-fixed layout-md-auto"></table>
                                 </div>
                                 <small>
                                     * all dates are displayed for
@@ -506,37 +525,37 @@
                             </div>
                         </div>
                         <div id="token-issuances-tab" class="tab-pane fade" role="tabpanel" aria-labelledby="tab-issuances">
-                            <div class="col-xs-12" id="address-issuances">
+                            <div class="col-xs-12 mb-4" id="address-issuances">
                                 <div class="block">
                                     <div class="block-header text-dark">
                                         <h3 class="h4">Token <span class="address-token-name"></span> Issuances</h3>
                                         <div class="total-records"></div>
                                     </div>
-                                    <table class="table"></table>
+                                    <table class="table m-0 layout-fixed layout-md-auto"></table>
                                 </div>
                                 <small>* all dates are displayed for <span class="local-time-offset"></span> timezone</small>
                             </div>
                         </div>
                         <div id="token-holders-tab" class="tab-pane fade" role="tabpanel" aria-labelledby="tab-holders">
-                            <div class="col-xs-12" id="address-token-holders">
+                            <div class="col-xs-12 mb-4" id="address-token-holders">
                                 <div class="block">
                                     <div class="block-header text-dark">
                                         <h3 class="h4">Token <span class="address-token-name"></span> Holders</h3>
                                         <div class="total-records"></div>
                                     </div>
-                                    <table class="table"></table>
+                                    <table class="table m-0 layout-fixed layout-md-auto"></table>
                                     <div id="address-token-holders-totals"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12" id="address-transfers" style="display:none;">
+                    <div class="col-xs-12 mb-4" id="address-transfers" style="display:none;">
                         <div class="block">
                             <div class="block-header text-dark">
                                 <h3 class="h4">Transfers</h3>
                                 <div class="total-records"></div>
                             </div>
-                            <table class="table"></table>
+                            <table class="table m-0 layout-fixed layout-md-auto"></table>
                         </div>
                         <small>
                             * all dates are displayed for
@@ -544,13 +563,13 @@
                             timezone{{ csvExport|raw }}
                         </small>
                     </div>
-                    <div class="col-xs-12" id="address-chainy-tx" style="display:none;">
+                    <div class="col-xs-12 mb-4" id="address-chainy-tx" style="display:none;">
                         <div class="block">
                             <div class="block-header text-dark">
                                 <h3 class="h4">Chainy Transactions</h3>
                                 <div class="total-records"></div>
                             </div>
-                            <table class="table"></table>
+                            <table class="table m-0 layout-fixed layout-md-auto"></table>
                         </div>
                         <small>* all dates are displayed for <span class="local-time-offset"></span> timezone</small>
                     </div>

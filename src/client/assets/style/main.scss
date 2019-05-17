@@ -121,11 +121,28 @@ main {
 .powered-items > a {
   lost-column: 1/2;
   display: inline-block;
+  text-align: center;
+}
+
+.layout-fixed {
+  table-layout: fixed !important;
+}
+
+.layout-auto {
+  table-layout: auto !important;
 }
 
 @include media-breakpoint-up(md) {
   .powered-items > a {
     lost-column: 1/4;
+  }
+
+  .w-md-auto {
+    width: auto !important;
+  }
+
+  .layout-md-auto {
+    table-layout: auto !important;
   }
 }
 

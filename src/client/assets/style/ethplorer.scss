@@ -1,7 +1,44 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,600,700&subset=latin,cyrillic);
+
+#page-create {
+  min-height: 650px;
+  font-size: 14px;
+  line-height: 1.45;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing: auto;
+  font-smoothing: auto;
+
+  & a:not(.btn) {
+    text-decoration: underline;
+  }
+
+  & .text-dark {
+    color: #333 !important;
+  }
+
+  & pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857143;
+    color: #333;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+}
+
 .pager .page {
   width: 20px;
   text-align: center;
   float: left;
+}
+
+h1 small {
+  font-size: 65%;
 }
 
 tr.paginationFooter td {
@@ -130,7 +167,6 @@ tr.paginationFooter td {
 
 .content-page .block {
   border-radius: 8px;
-  margin-top: 20px;
 }
 
 .content-page .block-header {
@@ -141,6 +177,13 @@ tr.paginationFooter td {
   background-color:white;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  position: relative;
+
+  & > h3 {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
 }
 
 .content-page table.table td {
@@ -244,9 +287,9 @@ tr.odd {
 }
 
 pre.list-field {
-  padding-top: 16px;
-  max-height: 200px;
-  padding-right: 36px;
+  padding-top: 16px !important;
+  max-height: 200px !important;
+  padding-right: 36px !important;
 }
 
 #search {
@@ -407,7 +450,6 @@ a.dashed {
   border-radius: 8px;
   text-align: center;
   font-size: 22px;
-  margin-top: 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis
@@ -505,14 +547,10 @@ a.dashed {
 #address-balances-total {
   color: rgba(0, 0, 0, 0.6);
   font-size: 0.8em;
-  line-height: 1.6em;
   display: block;
-  padding-right: 15px;
   width: 100%;
   position: relative;
-  top: -25px;
   text-align: right;
-  margin-bottom: -30px;
 }
 
 #address-balances-total-inner {
@@ -557,11 +595,9 @@ a.dashed {
 #address-issuances small,
 #address-chainy-tx small
 {
-  margin-top: -10px;
   display: block;
   padding-left: 16px;
-  color: white;
-  margin-bottom: 20px;
+  margin-top: 10px;
 }
 
 .export-csv {
@@ -659,7 +695,9 @@ a.dashed {
 
 .tx-details-link {
   font-size: 22px;
-  color: white !important;
+  line-height: normal;
+  display: inline-block;
+  margin-top: 16px;
   cursor: pointer;
   border-bottom: 1px dashed white;
 }
@@ -676,12 +714,11 @@ a.dashed {
 }
 
 .tx-details-close {
-  top: 24px;
-  position: absolute;
-  right: 32px;
   font-size: 30px;
   color: #444;
   cursor: pointer;
+  margin-top: -6px;
+  line-height: 24px;
 }
 
 .total-in-out-small {
@@ -691,55 +728,47 @@ a.dashed {
   padding-top: 4px;
 }
 
-.filter-box {
-  z-index:200;
-}
-
 #address-transfers {
   z-index:100;
 }
 
-.filter-box.in-tabs {
-  text-align: right;
-  height: 50px;
-  margin-top: -50px;
-}
+.filter-box {
+  z-index:200;
 
-.filter-box.in-tabs .filter-form{
-  width: 300px;
-  float: right;
-}
+  &.in-tabs {
+    text-align: right;
+    height: 50px;
+    margin-top: -50px;
 
-.filter-box.out-of-tabs{
-  text-align: right;
-  height: 15px;
-  margin-top: 5px;
+    & .filter-form {
+      width: 300px;
+      float: right;
+    }
+  }
+
+  &.processing {
+    opacity: 0.6;
+    pointer-events: none;
+  }
 }
 
 .filter-clear {
   width: 16px;
   height: 16px;
   position: absolute;
-  top: -3px;
-  right: 24px;
+  top: 3px;
+  right: 5px;
   color: #7b1818;
   cursor: pointer;
   display: none;
   font-size: 24px;
-}
-
-_::-webkit-:host:not(:root:root), .filter-clear {
-  top: -6px;
+  line-height: 16px;
 }
 
 #filter-error {
   color: #7b1818;
   margin-top: 15px;
   display: none;
-}
-
-.filter-box.out-of-tabs .filter-clear {
-  right: 24px;
 }
 
 #filter_list {
@@ -761,11 +790,6 @@ _::-webkit-:host:not(:root:root), .filter-clear {
 
 .filtered-totals {
   color: #7b1818;
-}
-
-.filter-box.processing {
-  opacity: 0.6;
-  pointer-events: none;
 }
 
 .ui-autocomplete {
@@ -941,9 +965,6 @@ li.ui-menu-item.have-more {
   #qr-code-address {
     font-size: 16px;
   }
-  .address-token {
-    display: none;
-  }
   .address-token-inline {
     display: inline;
   }
@@ -953,7 +974,8 @@ li.ui-menu-item.have-more {
 }
 
 @media screen and (min-width: 400px) and (max-width: 991px) {
-  .hash-from-to, .cut-long-text {
+  .hash-from-to,
+  .cut-long-text {
     padding-left: 20px;
     max-width: 38vw;
   }
@@ -994,10 +1016,19 @@ li.ui-menu-item.have-more {
 }
 
 @media screen and (max-width: 399px) {
+  .content-page .block-header {
+    padding: 8px;
+  }
+
   .pagination .page-link {
+    font-size: 9px;
     max-width: 50px;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .pageSize {
+    font-size: 9px;
   }
 
   #ethplorer-note {
@@ -1034,13 +1065,15 @@ li.ui-menu-item.have-more {
   }
   .block-header h3 {
     font-size: 18px;
-    padding-left: 8px;
   }
 
   #address-balances-total {
     font-size: 0.6em;
-    line-height: 2em;
-    padding-right: 5px;
+  }
+
+  .table tr td:first-child {
+    max-width: 90px;
+    padding-left: 8px !important;
   }
 }
 
@@ -1063,6 +1096,8 @@ a.token-update {
   height: 17px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 10px;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 979px) {
@@ -1140,23 +1175,15 @@ a.token-update {
   }
 
   .hash-from-to{
-    max-width: 85vw !important;
+    max-width: initial !important;
   }
 
   #address-token-transfers td {
     font-size: 12px;
   }
 
-  .hide-small {
-    display: none !important;
-  }
-
   .show_small {
     display: initial;
-  }
-
-  .address-token{
-    display: none;
   }
 
   #searchform {
@@ -1186,7 +1213,6 @@ a.token-update {
 @media screen and (max-width: 359px) {
   #address-balances-total {
     font-size: 0.5em;
-    line-height: 2.5em;
   }
   #address-balances-total-inner {
     max-width: 100px;
@@ -1248,11 +1274,11 @@ a.token-update {
 .scrollwrapper.hide-bottom-gr:after{
   display: none;
 }
-.scrollwrapper:after{
+.scrollwrapper:after {
   bottom: 0;
   pointer-events: none;
   content: '';
-  background: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,9));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgb(5, 19, 34));
 }
 
 .expand-btn{
@@ -1287,11 +1313,11 @@ a.token-update {
 
 /* ^^^ Scrollable ^^^ */
 
-#address-token-balances, .multiop {
+#address-token-balances {
   margin-bottom: 20px;
 }
 
-#address-token-balances table, .multiop table{
+#address-token-balances table {
   margin-bottom: 0;
 }
 
@@ -1306,34 +1332,10 @@ a.token-update {
   color: rgba(255, 255, 255, 0.6);
 }
 
-#page-create {
-  min-height: 650px;
-  font-size: 14px;
-
-  & a:not(.btn) {
-    text-decoration: underline;
-  }
-}
-
-#cookie-notification {
-  position: fixed;
-  z-index: 1000;
-  width: 100%;
-  bottom: 0;
-  padding: 10px 0;
-  background: #eaeaea;
-}
-
-#cookie-notification span {
-  padding-bottom: 7px;
-  display: inline-block;
-  margin-right: 10px;
-}
-
 #address-balances-total {
   pointer-events: none;
 }
 
-.tooltip{
-   font-size: 0.8em;
+.tooltip {
+  font-size: 0.8em;
 }
