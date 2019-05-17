@@ -72,9 +72,9 @@ main {
 
 #token-top,
 #token-last {
-  background-color: transparent;
   overflow: hidden;
   font-size: 12px;
+  background-color: transparent;
 }
 
 .editor-code {
@@ -132,6 +132,24 @@ main {
   table-layout: auto !important;
 }
 
+main[data-page="top"] {
+  & #token-top {
+    background-blend-mode: darken;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 7px;
+  }
+}
+
+main[data-page="last"] {
+  & #token-last {
+    max-width: 70%;
+    font-size: 16px;
+    background-blend-mode: darken;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 7px;
+  }
+}
+
 @include media-breakpoint-up(md) {
   .powered-items > a {
     lost-column: 1/4;
@@ -157,8 +175,7 @@ main {
 }
 
 @include media-breakpoint-up(xl) {
-  #token-top,
-  #token-last {
+  #token-top {
     font-size: 14px;
   }
 
