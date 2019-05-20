@@ -270,8 +270,8 @@ const config = {
     page('address'),
 
     tmpl('widgets'),
-    tmpl('address'),
     tmpl('footer', { inject: false }),
+    tmpl('navbar', { inject: false }),
 
     new HtmlBeautifyPlugin({
       config: {

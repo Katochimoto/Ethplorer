@@ -1,0 +1,235 @@
+<nav class="navbar navbar-light bg-white navbar-expand-lg flex-shrink-0">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img
+                src="../assets/images/ethplorer-logo-48.png"
+                width="170"
+                decoding="async"
+                importance="low"
+                alt="Ethplorer"
+            />
+        </a>
+
+        <a
+            id="twitter-small"
+            href="https://twitter.com/ethplorer"
+            class="btn btn-link btn-sm d-none d-lg-inline-block text-primary navbar-btn navbar-right"
+            role="button"
+            target="_blank"
+            rel="noopener nofollow"
+            data-ga="navigation:click:twitter"
+        >
+            <i class="fab fa-twitter"></i>
+        </a>
+
+        <form
+            id="search-form"
+            class="navbar-form navbar-right"
+            action="/search/"
+            method="POST"
+            novalidate
+            data-ga="navigation:submit:search"
+        >
+            <div class="form-group">
+                <div class="input-group input-group-sm flex-grow-1 shadow-sm-inner">
+                    <input
+                        id="search"
+                        type="text"
+                        name="data"
+                        class="form-control ui-autocomplete-input border-right-0 bg-transparent"
+                        placeholder="Token name or symbol / TX hash / address"
+                        aria-label="Search"
+                        autocomplete="off"
+                        required
+                    />
+                    <span class="input-group-addon">
+                        <button type="submit" class="btn btn-link input-group-text bg-transparent border-left-0 text-secondary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </form>
+
+        <ul id="nav-big" class="nav navbar-nav navbar-right">
+            <li>
+                <a href="/top?from=etop" data-ga="navigation:click:top">Top Tokens</a>
+            </li>
+            <li>
+                <a href="/index?from=etop" data-ga="navigation:click:index">Index Chart</a>
+            </li>
+            <li>
+                <a href="/last?from=etop" data-ga="navigation:click:last">Last Tx</a>
+            </li>
+            <li>
+                <a
+                    href="https://github.com/EverexIO/Ethplorer/wiki/Ethplorer-API"
+                    target="_blank"
+                    rel="noopener nofollow"
+                    data-ga="navigation:click:api"
+                >
+                    API
+                </a>
+            </li>
+            <li>
+                <a href="/#subscribe" data-ga="navigation:click:subscribe">
+                    Subscribe
+                </a>
+            </li>
+            <li class="dropdown">
+                <a
+                    href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    More <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a data-ga="navigation:click:widgets" href="/widgets?from=ehomefoot">
+                            Widgets
+                        </a>
+                    </li>
+                    <li>
+                        <a data-ga="navigation:click:sources" href="https://github.com/EverexIO/Ethplorer" target="_blank" rel="noopener nofollow">
+                            Sources
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/EverexIO/Ethplorer/wiki/Ethplorer-API" target="_blank" rel="noopener nofollow">
+                            API
+                        </a>
+                    </li>
+                    <li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a data-ga="navigation:click:issues" href="https://github.com/EverexIO/Ethplorer/issues" target="_blank" rel="noopener nofollow">
+                            Create Github Issue
+                        </a>
+                    </li>
+                    <li>
+                        <a data-ga="navigation:click:twitter" href="https://twitter.com/ethplorer" target="_blank" rel="noopener nofollow">
+                            Twitter
+                        </a>
+                    </li>
+                    <li>
+                        <a data-ga="navigation:click:reddit" href="https://www.reddit.com/r/ethplorer/" target="_blank" rel="noopener nofollow">
+                            Reddit
+                        </a>
+                    </li>
+                    <li>
+                        <a data-ga="navigation:click:update_token_info" href="http://bit.ly/ethp-contact" target="_blank" rel="noopener nofollow">
+                            Update your token info
+                        </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a data-ga="navigation:click:contact" href="http://bit.ly/ethp-contact" target="_blank" rel="noopener nofollow">
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <a
+            id="twitter-big"
+            href="https://twitter.com/ethplorer"
+            class="btn btn-primary ml-auto mr-2 mr-lg-0 d-none d-sm-inline-block d-lg-none navbar-btn navbar-right"
+            role="button"
+            target="_blank"
+            rel="noopener nofollow"
+        >
+            <i class="fab fa-twitter"></i>
+            Follow @ethplorer
+        </a>
+
+        <ul id="nav-small" class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a
+                    href="#"
+                    class="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    <i class="fa fa-bars fa-lg"></i>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="/top?from=etop" data-ga="navigation:click:top">Top Tokens</a>
+                    </li>
+                    <li>
+                        <a href="/index?from=etop" data-ga="navigation:click:index">Index Chart</a>
+                    </li>
+                    <li>
+                        <a href="/last?from=etop" data-ga="navigation:click:last">Last Tx</a>
+                    </li>
+                    <li>
+                        <a
+                            href="https://github.com/EverexIO/Ethplorer/wiki/Ethplorer-API"
+                            target="_blank"
+                            rel="noopener nofollow"
+                            data-ga="navigation:click:api"
+                        >
+                            API
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/#subscribe" data-ga="navigation:click:subscribe">
+                            Subscribe
+                        </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a data-ga="navigation:click:widgets" href="/widgets?from=ehomefoot">
+                            Widgets
+                        </a>
+                    </li>
+                    <li>
+                        <a data-ga="navigation:click:sources" href="https://github.com/EverexIO/Ethplorer" target="_blank" rel="noopener nofollow">
+                            Sources
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/EverexIO/Ethplorer/wiki/Ethplorer-API" target="_blank" rel="noopener nofollow">
+                            API
+                        </a>
+                    </li>
+                    <li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a data-ga="navigation:click:issues" href="https://github.com/EverexIO/Ethplorer/issues" target="_blank" rel="noopener nofollow">
+                            Create Github Issue
+                        </a>
+                    </li>
+                    <li>
+                        <a data-ga="navigation:click:twitter" href="https://twitter.com/ethplorer" target="_blank" rel="noopener nofollow">
+                            Twitter
+                        </a>
+                    </li>
+                    <li>
+                        <a data-ga="navigation:click:reddit" href="https://www.reddit.com/r/ethplorer/" target="_blank" rel="noopener nofollow">
+                            Reddit
+                        </a>
+                    </li>
+                    <li>
+                        <a data-ga="navigation:click:update_token_info" href="http://bit.ly/ethp-contact" target="_blank" rel="noopener nofollow">
+                            Update your token info
+                        </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a data-ga="navigation:click:contact" href="http://bit.ly/ethp-contact" target="_blank" rel="noopener nofollow">
+                            Contact
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>

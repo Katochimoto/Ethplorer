@@ -296,13 +296,6 @@ pre.list-field {
     padding-right: 36px;
 }
 
-#search {
-    margin-top: 8px;
-    margin-right: 15px !important;
-    width: 350px;
-    margin-left: 25px;
-}
-
 .subnav {
     background: #0f0f0f;
     marign: 0px;
@@ -1580,8 +1573,171 @@ a.text-secondary:hover, a.text-secondary:focus {
     text-decoration: none;
 }
 
+.bg-white {
+    background-color: #fff !important;
+}
+
+.border-right-0 {
+    border-right: none !important;
+}
+
+.bg-transparent {
+    background-color: transparent !important;
+}
+
+.shadow-sm-inner {
+    box-shadow: inset 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+#search-form {
+    padding: 0 8px;
+}
+
+#search-form .form-control {
+    box-shadow: none;
+}
+
+#search-form .form-control:focus + .input-group-addon {
+    border-color: #66afe9;
+}
+
+#search-form .input-group-addon {
+    padding: 3px 10px;
+    background-color: transparent;
+    border-left: none;
+}
+
+#search-form .input-group-addon .btn {
+    padding: 0;
+    margin: 0;
+}
+
+.navbar {
+    border-radius: 0;
+    font-size: 16px;
+    min-height: 72px;
+    border: none;
+    padding: 16px 0;
+}
+
+.navbar-brand {
+    height: 40px;
+    padding: 5px 15px;
+}
+
+.navbar-nav {
+    margin: 0 !important;
+}
+
+.navbar-nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 12px;
+    padding-left: 12px;
+    color: rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+    background-color: transparent !important;
+}
+
+.navbar-nav > li.dropdown.open > a {
+    color: rgba(0, 0, 0, 0.9) !important;
+}
+
+.navbar-nav > li > a:hover {
+    color: #1396e2;
+    background-color: transparent !important;
+}
+
+.navbar-btn.btn-sm {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px 4px;
+}
+
+.navbar-form {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.navbar-nav > li > .dropdown-menu {
+    box-shadow: none;
+    border-radius: 4px;
+}
+
+.navbar-nav > li > .dropdown-menu > li > a {
+    text-decoration: none;
+    background-color: transparent !important;
+}
+
+.navbar-nav > li > .dropdown-menu > li > a:hover {
+    text-decoration: none;
+    color: #1396e2;
+    background-color: transparent !important;
+}
+
+.dropdown-menu {
+    font-size: 16px;
+}
+
+#twitter-small,
+#twitter-big,
+#search-form,
+#nav-big {
+    display: none;
+}
+
+#nav-small {
+    display: block;
+}
+
+#nav-small .dropdown {
+    float: right;
+}
+
+#nav-small .dropdown.open {
+    width: 100%;
+}
+
+#nav-small .dropdown.open .dropdown-toggle {
+    float: right;
+    margin-top: -40px;
+}
+
 @media (min-width: 576px) {
     .mb-sm-0, .my-sm-0 {
         margin-bottom: 0 !important;
+    }
+
+    #twitter-big {
+        float: right !important;
+        margin-left: -210px;
+        margin-right: 50px;
+        margin-top: 3px;
+        margin-bottom: 3px;
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    #nav-small .dropdown.open {
+        width: auto !important;
+    }
+
+    #nav-small .dropdown.open .dropdown-toggle {
+        margin: 0;
+        float: none;
+    }
+}
+
+@media (min-width: 992px) {
+    #twitter-small,
+    #search-form,
+    #nav-big {
+        display: block;
+    }
+
+    #twitter-big,
+    #nav-small {
+        display: none !important;
     }
 }

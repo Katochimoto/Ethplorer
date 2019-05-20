@@ -149,6 +149,7 @@ $loader = new \Twig\Loader\FilesystemLoader('dist');
 $loader->addPath(dirname(__FILE__) . '/src/client/templates', 'components');
 $twig = new \Twig\Environment($loader);
 $footer = $twig->render('footer.twig');
+$navbar = $twig->render('navbar.twig');
 ?><!DOCTYPE html>
 <html>
 <head>
@@ -228,30 +229,7 @@ $footer = $twig->render('footer.twig');
 </head>
 <body>
 <div style="position: relative; min-height: 100vh;">
-    <nav class="navbar navbar-inverse">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-logo-small" href="/"><img title="Ethplorer" src="/favicon.ico"></a>
-                <a class="navbar-logo" href="/"><img title="Ethplorer" src="/images/ethplorer-logo-48.png"></a>
-                <a class="navbar-logo-extra" href="https://www.everex.io/?from=ethp-hd"><img title="by Everex" src="/images/byeverex.png"></a>
-            </div>
-            <div id="navbar" class="navbar" style="margin-bottom: 0px;">
-                <ul class="nav navbar-nav navbar-right" id="searchform">
-                    <form id="search-form">
-                        <input id="search" class="form-control" placeholder="Token name or symbol / TX hash / address" autocomplete="off" />
-                        <div id="search-quick-results"></div>
-                    </form>
-                </ul>
-                <ul class="nav navbar-nav navbar-right" id="topmenu">
-                    <li onclick="document.location.href='/index';">Index<div class="new-mark">NEW</div></li>
-                    <li onclick="document.location.href='/top';">TOP-50<div class="new-mark">NEW</div></li>
-                    <li onclick="document.location.href='/widgets';">Widgets</li>
-                    <li onclick="document.location.href='https://github.com/EverexIO/Ethplorer/wiki/Ethplorer-API';">API</li>
-                    <li onclick="document.location.href='https://ethplorer.io/#subscribe';">Subscribe</li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php echo $navbar; ?>
     <div id="ethplorer-note"></div>
     <div class="container">
         <div class="starter-template">
