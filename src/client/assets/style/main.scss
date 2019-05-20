@@ -9,6 +9,7 @@
 
 @import "loader";
 @import "token-holders";
+@import "widget";
 
 body {
   -webkit-text-size-adjust: none;
@@ -74,12 +75,6 @@ a.highlighted {
 main {
   position: relative;
   min-height: calc(100vh - 72px);
-}
-
-.ethplorer-widget {
-  & .widget-top-totals {
-    font-size: 0.7em;
-  }
 }
 
 #token-pulse .widget-top-totals ~ div ~ div {
@@ -194,18 +189,6 @@ body[data-page="last"] {
 @include media-breakpoint-up(xl) {
   #token-top {
     font-size: 14px;
-  }
-
-  .ethplorer-widget .tx-amount .tx-link,
-  .ethplorer-widget .tx-token .tx-link {
-    max-width: 50px !important;
-  }
-}
-
-@include media-breakpoint-up(xxl) {
-  .ethplorer-widget .tx-amount .tx-link,
-  .ethplorer-widget .tx-token .tx-link {
-    max-width: 80px !important;
   }
 }
 
