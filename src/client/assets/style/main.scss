@@ -169,6 +169,20 @@ body[data-page="top"] {
   }
 }
 
+body[data-page="last"] {
+  & .last-token-widget {
+    max-width: 860px;
+  }
+
+  & .last-token-hr {
+    width: 160px !important;
+  }
+
+  & #token-last {
+    max-width: 100% !important;
+  }
+}
+
 @include media-breakpoint-up(md) {
   .powered-items > a {
     lost-column: 1/4;
