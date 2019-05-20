@@ -149,6 +149,11 @@ body[data-page="chart"] {
     max-width: 100% !important;
     font-weight: bold !important;
     font-size: 14px;
+    height: 350px;
+  }
+
+  & .ethplorer-widget .widget-top-totals {
+    font-size: 1em;
   }
 }
 
