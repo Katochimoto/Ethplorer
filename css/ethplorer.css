@@ -1777,6 +1777,10 @@ a.text-secondary:hover, a.text-secondary:focus {
     padding: 0;
 }
 
+.ui-dialog {
+    z-index: 999 !important;
+}
+
 @media (min-width: 576px) {
     .mb-sm-0, .my-sm-0 {
         margin-bottom: 0 !important;
