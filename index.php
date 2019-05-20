@@ -43,6 +43,7 @@ $rParts = explode('/', $uri);
 foreach($rParts as $i => $part){
     $rParts[$i] = strtolower($part);
 }
+$page = $rParts[1];
 if(3 === count($rParts)){
     if(('tx' === $rParts[1]) && $es->isValidTransactionHash($rParts[2])){
         $header = "Transaction hash: " . $rParts[2];
@@ -797,6 +798,35 @@ $(document).ready(function(){
         'open': function(){
         }
     });
+
+    function sendDOMGa (target) {
+        if (!window.ga) {
+            return;
+        }
+
+        var $target = $(target);
+        var page = String('<?php echo $page ?>');
+        var dataGa = String($target.attr('data-ga') || '').split(':', 3);
+        var category = dataGa[0];
+        var action = dataGa[1];
+        var label = dataGa[2];
+
+        if (page && label) {
+            window.ga('send', 'event', category, action, label, { page: page });
+        }
+    }
+
+    $('a[data-ga]').on('click', function (event) {
+        var $target = $(event.currentTarget);
+        if (
+            $target.attr('target') === '_blank' ||
+            $target.attr('href').charAt(0) === '#'
+        ) {
+            sendDOMGa(event.currentTarget);
+        }
+    });
+    $('form[data-ga][target="_blank"]').on('submit', function (event) { sendDOMGa(event.currentTarget); });
+    $('button[type="button"]').on('click', function (event) { sendDOMGa(event.currentTarget); });
 });
 if(Ethplorer.Config.ga){
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
