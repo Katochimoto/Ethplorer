@@ -81,13 +81,6 @@ main {
   display: none;
 }
 
-#token-top,
-#token-last {
-  overflow: hidden;
-  font-size: 12px;
-  background-color: transparent;
-}
-
 .editor-code {
   max-height: 400px;
   overflow: hidden;
@@ -143,24 +136,6 @@ main {
   table-layout: auto !important;
 }
 
-body[data-page="top"] {
-  & #token-top {
-    background-blend-mode: darken;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 7px;
-    font-weight: bold;
-  }
-}
-
-body[data-page="last"] {
-  & #token-last {
-    max-width: 70%;
-    font-size: 16px;
-    background-blend-mode: darken;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 7px;
-  }
-}
 
 @include media-breakpoint-up(md) {
   .powered-items > a {
