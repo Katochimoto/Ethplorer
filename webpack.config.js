@@ -35,14 +35,14 @@ function page (name) {
   })
 }
 
-function tmpl (name) {
-  return new HtmlWebpackPlugin({
+function tmpl (name, params) {
+  return new HtmlWebpackPlugin(Object.assign({
     filename: name + '.twig',
     template: 'pages/' + name + '.twig',
     inject: 'body',
     chunksSortMode: 'dependency',
     alwaysWriteToDisk: true,
-  })
+  }, params))
 }
 
 const config = {
@@ -271,6 +271,7 @@ const config = {
 
     tmpl('widgets'),
     tmpl('address'),
+    tmpl('footer', { inject: false }),
 
     new HtmlBeautifyPlugin({
       config: {

@@ -136,7 +136,7 @@ function includeLocal($name){
 
 $csvExport = '';
 if(is_array($rParts) && isset($rParts[2])){
-    $csvExport = ' <span class="export-csv-spinner"><i class="fa fa-spinner fa-spin"></i> Export...</span><span class="export-csv"><a class="download text-primary" rel="nofollow" target="_blank" href="/service/exportcsv.php?data=' . $rParts[2] . '">Export as CSV</a></span>';
+    $csvExport = ' <span class="export-csv-spinner"><i class="fa fa-spinner fa-spin"></i> Export...</span><span class="export-csv"><a class="download" rel="nofollow" target="_blank" href="/service/exportcsv.php?data=' . $rParts[2] . '">Export as CSV</a></span>';
 }
 if(!$title){
     $title = 'Ethplorer';
@@ -146,32 +146,15 @@ if(!$title){
 }
 
 $loader = new \Twig\Loader\FilesystemLoader('dist');
-// $loader->addPath(dirname(__FILE__) . '/src/client/templates', 'components');
+$loader->addPath(dirname(__FILE__) . '/src/client/templates', 'components');
 $twig = new \Twig\Environment($loader);
-
-echo $twig->render('address.twig', [
-    'error' => $error,
-    'title' => $title,
-    'header' => $header,
-    'testWidget' => $testWidget,
-    'csvExport' => $csvExport,
-    'debugEnabled' => $debugEnabled,
-    'debugId' => $debugId,
-    'address' => isset($address) ? $address : false,
-    'withEth' => $withEth,
-    'scriptAddon' => $aConfig['scriptAddon'],
-    'ads' => includeLocal('ads'),
-    'head' => includeLocal('head'),
-    'bottom' => includeLocal('bottom'),
-]);
-die();
-
+$footer = $twig->render('footer.twig');
 ?><!DOCTYPE html>
 <html>
 <head>
     <title><?=$title?></title>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/ethplorer.css?v=<?=$codeVersion?>">
 <?php
@@ -202,7 +185,7 @@ die();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script src="https://www.google.com/jsapi"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="/js/bignumber.js"></script>
     <script src="/js/ethplorer.js?v=<?=$codeVersion?>"></script>
     <script src="/js/ethplorer-search.js?v=<?=$codeVersion?>"></script>
@@ -622,7 +605,7 @@ die();
                     <div class="col-xs-12 col-md-6">
                         <div class="block" id="address-token-balances">
                             <div class="block-header">
-                                <h3>Balances <sup><i class="fa fa-question-circle fa-xs ml-1 mt-1" data-toggle="tooltip" data-placement="right" title="ETH&nbsp;+&nbsp;Tokens"></i></sup>
+                                <h3>Balances <sup><i class="fa fa-question-circle fa-xs" data-toggle="tooltip" data-placement="right" title="ETH&nbsp;+&nbsp;Tokens"></i></sup>
                                     <div id="address-balances-total"></div>
                                 </h3>
                             </div>
@@ -807,42 +790,7 @@ die();
         (d.head || d.body).appendChild(s);
     })();
     </script>
-    <div class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-7 col-sm-3">
-                    <a href="#"><img src="/images/ethplorerlogowhite400.png" style="max-width: 140px;" alt=""></a>
-                    <div>
-                        <div style="color:#eeeeee;">© 2016-2018 <a href="https://everex.io/" target="_blank" class="small-link">Everex</a>
-                            <br><a href="/privacy" class="small-link">Privacy &amp; Terms</a><br>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-5 col-sm-2 col-md-2 footer-links">
-                    <ul>
-                        <li><a href="/widgets">Widgets</a></li>
-                        <li><a href="https://github.com/EverexIO/Ethplorer">Sources</a></li>
-                        <li><a href="https://github.com/EverexIO/Ethplorer/wiki/Ethplorer-API">API</a></li>
-                        <li><a href="https://github.com/EverexIO/Ethplorer/issues">Github Issue</a></li>
-                        <li><a href="https://twitter.com/ethplorer">Twitter</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-5 col-sm-2 col-md-3 footer-links">
-                    <ul>
-                        <li><a href="http://bit.ly/ethp-contact" target="_blank">Contact</a></li>
-                        <li><a href="https://ethplorer.io/#subscribe">Subscribe</a></li>
-                        <li><a href="https://www.reddit.com/r/ethplorer/">Discuss at Reddit</a></li>
-                        <li><a href="http://bit.ly/ethp-contact" target="_blank">Update your Token info</a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-7 col-sm-5 col-md-4 footer-donation">
-                    <strong>Donation:</strong><br>
-                    <br>ETH:<br>0x0dE0BCb0703ff8F1aEb8C892eDbE692683bD8030
-                    <br>BTC:<br>1MKVGqyJA9YkVRuDsGCvnYVJ6ivNtfe289
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php echo $footer; ?>
 </div>
 <div id="qr-code-popup" title="Address QR-Code" style="padding:5px;"><span id="qr-code-address"></span><br/><br/><center><div id="qr-code"></div></center><br/></div>
 <script>
