@@ -1621,7 +1621,7 @@ a.text-secondary:hover, a.text-secondary:focus {
 }
 
 #search-form .input-group-addon .btn {
-    padding: 5px 7px 2px 5px;
+    padding: 2px 7px 1px 5px;
     margin: 0;
 }
 
@@ -1641,12 +1641,9 @@ a.text-secondary:hover, a.text-secondary:focus {
     padding: 7px 15px 7px 0;
 }
 
-#nav-big .dropdown-menu {
-    background-color: rgba(255, 255, 255, 0.97);
-}
-
 .dropdown-menu {
     padding: 8px 0;
+    background-color: rgba(255, 255, 255, 0.97);
 }
 
 .dropdown-menu > li > a {

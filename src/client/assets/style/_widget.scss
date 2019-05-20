@@ -5,7 +5,7 @@
 #token-top,
 #token-last {
   overflow: hidden;
-  font-size: 12px;
+  font-size: 14px;
   background-color: transparent;
 }
 
@@ -131,7 +131,7 @@ body[data-page="top"] {
 
 @include media-breakpoint-up(lg) {
   body[data-page="index"] .ethplorer-widget .tx-transfer .tx-link {
-    max-width: none !important;
+    max-width: 250px !important;
   }
 
   body[data-page="last"] {
