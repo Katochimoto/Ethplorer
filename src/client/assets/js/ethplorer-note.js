@@ -20,13 +20,13 @@ EthplorerNote = {
     notes: [],
     init: function(container){
         EthplorerNote.container = container;
-        if((document.location.host !== 'ethplorer.io') && (document.location.host.indexOf('ethplorer') < 0)){
-            EthplorerNote.service = '//ethplorer.io' + EthplorerNote.service;
-        }
+        // if((document.location.host !== 'ethplorer.io') && (document.location.host.indexOf('ethplorer') < 0)){
+        //     EthplorerNote.service = '//ethplorer.io' + EthplorerNote.service;
+        // }
         var inner = $('<DIV>');
         inner.addClass('ethplorer-note');
         EthplorerNote.container.append(inner);
-        EthplorerNote.inner = inner;        
+        EthplorerNote.inner = inner;
         EthplorerNote.loadNotes();
     },
     loadNotes: function(){
@@ -46,7 +46,7 @@ EthplorerNote = {
         }
 
         EthplorerNote.container.show();
-        
+
         var note = EthplorerNote.notes[EthplorerNote.next];
         if(note.warning){
             EthplorerNote.container.addClass('warning');
@@ -65,7 +65,7 @@ EthplorerNote = {
                 EthplorerNote.inner.fadeIn(800);
             }
         }(note));
-        
+
         EthplorerNote.next++;
         setTimeout(EthplorerNote.showNext, 15000);
     }
