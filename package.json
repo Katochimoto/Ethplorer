@@ -48,17 +48,16 @@
         "@sentry/browser": "5.2.1",
         "bignumber.js": "8.1.1",
         "bootstrap": "4.3.1",
-        "classnames": "^2.2.6",
-        "diffhtml": "^1.0.0-beta.10",
+        "classnames": "2.2.6",
         "highlight.js": "9.15.6",
         "jquery": "3.4.1",
         "js-cookie": "2.2.0",
         "js-sha3": "0.8.0",
         "local-storage": "2.0.0",
-        "lodash": "^4.17.11",
+        "lodash": "4.17.11",
         "page": "1.11.4",
         "popper.js": "1.15.0",
         "query-string": "6.5.0",
-        "twig": "^1.13.3"
+        "twig": "1.13.3"
     }
 }
