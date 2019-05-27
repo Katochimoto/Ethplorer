@@ -3516,7 +3516,8 @@ class Ethplorer {
                 'name' => 'Chainy',
                 'symbol' => false,
                 'txsCount' => 99999,
-                'price' => 0
+                'hasPrice' => false,
+                'image' => ''
             );
             foreach($this->aTokens as $address => $aToken){
                 $name = substr($aToken['name'], 0, 32);
@@ -3526,7 +3527,8 @@ class Ethplorer {
                     'name' => trim($name),
                     'symbol' => trim($aToken['symbol']),
                     'txsCount' => $aToken['txsCount'],
-                    'price' => $aToken['price']
+                    'hasPrice' => !empty($aToken['price']),
+                    'image' => $aToken['image'],
                 ];
                 if(isset($this->aSettings['client']) && isset($this->aSettings['client']['tokens']) && isset($this->aSettings['client']['tokens'][$address])){
                     $aClientToken = $this->aSettings['client']['tokens'][$address];
@@ -3567,7 +3569,7 @@ class Ethplorer {
                         $aToken['name'],
                         $aToken['symbol'],
                         $aToken['address'],
-                        !empty($aToken['price']),
+                        $aToken['hasPrice'],
                         $aToken['image']
                     ];
                 }
