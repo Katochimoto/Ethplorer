@@ -33,4 +33,6 @@ $(function () {
       document.location.href = '/tx/' + data + '?from=search';
     }
   })
+
+  EthplorerSearch.setOption('classes.ui-autocomplete', 'ui-autocomplete__small')
 })

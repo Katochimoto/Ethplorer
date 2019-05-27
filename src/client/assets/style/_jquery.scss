@@ -10,12 +10,16 @@
 
 .ui-menu-item {
   display: flex;
-  padding: 3px .4em;
+  padding: 9px .8rem;
   font-size: 16px;
   white-space: nowrap;
   border: none;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  .ui-autocomplete__small & {
+    padding: 4px .4rem;
+  }
 
   &:not(:first-child) {
     border-top: 1px solid #d8d8d8;
