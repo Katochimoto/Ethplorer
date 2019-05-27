@@ -9,6 +9,7 @@
 }
 
 .ui-menu-item {
+  display: flex;
   padding: 3px .4em;
   font-size: 16px;
   white-space: nowrap;
@@ -25,7 +26,7 @@
     font-weight: normal;
     color: $blue;
 
-    & > .ui-menu-item-address {
+    & .ui-menu-item-address {
       color: $blue;
     }
   }
@@ -45,9 +46,33 @@
     pointer-events: none;
   }
 
-  & > .ui-menu-item-address {
+  & .ui-menu-item-address {
     overflow: hidden;
     text-overflow: ellipsis;
     color: #aaa;
+  }
+
+  & .ui-menu-item-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  & .ui-menu-item-price {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+
+    &::before {
+      content: '$';
+      display: block;
+      width: 25px;
+      height: 25px;
+      border-radius: 25px;
+      line-height: 26px;
+      color: #fff;
+      background-color: #aeb9c4;
+      text-align: center;
+    }
   }
 }

@@ -138,9 +138,9 @@ class Ethplorer {
     protected $useOperations2 = FALSE;
 
     protected $getTokensCacheCreation = FALSE;
-    
+
     protected $debug = false;
-    
+
     protected $memUsage = [];
 
     /**
@@ -246,7 +246,7 @@ class Ethplorer {
                 'real' => round(memory_get_usage(TRUE) / $mb, 2)
             ];
         }
-    }       
+    }
 
     /**
      * Returns some debug data
@@ -261,7 +261,7 @@ class Ethplorer {
             'memUsage' => $this->memUsage
         );
     }
-    
+
     /**
      * Singleton getter.
      *
@@ -487,7 +487,7 @@ class Ethplorer {
                     $result['cryptokitties'] = true;
                     break;
                 }
-            }            
+            }
         }
         if(!isset($result['token']) && !isset($result['pager'])){
             // Get balances
@@ -601,8 +601,8 @@ class Ethplorer {
             evxProfiler::checkpoint('getEtherTotalIn', 'FINISH');
         }
         return (float)$result;
-    }    
-    
+    }
+
     /**
      * Returns ETH address total out.
      * Total in can be calculated as total out + current balance.
@@ -648,7 +648,7 @@ class Ethplorer {
      */
     public function getTransactions($address, $limit = 10, $timestamp = 0, $showZero = FALSE){
         $cache = 'transactions-' . $address . '-' . $limit . '-' . ($timestamp ? ($timestamp . '-') : '') . ($showZero ? '1' : '0');
-        $result = $this->oCache->get($cache, FALSE, TRUE, 30);        
+        $result = $this->oCache->get($cache, FALSE, TRUE, 30);
         if(!$result){
             $result = array();
             $fields = ['from', 'to'];
@@ -684,7 +684,7 @@ class Ethplorer {
                     );
                 }
             }
-            usort($result, function($a, $b){ 
+            usort($result, function($a, $b){
                 return ($a['timestamp'] > $b['timestamp']) ? -1 : (($a['timestamp'] < $b['timestamp']) ? 1 : 0);
             });
 
@@ -929,7 +929,7 @@ class Ethplorer {
             $cursor = $this->oMongo->find('ethBalances', array('address' => $address));
             foreach($cursor as $result) break;
             if($result && isset($result['balance']) && ((time() * 1000 - (int)$result['lastUpdated']) < 3600000 * 24)){
-                $balance = $result['balance'];               
+                $balance = $result['balance'];
             }else{
                 $balance = $this->_callRPC('eth_getBalance', array($address, 'latest'));
                 if(false !== $balance){
@@ -1036,7 +1036,7 @@ class Ethplorer {
     public function getIssuances($tx){
         return $this->getOperations($tx, array('$in' => array('issuance', 'burn', 'mint')));
     }
-    
+
     /**
      * Returns list of known tokens.
      *
@@ -1354,7 +1354,7 @@ class Ethplorer {
      * @param string $address  Contract address
      * @return int
      */
-    public function countOperations($address, $useFilter = TRUE, $showTx = self::SHOW_TX_ALL){        
+    public function countOperations($address, $useFilter = TRUE, $showTx = self::SHOW_TX_ALL){
         evxProfiler::checkpoint('countOperations', 'START', 'address=' . $address . ', useFilter = ' . ($useFilter ? 'ON' : 'OFF'));
         $cache = 'countOperations-' . $address . '-' . $showTx;
         $result = $this->oCache->get($cache, false, true, 30);
@@ -1365,7 +1365,7 @@ class Ethplorer {
             }else{
                 $cursor = $this->oMongo->find('addressCache', array("address" => $address));
                 $aCachedData = false;
-                foreach($cursor as $aCachedData) break;                
+                foreach($cursor as $aCachedData) break;
                 if(false !== $aCachedData){
                     evxProfiler::checkpoint('countTransfersFromCache', 'START', 'address=' . $address);
                     $result = $aCachedData['transfersCount'];
@@ -1445,7 +1445,7 @@ class Ethplorer {
             if($token = $this->getToken($address)){
                 $result = $token['txsCount'];
                 $result++; // One for contract creation
-            } else { 
+            } else {
                 $cursor = $this->oMongo->find('addressCache', array("address" => $address));
                 $aCachedData = false;
                 foreach($cursor as $aCachedData) break;
@@ -2398,7 +2398,7 @@ class Ethplorer {
     public function getAPIKeySettings($key){
         return isset($this->aSettings['apiKeys']) && isset($this->aSettings['apiKeys'][$key]) ? $this->aSettings['apiKeys'][$key] : false;
     }
-    
+
     public function checkAPIKey($key){
         return is_array($this->getAPIKeySettings($key));
     }
@@ -2407,12 +2407,12 @@ class Ethplorer {
         $keyData = $this->getAPIKeySettings($key);
         return ($keyData && isset($keyData['suspended']) && !!$keyData['suspended']);
     }
-    
+
     public function getAPIKeyAllowedCommands($key){
         $keyData = $this->getAPIKeySettings($key);
         return ($keyData && isset($keyData['allowedCommands']) && is_array($keyData['allowedCommands'])) ? $keyData['allowedCommands'] : [];
     }
-    
+
     public function getAPIKeyDefaults($key, $option = FALSE){
         $res = FALSE;
         if($this->checkAPIKey($key)){
@@ -2929,7 +2929,7 @@ class Ethplorer {
                             if(!isset($aDailyRecord['average'])) $aDailyRecord['average'] = 0;
                             $aPriceHistoryDaily[] = $aDailyRecord;
                             $prevVol = $aDailyRecord['volume'];
-                            $prevVolC = $aDailyRecord['volumeConverted'];                        
+                            $prevVolC = $aDailyRecord['volumeConverted'];
                         }
                         $curDate = $resService[$i]['date'];
                     }
@@ -3015,11 +3015,11 @@ class Ethplorer {
             $withEth = TRUE;
         }
         if(FALSE === $result || $updateCache){
-            
+
             $opCount = $this->countOperations($address, FALSE);
             if($opCount >= 10000){
                 evxProfiler::checkpoint('getAddressPriceHistoryGrouped', 'FINISH', 'Address has >10000 operations, skip');
-                return FALSE;                
+                return FALSE;
             }
 
             $aSearch = array('from', 'to', 'address'); // @todo: research "addresses"
@@ -3362,7 +3362,7 @@ class Ethplorer {
                     }
                     $aOps[$op["contract"]][] = $operation;
                 }
-                
+
                 if (stripos($poolAddresses, $op["from"]) !== false) {
                     if (!is_array($aOps[$op["from"]])) {
                         $aOps[$op["from"]] = [];
@@ -3468,7 +3468,7 @@ class Ethplorer {
         }
         return $this->_jsonrpcall($this->aSettings['ethereum'], $method, $params);
     }
-    
+
     protected function _jsonrpcall($service, $method, $params = array()){
         $data = array(
             'jsonrpc' => "2.0",
@@ -3515,7 +3515,8 @@ class Ethplorer {
             $this->aTokens['0xf3763c30dd6986b53402d41a8552b8f7f6a6089b'] = array(
                 'name' => 'Chainy',
                 'symbol' => false,
-                'txsCount' => 99999
+                'txsCount' => 99999,
+                'price' => 0
             );
             foreach($this->aTokens as $address => $aToken){
                 $name = substr($aToken['name'], 0, 32);
@@ -3524,7 +3525,8 @@ class Ethplorer {
                     'address' => $address,
                     'name' => trim($name),
                     'symbol' => trim($aToken['symbol']),
-                    'txsCount' => $aToken['txsCount']
+                    'txsCount' => $aToken['txsCount'],
+                    'price' => $aToken['price']
                 ];
                 if(isset($this->aSettings['client']) && isset($this->aSettings['client']['tokens']) && isset($this->aSettings['client']['tokens'][$address])){
                     $aClientToken = $this->aSettings['client']['tokens'][$address];
@@ -3557,7 +3559,7 @@ class Ethplorer {
                 $count++;
                 $result['total'] = $count;
                 if($count <= $maxResults){
-                    $result['results'][] = [$aToken['name'], $aToken['symbol'], $aToken['address']];
+                    $result['results'][] = [$aToken['name'], $aToken['symbol'], $aToken['address'], $aToken['price']];
                 }
             }
         }
@@ -3600,7 +3602,7 @@ class Ethplorer {
             $this->sentryClient->captureException($exception, $data);
         }
     }
-    
+
     protected function txSuccessStatus(array $tx){
         if(isset($tx['status']) && $tx['status'] && is_string($tx['status'])){
             $tx['status'] = str_replace("0x", "", $tx['status']);
