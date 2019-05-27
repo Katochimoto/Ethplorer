@@ -38,11 +38,10 @@
 
   &.have-more {
     opacity: 1 !important;
-    color: #aaa;
-    padding-top: 4px;
-    border-top: 1px dotted #d8d8d8;
+    border-top: 1px dashed #d8d8d8;
     font-style: italic;
     pointer-events: none;
+    font-size: 14px;
   }
 
   &.not-found {
