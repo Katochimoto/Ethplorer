@@ -3555,11 +3555,21 @@ class Ethplorer {
         $count = 0;
         $search = strtolower($token);
         foreach($aTokens as $aToken){
-            if((FALSE !== strpos($aToken['address'], $search)) || (FALSE !== strpos(strtolower($aToken['name']), $search)) || (FALSE !== strpos(strtolower($aToken['symbol']), $search))){
+            if (
+                (FALSE !== strpos($aToken['address'], $search)) ||
+                (FALSE !== strpos(strtolower($aToken['name']), $search)) ||
+                (FALSE !== strpos(strtolower($aToken['symbol']), $search))
+            ) {
                 $count++;
                 $result['total'] = $count;
                 if($count <= $maxResults){
-                    $result['results'][] = [$aToken['name'], $aToken['symbol'], $aToken['address'], $aToken['price']];
+                    $result['results'][] = [
+                        $aToken['name'],
+                        $aToken['symbol'],
+                        $aToken['address'],
+                        !empty($aToken['price']),
+                        $aToken['image']
+                    ];
                 }
             }
         }
@@ -3587,8 +3597,8 @@ class Ethplorer {
     }
 
     public function sortTokensByPrice($a, $b) {
-        $aHasPrice = !empty($a[3]);
-        $bHasPrice = !empty($b[3]);
+        $aHasPrice = $a[3];
+        $bHasPrice = $b[3];
         if ($aHasPrice && $bHasPrice) {
             return 0;
         }
