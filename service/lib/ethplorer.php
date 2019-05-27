@@ -3511,7 +3511,7 @@ class Ethplorer {
         $aResult = $this->oCache->get('tokens-simple', false, true, 3600);
         if(false === $aResult){
             $aResult = [];
-            $this->getTokens();
+            $this->getTokens(true);
             $this->aTokens['0xf3763c30dd6986b53402d41a8552b8f7f6a6089b'] = array(
                 'name' => 'Chainy',
                 'symbol' => false,
