@@ -3543,9 +3543,6 @@ class Ethplorer {
             foreach($aResult as $i => $aToken){
                 unset($aResult[$i]['txsCount']);
             }
-            if (count($aResult) < 100) {
-                uasort($aResult, array($this, 'sortTokensByPrice'));
-            }
             $this->oCache->save('tokens-simple', $aResult);
         }
         return $aResult;
@@ -3566,6 +3563,9 @@ class Ethplorer {
                 }
             }
         }
+        if (strlen($search) > 1 || $result['total'] < 100) {
+            uasort($result['results'], array($this, 'sortTokensByPrice'));
+        }
         return $result;
     }
 
@@ -3583,8 +3583,8 @@ class Ethplorer {
     }
 
     public function sortTokensByPrice($a, $b) {
-        $aHasPrice = !empty($a['price']);
-        $bHasPrice = !empty($a['price']);
+        $aHasPrice = !empty($a[3]);
+        $bHasPrice = !empty($b[3]);
         if ($aHasPrice && $bHasPrice) {
             return 0;
         }
