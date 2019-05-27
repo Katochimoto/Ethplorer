@@ -19,6 +19,7 @@
 
   .ui-autocomplete__small & {
     padding: 4px .4rem;
+    font-size: 14px;
   }
 
   &:not(:first-child) {
@@ -53,12 +54,14 @@
   & .ui-menu-item-address {
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #aaa;
+    font-size: 14px;
   }
 
   & .ui-menu-item-content {
     flex: 1;
     min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   & .ui-menu-item-price {
