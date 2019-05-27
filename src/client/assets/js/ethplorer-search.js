@@ -68,14 +68,19 @@ EthplorerSearch = {
             autocomplete._renderItem = function(ul, res){
                 if(!res) return;
                 if('undefined' !== typeof(res[0])){
-                    var hasPrice = res[3];
+                    var image = res[4];
+                    image = image ? '<img src="' + image + '" class="ui-menu-item-image" decoding="async" importance="low" />' : '';
+
+                    var hasPrice = Boolean(res[3]);
                     var address = res[2];
+                    address = address.replace(new RegExp(EthplorerSearch.el.val(), 'ig'), "<b>$&</b>");
+
                     var text = (res[0] ? $('<span>').text(res[0]).html() : '') + (res[1] ? ' (' + res[1] + ')' : '');
                     text = text.replace(new RegExp(EthplorerSearch.el.val(), 'ig'), "<b>$&</b>");
-                    address = address.replace(new RegExp(EthplorerSearch.el.val(), 'ig'), "<b>$&</b>");
-                    text += (' <div class="ui-menu-item-address">' + address + '</div>')
+                    text += (' <div class="ui-menu-item-address">' + address + '</div>');
+
                     return $('<li class="ui-menu-item">')
-                        .append('<div class="ui-menu-item-content">' + text + '</div>')
+                        .append('<div class="ui-menu-item-content">' + image + text + '</div>')
                         .append(hasPrice ? '<div class="ui-menu-item-price" />' : undefined)
                         .appendTo(ul);
                 }

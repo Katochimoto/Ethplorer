@@ -82,4 +82,14 @@
       text-align: center;
     }
   }
+
+  & .ui-menu-item-image {
+    vertical-align: text-bottom;
+    margin-right: 4px;
+    height: 20px;
+
+    .ui-autocomplete__small & {
+      height: 16px;
+    }
+  }
 }
