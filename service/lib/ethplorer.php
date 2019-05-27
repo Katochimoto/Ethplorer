@@ -3563,7 +3563,7 @@ class Ethplorer {
                 }
             }
         }
-        if (strlen($search) > 1 || $result['total'] < 100) {
+        if (strlen($search) > 2 || $result['total'] < 100) {
             uasort($result['results'], array($this, 'sortTokensByPrice'));
         }
         return $result;
