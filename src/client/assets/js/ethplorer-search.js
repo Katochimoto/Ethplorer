@@ -70,8 +70,7 @@ EthplorerSearch = {
                 if('undefined' !== typeof(res[0])){
                     var hasPrice = res[3];
                     var address = res[2];
-                    var text = res[1] ? res[1] + ' ' : '';
-                    text += res[0] ? $('<span>').text(res[0]).html() : '';
+                    var text = (res[0] ? $('<span>').text(res[0]).html() : '') + (res[1] ? ' (' + res[1] + ')' : '');
                     text = text.replace(new RegExp(EthplorerSearch.el.val(), 'ig'), "<b>$&</b>");
                     address = address.replace(new RegExp(EthplorerSearch.el.val(), 'ig'), "<b>$&</b>");
                     text += (' <div class="ui-menu-item-address">' + address + '</div>')
