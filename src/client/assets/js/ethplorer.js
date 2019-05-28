@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import BigNumber from './bignumber'
-import { keccak_256 } from './sha3.min'
-import QRCode from './qrcode.min'
-import ethplorerWidget from 'ethplorer-widget'
 
 Ethplorer = {
     debug: false,
@@ -66,7 +62,7 @@ Ethplorer = {
         Ethplorer.showTx = Ethplorer.Storage.get('showTx', 'all');
         var showTxHash = window.location.hash.substr(1);
         if(showTxHash){
-            const aShowTxHash = showTxHash.split('=');
+            aShowTxHash = showTxHash.split('=');
             if(aShowTxHash.length > 1 && (aShowTxHash[0] == 'showTx') && (['all', 'eth', 'tokens'].indexOf(aShowTxHash[1]) >= 0)){
                 Ethplorer.showTx = aShowTxHash[1];
                 Ethplorer.Storage.set('showTx', aShowTxHash[1]);
@@ -97,7 +93,7 @@ Ethplorer = {
             $('#tx-details-block').hide();
         });
         $(document).on('click', '[data-toggle="tab"]', function(){
-            Ethplorer.Nav.set('tab', $(this).attr('id'));
+            Ethplorer.Nav.set('tab', $(this).parent().attr('id'));
             var activeTab = Ethplorer.getActiveTab();
             if(activeTab){
                 if(activeTab != 'transfers'){
@@ -171,8 +167,8 @@ Ethplorer = {
                 Ethplorer.reloadTab(false, true);
             }
         });
-        $('.nav-tabs .nav-link').click(function(){
-            var tabName = $(this).attr('id').replace('tab-', '');
+        $('.nav-tabs li a').click(function(){
+            var tabName = $(this).parent().attr('id').replace('tab-', '');
             if(('undefined' !== typeof(Ethplorer.reloadTabs)) && (Ethplorer.reloadTabs.indexOf(tabName) >= 0)){
                 Ethplorer.reloadTab(tabName, false);
             }
@@ -247,7 +243,7 @@ Ethplorer = {
         this.Utils.initScrollable();
     },
     getActiveTab: function(){
-        var tab = ($('.nav-tabs:visible .nav-link.active').length) ? $('.nav-tabs:visible .nav-link.active').attr('id').replace('tab-', '') : false;
+        var tab = ($('.nav-tabs:visible li.active').length) ? $('.nav-tabs:visible li.active').attr('id').replace('tab-', '') : false;
         if(!tab){
             if($('#address-transfers:visible').length){
                 tab = 'transfers';
@@ -444,6 +440,8 @@ Ethplorer = {
         $('.token-operation-type').text(oOperation['type']);
         Ethplorer.fillValues('transfer', txData, ['operation', 'operation.from', 'operation.to']);
         if(oTx.blockNumber){
+            $('#txTokenStatus')[oOperation.success ? 'removeClass' : 'addClass']('text-danger');
+            $('#txTokenStatus')[oOperation.success ? 'addClass' : 'removeClass']('text-success');
             $('#txTokenStatus').html(oOperation.success ? 'Success' : 'Failed' + (oOperation.failedReason ? (': ' + Ethplorer.getTxErrorReason(oOperation.failedReason)) : ''));
             $('#operation-status').addClass(oOperation.success ? 'green' : 'red');
         }
@@ -477,11 +475,15 @@ Ethplorer = {
         Ethplorer.knownContracts = txData.contracts ? txData.contracts : [];
 
         if(oTx.blockNumber && !txData.pending){
+            $('#txEthStatus')[oTx.success ? 'removeClass' : 'addClass']('text-danger');
+            $('#txEthStatus')[oTx.success ? 'addClass' : 'removeClass']('text-success');
             $('#txEthStatus').html(oTx.success ? 'Success' : 'Failed' + (oTx.failedReason ? (': ' + Ethplorer.getTxErrorReason(oTx.failedReason)) : ''));
             $('#tx-status').addClass(oTx.success ? 'green' : 'red');
         } else if (oTx.blockNumber && txData.pending) {
+            $('#txEthStatus').removeClass('text-danger text-success');
             $('#txEthStatus').html('Processing');
         } else {
+            $('#txEthStatus').removeClass('text-danger text-success');
             $('#txEthStatus').html('Pending');
         }
 
@@ -637,15 +639,15 @@ Ethplorer = {
                     }else if(op.from && op.to){
                         var from = '<span class="cuttable-address">from ' + op.from + '</span>';
                         var to = '<span class="cuttable-address">to ' + op.to + '</span>';
-                        opParties = from + '<br class="d-inline d-sm-none"> ' + to;
+                        opParties = from + '<br class="show_small"> ' + to;
                     }
                     if(multiop){
                         var row = $(
                             '<tr data-op-idx="' + pos + '">' +
-                            '<td><a class="dashed text-decoration-none">Details</a></td>' +
+                            '<td><a class="dashed">Details</a></td>' +
                             '<td><span class="dash_on_hover">' + op.type.toString().toUpperCase() +
-                            '<span class="d-inline d-sm-none"> ' + op.value + ' ' + op.symbol + '</span>' +
-                            '<br class="d-inline d-sm-none"> ' + opParties + '</span></td>' +
+                            '<span class="show_small"> ' + op.value + ' ' + op.symbol + '</span>' +
+                            '<br class="show_small"> ' + opParties + '</span></td>' +
                             '<td class="text-right"><span class="dash_on_hover">' + op.value + '</span></td>' +
                             '<td><span class="dash_on_hover">' + op.symbol + '</span></td>' +
                             '<td></td>' +
@@ -700,11 +702,15 @@ Ethplorer = {
                 }
 
                 if(oTx.blockNumber && !txData.pending){
+                    $('#txTokenStatus')[oOperation.success ? 'removeClass' : 'addClass']('text-danger');
+                    $('#txTokenStatus')[oOperation.success ? 'addClass' : 'removeClass']('text-success');
                     $('#txTokenStatus').html(oOperation.success ? 'Success' : 'Failed' + (oOperation.failedReason ? (': ' + Ethplorer.getTxErrorReason(oOperation.failedReason)) : ''));
                     $('#operation-status').addClass(oOperation.success ? 'green' : 'red');
                 } else if (oTx.blockNumber && txData.pending) {
+                    $('#txTokenStatus').removeClass('text-danger text-success');
                     $('#txTokenStatus').html('Processing');
                 } else {
+                    $('#txTokenStatus').removeClass('text-danger text-success');
                     $('#txTokenStatus').html('Pending');
                 }
             }else{
@@ -722,13 +728,17 @@ Ethplorer = {
                     }
                 }
                 if(oTx.blockNumber){
+                    $('#txTokenStatus')[oTx.success ? 'removeClass' : 'addClass']('text-danger');
+                    $('#txTokenStatus')[oTx.success ? 'addClass' : 'removeClass']('text-success');
                     $('#txTokenStatus').html(oTx.success ? 'Success' : 'Failed' + (oTx.failedReason ? (': ' + Ethplorer.getTxErrorReason(oTx.failedReason)) : ''));
                     $('#operation-status').addClass(oTx.success ? 'green' : 'red');
                 }
             }
             if(!oTx.blockNumber && txData.pending){
+                $('#txTokenStatus').removeClass('text-danger text-success');
                 $('#txTokenStatus').html('Pending');
             } else if (oTx.blockNumber && txData.pending) {
+                $('#txTokenStatus').removeClass('text-danger text-success');
                 $('#txTokenStatus').html('Processing');
             }
             Ethplorer.fillValues('transfer', txData, ['tx', 'tx.timestamp']);
@@ -772,11 +782,15 @@ Ethplorer = {
                 Ethplorer.fillValues('transfer', txData, ['tx', 'tx.timestamp']);
 
                 if(oTx.blockNumber && !txData.pending){
+                    $('#txTokenStatus')[txData.operation.success ? 'removeClass' : 'addClass']('text-danger');
+                    $('#txTokenStatus')[txData.operation.success ? 'addClass' : 'removeClass']('text-success');
                     $('#txTokenStatus').html(txData.operation.success ? 'Success' : 'Failed');
                     $('#operation-status').addClass(txData.operation.success ? 'green' : 'red');
                 } else if (oTx.blockNumber && txData.pending) {
+                    $('#operation-status').removeClass('text-danger text-success');
                     $('#txTokenStatus').html('Processing');
                 } else {
+                    $('#operation-status').removeClass('text-danger text-success');
                     $('#txTokenStatus').html('Pending');
                 }
             }
@@ -882,16 +896,16 @@ Ethplorer = {
         if(data.isContract){
             Ethplorer.fillValues('address', data, ['contract', 'contract.creator']);
         }
-        var qrIcon = '<a style="float:right;position:relative;" class="text-primary" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
+        var qrIcon = '<a style="float:right;position:relative;" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
         if(data.isContract && data.token){
 
-            qrIcon = '<a style="float:right;position:relative;line-height:48px;" class="text-primary" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
+            qrIcon = '<a style="float:right;position:relative;line-height:48px;" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
             $('#address-token-details').show();
             var oToken = Ethplorer.prepareToken(data.token);
             // oToken.address = oToken.address;
             // QUESTION: need explanation
             var ttype = (address.toLowerCase() !== "0x55d34b686aa8c04921397c5807db9ecedba00a4c") ? 'Token ' : 'Contract ';
-            $('#ethplorer-path').html(qrIcon + ttype + oToken.name + '<br><small class="text-secondary">' + Ethplorer.Utils.toChecksumAddress(oToken.address) + '</small>');
+            $('#ethplorer-path').html(qrIcon + ttype + oToken.name + '<br><small>' + Ethplorer.Utils.toChecksumAddress(oToken.address) + '</small>');
             titleAdd = ttype + oToken.name + (oToken.symbol ? (' [' + oToken.symbol + ']') : '' ) + ' Information';
             // Read description from tx
             if(data.contract && data.contract.code){
@@ -955,7 +969,7 @@ Ethplorer = {
             }
             $('.address-token-name').html(oToken.name);
             if(Ethplorer.Config.updateLink){
-                $('.address-token-name:eq(0)').append('<a href="' + Ethplorer.Config.updateLink + '" target="_blank" class="token-update text-primary">Update</a>')
+                $('.address-token-name:eq(0)').append('<a href="' + Ethplorer.Config.updateLink + '" target="_blank" class="token-update">Update</a>')
             }
 
             Ethplorer.drawHolders(srcAddress, data);
@@ -1182,17 +1196,7 @@ Ethplorer = {
                 $('#filter_list').hide();
             }else{
                 if(Ethplorer.showTx && data.token){
-                    $('.filter-box').prepend(`
-                    <style>
-                        @media screen and (max-width: 992px) {
-                            .filter-box.in-tabs {text-align: right !important; margin-top: 10px !important; height: 15px !important;}
-                            .filter-box.in-tabs .filter-form {width: 100% !important;}
-                            .filter-box.in-tabs #filter_list {width: 100% !important;}
-                        }
-                        @media screen and (max-width: 379px) {
-                            .filter-box.in-tabs {height: 40px !important;}
-                        }
-                    </style>`);
+                    $('.filter-box').prepend('<style>@media screen and (max-width: 992px) { .filter-box.in-tabs {text-align: right !important; margin-top: 10px !important; height: 15px !important;} .filter-box.in-tabs .filter-form {width: 100% !important;} .filter-box.in-tabs #filter_list {width: 100% !important;} } @media screen and (max-width: 379px) {.filter-box.in-tabs {height: 40px !important;} }</style>');
                 }
                 $('#filter_list').show();
             }
@@ -1279,40 +1283,12 @@ Ethplorer = {
         var tableId = data.token ? 'address-token-transfers' : 'address-transfers';
         $('#' + tableId).find('.table').empty();
         if(Ethplorer.showTx && !$('#showTxEth').length){
-            var showTxChecks = `
-                <span id="showTxChecks" class="d-inline-flex align-items-center mb-2">
-                    <span class="ml-2">
-                        <label class="m-0" for="showTxEth">ETH <sup class="diff-down">new</sup></label>
-                    </span>
-                    <input
-                        onClick="Ethplorer.showTransfers(this, 'eth');"
-                        id="showTxEth"
-                        type="checkbox"
-                        ${(Ethplorer.showTx == 'all' || Ethplorer.showTx == 'eth') ? 'checked="checked"' : ''}
-                        name="showTxEth"
-                        value="1"
-                        class="ml-1"
-                    />
-                    <span class="ml-2">
-                        <label class="m-0" for="showTxTokens">Tokens <sup class="diff-down">new</sup></label>
-                    </span>
-                    <input
-                        onClick="Ethplorer.showTransfers(this, 'tokens');"
-                        id="showTxTokens"
-                        type="checkbox"
-                        ${(Ethplorer.showTx == 'all' || Ethplorer.showTx == 'tokens') ? 'checked="checked"' : ''}
-                        name="showTxTokens"
-                        value="1"
-                        class="ml-1"
-                    />
-                </span>`;
+            var showTxChecks = '<span id="showTxChecks"><span style="color: white;vertical-align:middle;"><label for="showTxEth">ETH <sup class="diff-down">new</sup></label></span> <input onClick="Ethplorer.showTransfers(this, \'eth\');" id="showTxEth" type="checkbox" ' + ((Ethplorer.showTx == 'all' || Ethplorer.showTx == 'eth') ? 'checked="checked"' : '') + ' name="showTxEth" value="1" style="vertical-align: text-bottom;margin-right:5px;">' + ' <span style="color: white;vertical-align:middle;"><label for="showTxTokens">Tokens <sup class="diff-down">new</sup></label></span> <input onClick="Ethplorer.showTransfers(this, \'tokens\');" id="showTxTokens" type="checkbox" ' + ((Ethplorer.showTx == 'all' || Ethplorer.showTx == 'tokens') ? 'checked="checked"' : '') + ' name="showTxTokens" value="1" style="vertical-align: text-bottom;margin-right:5px;"></span>';
 
             if(!data.token){
-                $('.filter-form').prepend('<style>@media screen and (max-width: 501px) {.filter-box.out-of-tabs{height: 35px !important;}}</style>');
-                $('.filter-form').prepend(showTxChecks);
+                $('.filter-form').prepend('<style>@media screen and (max-width: 501px) {.filter-box.out-of-tabs{height: 35px !important;}}</style>' + showTxChecks);
             }else{
-                $('.filter-box').prepend('<style>.filter-box.in-tabs .filter-form{width: auto !important;} @media screen and (max-width: 501px) {.filter-box.out-of-tabs{height: 35px !important;}} @media screen and (max-width: 432px) {.filter-box.in-tabs{height: 35px !important;}}</style>');
-                $('.filter-box').prepend(showTxChecks);
+                $('.filter-box').prepend('<style>.filter-box.in-tabs .filter-form{width: auto !important;} @media screen and (max-width: 501px) {.filter-box.out-of-tabs{height: 35px !important;}} @media screen and (max-width: 432px) {.filter-box.in-tabs{height: 35px !important;}}</style>' + showTxChecks);
             }
         }
         if(!data.transfers || !data.transfers.length){
@@ -1337,10 +1313,10 @@ Ethplorer = {
                         }
                     }
                     var row = $('<tr>');
-                    var tdDate = $('<td>').addClass('d-none d-md-table-cell');
-                    var tdData = $('<td>').addClass('w-100 w-md-auto');
+                    var tdDate = $('<td>').addClass('hide-small');
+                    var tdData = $('<td>');
                     var divData = $('<div>').addClass('hash-from-to');
-                    var tdQty = $('<td>').addClass('d-none d-md-table-cell text-right');
+                    var tdQty = $('<td>').addClass('hide-small text-right');
                     var date = Ethplorer.Utils.ts2date(tx.timestamp, false);
                     var value = Ethplorer.Utils.formatNum(qty, true, txToken.decimals, 2) + ' ' + (tx.isEth ? '<i class="fab fa-ethereum"></i> ' : '') + txToken.symbol;
                     var token = Ethplorer.Utils.getEthplorerLink(tx.contract, txToken.name, false);
@@ -1394,9 +1370,9 @@ Ethplorer = {
                     }
                     value +=  usdPrice;
                     divData.html(
-                        '<span class="d-inline d-sm-none">Date:&nbsp;' + date + '<br></span>' +
+                        '<span class="show_small">Date:&nbsp;' + date + '<br></span>' +
                         (!data.token ? ('<span class="address-token-inline">Token:&nbsp;' + token + '<br></span>') : '') +
-                        '<span class="d-inline d-sm-none ' + rowClass + '">Value:&nbsp;' + value + '</span>' +
+                        '<span class="show_small ' + rowClass + '">Value:&nbsp;' + value + '</span>' +
                         'Tx:&nbsp;' + Ethplorer.Utils.getEthplorerLink(tx.transactionHash) + '<br>' +
                         (from ? ('From:&nbsp;' + from + '<br>To:&nbsp;' + to) : ('Address:&nbsp;' + _address))
                     );
@@ -1406,7 +1382,7 @@ Ethplorer = {
                     row.append(tdDate, tdData);
                     if(!data.token){
                         var tdToken = $('<td>');
-                        tdToken.addClass('d-none d-lg-table-cell');
+                        tdToken.addClass('address-token');
                         tdToken.html(token);
                         row.append(tdToken);
                     }
@@ -1554,11 +1530,11 @@ Ethplorer = {
                 }
 
                 var address = Ethplorer.Utils.getEthplorerLink(holder['address'], holder['address'], false);
-                var shareDiv = '<div class="clearfix mr-5"><div class="holder-gauge" style="width:' + holder['share'] + '%;"></div><div class="holder-gauge-value mr-n5">&nbsp;' + holder['share'] + '%</div></div>'
+                var shareDiv = '<div><div class="holder-gauge" style="width:' + holder['share'] + '%;"></div><div class="holder-gauge-value">&nbsp;' + holder['share'] + '%</div></div>'
                 var page = (data.pager && data.pager.holders) ? data.pager.holders.page : 1;
                 var add = (page - 1) * Ethplorer.pageSize;
-                row.append('<td>' + (add + i + 1) + '</td><td class="d-none d-md-table-cell">' + address + '</td><td class="d-none d-md-table-cell"></td><td class="d-none d-md-table-cell">' + balance + '</td><td class="d-none d-md-table-cell">' + shareDiv + '</td>');
-                row.append('<td class="d-table-cell d-md-none w-100"><div class="holder_small">' + address + '<br />' + balance + '<br />' + shareDiv + '</div></td>');
+                row.append('<td>' + (add + i + 1) + '</td><td class="hide-small">' + address + '</td><td class="hide-small"></td><td class="hide-small">' + balance + '</td><td class="hide-small">' + shareDiv + '</td>');
+                row.append('<td class="show_small"><div class="holder_small">' + address + '<br />' + balance + '<br />' + shareDiv + '</div></td>');
                 table.append(row);
             }
             if(totalShare > 100){
@@ -1670,7 +1646,7 @@ Ethplorer = {
 
         container.parents('.block').find('.total-records').empty();
 
-        var pageSizeSelect = $('<SELECT class="pageSize form-control form-control-sm w-auto d-inline mt-2 ml-2 ml-sm-3 float-left">');
+        var pageSizeSelect = $('<SELECT class="pageSize">');
         var sizes = [10, 25, 50, 100];
         for(var i=0; i<4; i++){
             var option = $('<OPTION>');
@@ -1699,7 +1675,7 @@ Ethplorer = {
         }(container, pageData));
 
         var pager = $('<UL>');
-        pager.addClass('pagination pagination-sm my-2 mr-2 mr-sm-3 float-right');
+        pager.addClass('pagination pagination-sm');
         setTimeout(function(_container, _count, _total){
             return function(){
                 var str = Ethplorer.Utils.formatNum(_count) + ' total';
@@ -1729,7 +1705,7 @@ Ethplorer = {
                 if((i <= 1) || ((i <= 5) &&(currentPage <= 4)) || ((i >= (pages - 4)) &&(currentPage >= (pages - 3))) || (i >= (pages)) || ((i >= (currentPage - 1)) && (i <= (currentPage + 1)))){
                     var page = $('<LI>');
                     page.addClass('page-item');
-                    var link = $('<a class="page-link text-decoration-none">');
+                    var link = $('<a>');
                     link.html(i);
                     if(i === currentPage){
                         page.addClass('active');
@@ -1753,7 +1729,7 @@ Ethplorer = {
                     var page = $('<LI>');
                     page.addClass('page-item');
                     lastPage = false;
-                    var splitter = $('<span class="page-link">');
+                    var splitter = $('<a>');
                     splitter.html('...');
                     page.append(splitter);
                     page.addClass('disabled');
@@ -1985,7 +1961,7 @@ Ethplorer = {
     showTableLoader: function(){
         $('.filter-box').addClass('processing');
         $('.paginationFooter, .notFoundRow').parents('.table').addClass('unclickable');
-        $('.total-records:visible').html('<i class="table-loading fa fa-spinner fa-spin fa-lg"></i>');
+        $('.total-records:visible').html('<i class="table-loading fa fa-spinner fa-spin fa-2x"></i>');
         $('.nav-tabs').addClass('unclickable');
     },
     hideTableLoader: function(){
@@ -2497,10 +2473,8 @@ Ethplorer = {
 
                 $el.removeClass('hide-bottom-gr');
 
-                if (
-                    $child.outerHeight(true) < $el.outerHeight(true) ||
-                    $child.outerHeight(true) - $el.outerHeight(true) + $child.position().top === 0
-                ) {
+                if ($child.outerHeight(true) < $el.outerHeight(true) || $child.outerHeight(true) - $el.outerHeight(true) + $child.position().top === 0){
+                    //bottom
                     $el.addClass('hide-bottom-gr')
                 }
 

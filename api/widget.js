@@ -143,6 +143,17 @@ ethplorerWidget = {
         if(size > 90) return "MMM ''yy";
         else return "MMM d";
     },
+    getGoogleChartAxisFormatByInterval: function (start, end) {
+        var diff = Math.abs(end - start) / (24 * 3600 * 1000);
+        var format;
+        if (diff < 131) {
+            format = 'MMM d';
+        // more than 131 days grouping up to one month
+        } else {
+            format = "MMM ''yy";
+        }
+        return format;
+    },
     getGoogleChartAxisCount: function(size){
         if(size > 90) return 10;
         else return 7;
@@ -1365,7 +1376,7 @@ ethplorerWidget.Type['tokenHistoryGrouped'] = function(element, options, templat
                 slantedText: false,
                 maxAlternation: 1,
                 maxTextLines: 1,
-                format: ethplorerWidget.getGoogleChartAxisFormat(aData.length),
+                format: ethplorerWidget.getGoogleChartAxisFormatByInterval(dteRangeStart, dteRangeEnd),
                 gridlines: {
                     count: ethplorerWidget.getGoogleChartAxisCount(aData.length),
                     color: "none"
@@ -1471,6 +1482,18 @@ ethplorerWidget.Type['tokenHistoryGrouped'] = function(element, options, templat
             var chart = new google.visualization.ChartWrapper(def);
             dashboard.bind(control, chart);
             dashboard.draw(data);
+
+            google.visualization.events.addListener(control, 'statechange', function (data) {
+                var state = control.getState();
+                if (state && state.range && state.range.end && state.range.start) {
+                    var prevFormat = chart.getOption('hAxis.format');
+                    var nextFormat = ethplorerWidget.getGoogleChartAxisFormatByInterval(state.range.start, state.range.end);
+                    if (prevFormat !== nextFormat) {
+                        chart.setOption('hAxis.format', nextFormat);
+                        chart.draw();
+                    }
+                }
+            });
         }else{
             var options = $.extend(true, defOptions, this.options['options']);
 
@@ -1950,7 +1973,7 @@ ethplorerWidget.Type['tokenPriceHistoryGrouped'] = function(element, options, te
                     slantedText: false,
                     maxAlternation: 1,
                     maxTextLines: 1,
-                    format: ethplorerWidget.getGoogleChartAxisFormat(aData.length),
+                    format: ethplorerWidget.getGoogleChartAxisFormatByInterval(rangeStart, new Date(strFirstDate)),
                     gridlines: {
                         count: ethplorerWidget.getGoogleChartAxisCount(aData.length),
                         color: "none"
@@ -2050,6 +2073,18 @@ ethplorerWidget.Type['tokenPriceHistoryGrouped'] = function(element, options, te
         // draw chart
         dashboard.bind(control, chart);
         dashboard.draw(data);
+
+        google.visualization.events.addListener(control, 'statechange', function (data) {
+            var state = control.getState();
+            if (state && state.range && state.range.end && state.range.start) {
+                var prevFormat = chart.getOption('hAxis.format');
+                var nextFormat = ethplorerWidget.getGoogleChartAxisFormatByInterval(state.range.start, state.range.end);
+                if (prevFormat !== nextFormat) {
+                    chart.setOption('hAxis.format', nextFormat);
+                    chart.draw();
+                }
+            }
+        });
     };
 
     this.init = function(){
@@ -2438,7 +2473,7 @@ ethplorerWidget.Type['addressPriceHistoryGrouped'] = function(element, options, 
                     slantedText: false,
                     maxAlternation: 1,
                     maxTextLines: 1,
-                    format: ethplorerWidget.getGoogleChartAxisFormat(aData.length),
+                    format: ethplorerWidget.getGoogleChartAxisFormatByInterval(dteRangeStart, dteRangeEnd),
                     gridlines: {
                         count: ethplorerWidget.getGoogleChartAxisCount(aData.length),
                         color: "none"
@@ -2503,6 +2538,18 @@ ethplorerWidget.Type['addressPriceHistoryGrouped'] = function(element, options, 
         // draw chart
         dashboard.bind(control, chart);
         dashboard.draw(data);
+
+        google.visualization.events.addListener(control, 'statechange', function (data) {
+            var state = control.getState();
+            if (state && state.range && state.range.end && state.range.start) {
+                var prevFormat = chart.getOption('hAxis.format');
+                var nextFormat = ethplorerWidget.getGoogleChartAxisFormatByInterval(state.range.start, state.range.end);
+                if (prevFormat !== nextFormat) {
+                    chart.setOption('hAxis.format', nextFormat);
+                    chart.draw();
+                }
+            }
+        });
     };
 
     this.init = function(){
