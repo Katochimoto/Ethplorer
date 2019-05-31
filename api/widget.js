@@ -147,7 +147,7 @@ ethplorerWidget = {
         var diff = Math.abs(end - start) / (24 * 3600 * 1000);
         var format;
         if (diff < 131) {
-            format = 'MMM d';
+            format = 'd. MMM';
         // more than 132 days grouping up to one month
         } else {
             format = "MMM ''yy";
