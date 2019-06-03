@@ -241,6 +241,11 @@ tr.odd {
     overflow: hidden;
 }
 
+#address-token-balances .table td.notfound {
+    padding: 8px;
+    text-align: center;
+}
+
 .content-page .table tr.blue {
     background-color: #1396e2 !important;
 }
@@ -1050,6 +1055,44 @@ _::-webkit-:host:not(:root:root), .filter-clear {
     top: 5px;
 }
 
+.block-header-balances {
+    text-decoration: none !important;
+    color: inherit;
+}
+
+.block-header-balances:not(.collapsed) .caret {
+    content: "";
+    border-top: 0;
+    border-bottom: 4px dashed;
+}
+
+.block-header-balances-content {
+    text-decoration: underline;
+    text-decoration-style: dashed;
+}
+
+.address-token-filter {
+    padding: 10px 20px 0 20px;
+}
+
+.address-token-filter .form-group {
+    margin-bottom: 0px;
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.address-token-filter .form-control {
+    min-width: 160px;
+}
+
+.address-token-filter label {
+    font-weight: normal;
+    margin-top: 5px;
+}
+
 @media screen and (max-width: 1199px) {
     #topmenu li {
         padding-right: 8px;
@@ -1059,6 +1102,13 @@ _::-webkit-:host:not(:root:root), .filter-clear {
 @media screen and (min-width: 640px) {
     .nav-tabs li a {
         font-size: 24px !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .address-token-filter .form-group {
+        align-items: center;
+        flex-direction: row;
     }
 }
 
@@ -1179,6 +1229,9 @@ _::-webkit-:host:not(:root:root), .filter-clear {
         font-size: 0.6em;
         line-height: 2em;
         padding-right: 5px;
+    }
+    .address-token-filter {
+        padding: 10px 8px 0 8px;
     }
 }
 

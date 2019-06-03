@@ -584,11 +584,42 @@ $navbar = $twig->render('navbar.twig');
                     <div class="col-xs-12 col-md-6">
                         <div class="block" id="address-token-balances">
                             <div class="block-header">
-                                <h3>Balances <sup><i class="fa fa-question-circle fa-xs" data-toggle="tooltip" data-placement="right" title="ETH&nbsp;+&nbsp;Tokens"></i></sup>
+                                <h3>
+                                    <a
+                                        href="#balances-filter"
+                                        class="block-header-balances collapsed"
+                                        role="button"
+                                        data-toggle="collapse"
+                                        aria-expanded="false"
+                                        aria-controls="balances-filter"
+                                    >
+                                        <span class="block-header-balances-content">Balances</span>
+                                        <span class="caret"></span>
+                                    </a>
                                     <div id="address-balances-total"></div>
                                 </h3>
+                                <form
+                                    id="balances-filter"
+                                    class="collapse form-inline address-token-filter"
+                                >
+                                    <div class="form-group">
+                                        <label>
+                                            Found&nbsp;<span id="balances-filter-tokens">0</span>,
+                                            Total:&nbsp;<span id="balances-filter-total">0</span>&nbsp;USD
+                                        </label>
+                                        <input
+                                            class="form-control input-sm"
+                                            type="text"
+                                            name="search"
+                                            autocomplete="off"
+                                            placeholder="Filter by name or symbol"
+                                        />
+                                    </div>
+                                </form>
                             </div>
-                            <div class="scrollable"><div class="scrollwrapper"><table class="table"></table></div></div>
+                            <div class="scrollable">
+                                <div class="scrollwrapper" data-height="350"><table class="table"></table></div>
+                            </div>
                             <div class="text-center">
                                 <a class="expand-btn">Expand</a>
                             </div>

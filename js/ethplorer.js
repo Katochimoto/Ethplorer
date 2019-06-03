@@ -1024,18 +1024,24 @@ Ethplorer = {
 
         }else{
             // Fill prices
+            var hasEthPrice = Boolean(Ethplorer.ethPrice && Ethplorer.ethPrice.rate && data.balance);
             var totalPrice = 0;
             var lastTotalPrice = 0;
-            if(Ethplorer.ethPrice && Ethplorer.ethPrice.rate && data.balance){
+            var balances = [].concat(data.balances || []);
+
+            if (hasEthPrice) {
                 totalPrice = Ethplorer.ethPrice.rate * data.balance;
                 if(Ethplorer.ethPrice.diff){
                     var lastEthRate = Ethplorer.ethPrice.diff > -100 ? (Ethplorer.ethPrice.rate / (1 + Ethplorer.ethPrice.diff / 100)) : 0;
                     lastTotalPrice += lastEthRate * data.balance;
                 }
             }
-            if(data.balances && data.balances.length){
-                for(var k=0; k<data.balances.length; k++){
-                    var balance = data.balances[k];
+
+            $('#address-token-balances input[name="search"]').off();
+
+            if (balances.length) {
+                for (var k=0; k<balances.length; k++) {
+                    var balance = balances[k];
                     var oToken = Ethplorer.prepareToken(data.tokens[balance.contract]);
                     var qty = Ethplorer.Utils.toBig(balance.balance);
                     if(Ethplorer.Utils.isSafari()){
@@ -1044,19 +1050,19 @@ Ethplorer = {
                         qty = qty.div(Math.pow(10, oToken.decimals));
                     }
                     var qFloat = parseFloat(qty.toString());
-                    data.balances[k].qty = qty;
-                    data.balances[k].price = false;
-                    data.balances[k].balanceUSD = false;
+                    balances[k].qty = qty;
+                    balances[k].price = false;
+                    balances[k].balanceUSD = false;
                     if((qFloat > 0) && oToken.price && oToken.price.rate){
-                        data.balances[k].price = oToken.price.rate;
-                        data.balances[k].balanceUSD = oToken.price.rate * qFloat;
+                        balances[k].price = oToken.price.rate;
+                        balances[k].balanceUSD = oToken.price.rate * qFloat;
                         var lastRate = oToken.price.diff > -100 ? (oToken.price.rate / (1 + oToken.price.diff / 100)) : 0;
                         lastTotalPrice += qFloat * lastRate;
-                        totalPrice += data.balances[k].balanceUSD;
+                        totalPrice += balances[k].balanceUSD;
                     }
                 }
                 // Sort
-                var balances = data.balances.sort(function(a,b){
+                balances = balances.sort(function(a,b){
                     if(a.price && !b.price) return -1;
                     if(b.price && !a.price) return 1;
                     if(a.balanceUSD < b.balanceUSD)
@@ -1065,53 +1071,114 @@ Ethplorer = {
                         return -1;
                     return 0;
                 });
-                // Show
-                $('#address-token-balances table').empty();
-                for(var k=0; k<balances.length; k++){
-                    var balance = balances[k];
-                    var oToken = Ethplorer.prepareToken(data.tokens[balance.contract]);
-                    var row = $('<TR>');
-                    var qty = balance.qty;
-                    if(!parseFloat(qty.toString()) && !(balance.totalIn || balance.totalOut)){
-                        // No balance and no movement - skip
-                        continue;
-                    }
-                    var value = Ethplorer.Utils.formatNum(qty, true, oToken.decimals, true, true) + ' ' + oToken.symbol;
-                    if(balances[k].price){
-                        var rate = oToken.price;
-                        var price = balances[k].balanceUSD;
-                        value += ('<br><div class="balances-price" title="$' + price + '">$&nbsp;' + Ethplorer.Utils.formatNum(price, true, 2, true, true) + ' ');
-                        if(rate.diff){
-                            var cls = getDiffClass(rate.diff);
-                            var hint = 'Updated at ' + Ethplorer.Utils.ts2date(rate.ts, true);
-                            if(rate.diff > 0){
-                                rate.diff = '+' + rate.diff;
-                            }
-                            value = value + ' <span class="' + cls + '" title="' + hint + '">(' + Ethplorer.Utils.round(rate.diff, 2) + '%)</span>'
-                        }
-                        value = value + '</div>';
 
-                    }
-                    // @temporary off
-                    if(false && (balance.totalIn || balance.totalOut)){
-                        value += '<br />';
-                        var totalIn = Ethplorer.Utils.toBig(balance.totalIn);
-                        var totalOut = Ethplorer.Utils.toBig(balance.totalOut);
-                        if(Ethplorer.Utils.isSafari()){
-                            totalIn = parseFloat(totalIn.toString()) / Math.pow(10, oToken.decimals);
-                            totalOut = parseFloat(totalOut.toString()) / Math.pow(10, oToken.decimals);
-                        }else{
-                            totalIn = totalIn.div(Math.pow(10, oToken.decimals));
-                            totalOut = totalOut.div(Math.pow(10, oToken.decimals));
-                        }
-                        value += ('<div class="total-in-out-small">Total In: ' + Ethplorer.Utils.formatNum(totalIn, true, oToken.decimals, true) + '<br />');
-                        value += ('Total Out: ' + Ethplorer.Utils.formatNum(totalOut, true, oToken.decimals, true) + '</div>');
-                    }
-                    row.append('<td class="cut-long-text">' + Ethplorer.Utils.getEthplorerLink(balance.contract, oToken.name, false) + '</td>');
-                    row.append('<td>' + value + '</td>');
-                    row.find('td:eq(1)').addClass('text-right');
+                if (hasEthPrice) {
+                    balances = [].concat({
+                        isEth: true,
+                        name: 'Ethereum',
+                        symbol: 'ETH',
+                        balance: data.balance,
+                        balanceUSD: Ethplorer.ethPrice.rate * data.balance
+                    }, balances);
+                }
+
+                if (hasEthPrice) {
+                    var row = $('<TR>')
+                        .append('<td class="cut-long-text">Ethereum</td>')
+                        .append('<td align="right">' + Ethplorer.formatValue(data.balance, 'ether-full') + '</td>');
                     $('#address-token-balances table').append(row);
                 }
+
+                // Show
+                var showAddressTokenBalances = function (balances) {
+                    $('#address-token-balances table').empty();
+                    var tokens = 0;
+                    for(var k=0; k<balances.length; k++){
+                        var balance = balances[k];
+                        var oToken = Ethplorer.prepareToken(data.tokens[balance.contract]);
+                        var row = $('<TR>');
+
+                        if (balance.isEth) {
+                            row.append('<td class="cut-long-text">' + balance.name + '</td>')
+                                .append('<td align="right">' + Ethplorer.formatValue(balance.balance, 'ether-full') + '</td>');
+                            $('#address-token-balances table').append(row);
+                            tokens++;
+                            continue;
+                        }
+
+                        var qty = balance.qty;
+                        if(!parseFloat(qty.toString()) && !(balance.totalIn || balance.totalOut)){
+                            // No balance and no movement - skip
+                            continue;
+                        }
+                        var value = Ethplorer.Utils.formatNum(qty, true, oToken.decimals, true, true) + ' ' + oToken.symbol;
+                        if(balances[k].price){
+                            var rate = oToken.price;
+                            var price = balances[k].balanceUSD;
+                            value += ('<br><div class="balances-price" title="$' + price + '">$&nbsp;' + Ethplorer.Utils.formatNum(price, true, 2, true, true) + ' ');
+                            if(rate.diff){
+                                var cls = getDiffClass(rate.diff);
+                                var hint = 'Updated at ' + Ethplorer.Utils.ts2date(rate.ts, true);
+                                if(rate.diff > 0){
+                                    rate.diff = '+' + rate.diff;
+                                }
+                                value = value + ' <span class="' + cls + '" title="' + hint + '">(' + Ethplorer.Utils.round(rate.diff, 2) + '%)</span>'
+                            }
+                            value = value + '</div>';
+
+                        }
+                        // @temporary off
+                        if(false && (balance.totalIn || balance.totalOut)){
+                            value += '<br />';
+                            var totalIn = Ethplorer.Utils.toBig(balance.totalIn);
+                            var totalOut = Ethplorer.Utils.toBig(balance.totalOut);
+                            if(Ethplorer.Utils.isSafari()){
+                                totalIn = parseFloat(totalIn.toString()) / Math.pow(10, oToken.decimals);
+                                totalOut = parseFloat(totalOut.toString()) / Math.pow(10, oToken.decimals);
+                            }else{
+                                totalIn = totalIn.div(Math.pow(10, oToken.decimals));
+                                totalOut = totalOut.div(Math.pow(10, oToken.decimals));
+                            }
+                            value += ('<div class="total-in-out-small">Total In: ' + Ethplorer.Utils.formatNum(totalIn, true, oToken.decimals, true) + '<br />');
+                            value += ('Total Out: ' + Ethplorer.Utils.formatNum(totalOut, true, oToken.decimals, true) + '</div>');
+                        }
+                        row.append('<td class="cut-long-text">' + Ethplorer.Utils.getEthplorerLink(balance.contract, oToken.name, false) + '</td>');
+                        row.append('<td>' + value + '</td>');
+                        row.find('td:eq(1)').addClass('text-right');
+                        $('#address-token-balances table').append(row);
+                        tokens++;
+                    }
+
+                    if (!tokens) {
+                        $('#address-token-balances table')
+                            .append($('<TR>').append('<td colspan="2" class="notfound">No tokens found</td>'));
+                    }
+
+                    Ethplorer.Utils.resetScrollable($('#address-token-balances .scrollwrapper'));
+
+                    var total = balances.reduce(function (out, item) {
+                        return out + (item.balanceUSD || 0);
+                    }, 0);
+
+                    $('#balances-filter-tokens').html(tokens + '&nbsp;' + Ethplorer.Utils.getNoun(tokens, 'token', 'tokens', 'tokens'));
+                    $('#balances-filter-total').html(total > 0 ? '~&nbsp;' + Ethplorer.Utils.formatNum(total, true, 2, true, true) : '0');
+                };
+
+                $('#address-token-balances input[name="search"]')
+                    .on('input', function (event) {
+                        var value = String(event.target.value).toLowerCase();
+                        var filteredBalances = balances.filter(function (balance) {
+                            var oToken = balance.isEth ? balance : Ethplorer.prepareToken(data.tokens[balance.contract]);
+                            return (
+                                (oToken.name && oToken.name.toLowerCase().indexOf(value) !== -1) ||
+                                (oToken.symbol && oToken.symbol.toLowerCase().indexOf(value) !== -1)
+                            );
+                        });
+
+                        showAddressTokenBalances(filteredBalances);
+                    });
+
+                showAddressTokenBalances(balances);
             }
 
             var totalDiff = Ethplorer.Utils.round(Ethplorer.Utils.pdiff(totalPrice, lastTotalPrice), 2);
@@ -1883,9 +1950,7 @@ Ethplorer = {
             }
         }
     },
-    fillValue: function(id, value){
-        var type = $('#' + id).attr('data-type') || 'none';
-        var options = $('#' + id).attr('data-options') ? $('#' + id).attr('data-options').split('|') : [];
+    formatValue: function (value, type, options) {
         switch(type){
             case 'int':
             case 'float':
@@ -1966,6 +2031,13 @@ Ethplorer = {
                 }
                 break;
         }
+
+        return value;
+    },
+    fillValue: function(id, value){
+        var type = $('#' + id).attr('data-type') || 'none';
+        var options = $('#' + id).attr('data-options') ? $('#' + id).attr('data-options').split('|') : [];
+        value = Ethplorer.formatValue(value, type, options);
         $('#' + id).html(value);
     },
     showTableLoader: function(){
@@ -2477,51 +2549,80 @@ Ethplorer = {
          *
          */
         initScrollable: function () {
-            function checkPosition(el){
-                var $el = $(el);
-                var $child = $el.children();
+            $(document)
+                .on('click', '.expand-btn', function(e){
+                    var $btn = $(e.target);
+                    var $scrollable = $btn.parent().siblings('.scrollable');
+                    var bool = $btn.text().indexOf('expand') !== -1;
+                    var text = bool ? 'collapse' : 'expand';
 
-                $el.removeClass('hide-bottom-gr');
+                    $scrollable.toggleClass('expanded', bool);
+                    $btn.toggleClass('shift-up', text === 'expand')
+                        .html(text + (bool ? '&uarr;': '&darr;'))
 
-                if ($child.outerHeight(true) < $el.outerHeight(true) || $child.outerHeight(true) - $el.outerHeight(true) + $child.position().top === 0){
-                    //bottom
-                    $el.addClass('hide-bottom-gr')
-                }
+                    Ethplorer.Storage.set('expand-address-token-balances', text);
 
-                // expand-btn now only for Token Balances block
-                // to extend functionality need to update storage keys depends on block
-                var $expand = $el.closest('.block').find('.expand-btn');
-                if ($expand.length && $el.outerHeight(true) < $el.children().outerHeight(true)) {
-                    $expand.show();
-                    var text = Ethplorer.Storage.get('expand-address-token-balances', 'expand');
-                    $expand
-                        .html(text + (text === 'collapse' ? '&uarr;': '&darr;'))
-                        .toggleClass('shift-up', text.indexOf('expand') !== -1)
-                        .parent()
-                        .siblings('.scrollable')
-                        .toggleClass('expanded', text.indexOf('collapse') !== -1)
-                    $(document).on('click', '.expand-btn', function(e){
-                        var $btn = $(e.target);
-                        var $scrollable = $btn.parent().siblings('.scrollable');
-                        var bool = $btn.text().indexOf('expand') !== -1;
-                        $scrollable.toggleClass('expanded', bool);
-                        text = bool ? 'collapse' : 'expand';
-                        $btn
-                            .toggleClass('shift-up', text === 'expand')
-                            .html(text + (bool ? '&uarr;': '&darr;'))
-                        Ethplorer.Storage.set('expand-address-token-balances', text);
-                        if (!bool){
-                            $('#address-balances-total')[0].scrollIntoView({behavior: "instant", block: "start"})
-                        }
-                    })
-                }
-            }
+                    if (!bool){
+                        $('#address-balances-total')[0].scrollIntoView({behavior: "instant", block: "start"});
+                    }
+                });
+
             $('.scrollwrapper').one("DOMSubtreeModified", function(event){
                 setTimeout(() => {
-                    checkPosition(event.target.parentElement)
+                    Ethplorer.Utils.resetScrollable(event.target.parentElement);
                 },100)
             });
+        },
 
+        resetScrollable: function (el) {
+            var $el = $(el);
+            var $child = $el.children();
+            var scrollHeight = $el.data('height') ? parseInt($el.data('height'), 10) : $el.outerHeight(true);
+            var scrollContentHeight = $child.outerHeight(true);
+
+            $el.removeClass('hide-bottom-gr');
+
+            if (
+                scrollContentHeight < scrollHeight ||
+                scrollContentHeight - scrollHeight + $child.position().top === 0
+            ) {
+                //bottom
+                $el.addClass('hide-bottom-gr')
+            }
+
+            // expand-btn now only for Token Balances block
+            // to extend functionality need to update storage keys depends on block
+            var $expand = $el.closest('.block').find('.expand-btn');
+            if (
+                $expand.length &&
+                scrollHeight < scrollContentHeight
+            ) {
+                $expand.show();
+                var text = Ethplorer.Storage.get('expand-address-token-balances', 'expand');
+                $expand
+                    .html(text + (text === 'collapse' ? '&uarr;': '&darr;'))
+                    .toggleClass('shift-up', text.indexOf('expand') !== -1)
+                    .parent()
+                    .siblings('.scrollable')
+                    .toggleClass('expanded', text.indexOf('collapse') !== -1);
+            } else {
+                $expand.hide();
+            }
+        },
+        getNoun: function (number, one, two, five) {
+            var n = Math.abs(number);
+            n %= 100;
+            if (n >= 5 && n <= 20) {
+                return five;
+            }
+            n %= 10;
+            if (n === 1) {
+                return one;
+            }
+            if (n >= 2 && n <= 4) {
+                return two;
+            }
+            return five;
         }
     },
     enableHistoricalPrice: function(bool){
