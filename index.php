@@ -22,7 +22,7 @@ require dirname(__FILE__) . '/service/lib/ethplorer.php';
  */
 $es = Ethplorer::db($aConfig);
 
-$codeVersion = isset($aConfig['codeVersion']) ? $aConfig['codeVersion'] : "220";
+$codeVersion = isset($aConfig['codeVersion']) ? $aConfig['codeVersion'] : "221";
 
 $error = TRUE;
 $header = "";

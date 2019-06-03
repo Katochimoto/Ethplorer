@@ -1292,8 +1292,18 @@ Ethplorer = {
             }
         }
         if(!data.transfers || !data.transfers.length){
+            var hasFilters = Boolean(
+                $('#filter_list').val() ||
+                !$('#showTxEth').prop('checked') ||
+                !$('#showTxTokens').prop('checked')
+            );
+
+            var notFoundText = hasFilters ?
+                'No transfers found<br/>Please try changing the search terms' :
+                'No transfers found';
+
             $('#' + tableId).find('.total-records').empty();
-            $('#' + tableId).find('.table').append('<tr class="notFoundRow"><td>No transfers found</td></tr>');
+            $('#' + tableId).find('.table').append('<tr class="notFoundRow"><td>' + notFoundText + '</td></tr>');
         }else{
             for(var i=0; i<data.transfers.length; i++){
                 var tx = data.transfers[i];
