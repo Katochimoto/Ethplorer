@@ -267,7 +267,6 @@ const config = {
     page('widgets'),
     page('about'),
     page('privacy'),
-    page('address'),
 
     tmpl('widgets'),
     tmpl('footer', { inject: false }),
