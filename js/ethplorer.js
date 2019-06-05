@@ -307,7 +307,7 @@ Ethplorer = {
             $('#error-reason').text(message);
         }
         $('#error').show();
-        $('#ethplorer-path').hide();
+        $('#ethplorer-path').addClass('hidden');
     },
     getTxErrorReason: function(reason){
         var aReasons = {
@@ -450,7 +450,7 @@ Ethplorer = {
     },
     showTxDetails: function(txHash, txData){
         // $('#ethplorer-path').html('<h1>Transaction hash: ' + txHash + '</h1>');
-        $('#ethplorer-path').show();
+        $('#ethplorer-path').removeClass('hidden');
         if (txData.pending && txData.tx && txData.tx.blockNumber) {
             $('#ethplorer-path')
                 .remove('.qrcode, h2, h4')
@@ -882,7 +882,7 @@ Ethplorer = {
         var titleAdd = '';
         // Temporary hack
         $('.address-type').text(data.isContract ? 'Contract' : 'Address');
-        $('#ethplorer-path').show();
+        $('#ethplorer-path').removeClass('hidden');
         data.address = address;
         var aValues = ['address', 'balance'];
         if(data.balanceIn){
