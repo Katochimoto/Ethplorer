@@ -1067,8 +1067,18 @@ _::-webkit-:host:not(:root:root), .filter-clear {
 }
 
 .block-header-balances-content {
-    text-decoration: underline;
-    text-decoration-style: dashed;
+    position: relative;
+    display: inline-block;
+}
+
+.block-header-balances-content::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    border-bottom: 2px dashed;
+    left: 0;
+    right: 0;
 }
 
 .address-token-filter {
