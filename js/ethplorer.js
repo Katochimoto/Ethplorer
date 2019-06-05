@@ -452,9 +452,14 @@ Ethplorer = {
         // $('#ethplorer-path').html('<h1>Transaction hash: ' + txHash + '</h1>');
         $('#ethplorer-path').show();
         if (txData.pending && txData.tx && txData.tx.blockNumber) {
-            $('#ethplorer-path').html($('#ethplorer-path').text() + '<br /><h4 class="text-danger tx-pending">Processing transaction&nbsp;&nbsp;<i class="table-loading fa fa-spinner fa-spin"></i></h4>')
+            $('#ethplorer-path')
+                .remove('.qrcode, h2, h4')
+                .append('<h4 class="text-danger tx-pending">Processing transaction&nbsp;&nbsp;<i class="table-loading fa fa-spinner fa-spin"></i></h4>');
+
         } else if (txData.pending) {
-            $('#ethplorer-path').html($('#ethplorer-path').text() + '<br /><h4 class="text-danger tx-pending">Pending transaction&nbsp;&nbsp;<i class="table-loading fa fa-spinner fa-spin"></i></h4>')
+            $('#ethplorer-path')
+                .remove('.qrcode, h2, h4')
+                .append('<h4 class="text-danger tx-pending">Pending transaction&nbsp;&nbsp;<i class="table-loading fa fa-spinner fa-spin"></i></h4>');
         }
 
         $('.list-field').empty();
@@ -896,16 +901,24 @@ Ethplorer = {
         if(data.isContract){
             Ethplorer.fillValues('address', data, ['contract', 'contract.creator']);
         }
-        var qrIcon = '<a style="float:right;position:relative;" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
+        var qrIcon = '<a class="qrcode" style="line-height:initial;" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
         if(data.isContract && data.token){
+            qrIcon = '<a class="qrcode" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
 
-            qrIcon = '<a style="float:right;position:relative;line-height:48px;" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
             $('#address-token-details').show();
             var oToken = Ethplorer.prepareToken(data.token);
             // oToken.address = oToken.address;
             // QUESTION: need explanation
             var ttype = (address.toLowerCase() !== "0x55d34b686aa8c04921397c5807db9ecedba00a4c") ? 'Token ' : 'Contract ';
-            $('#ethplorer-path').html(qrIcon + ttype + oToken.name + '<br><small>' + Ethplorer.Utils.toChecksumAddress(oToken.address) + '</small>');
+
+            $('#ethplorer-path')
+                .remove('.qrcode, h2')
+                .find('h1')
+                .html(ttype + oToken.name)
+                .end()
+                .append('<h2>' + Ethplorer.Utils.toChecksumAddress(oToken.address) + '</h2>')
+                .prepend(qrIcon);
+
             titleAdd = ttype + oToken.name + (oToken.symbol ? (' [' + oToken.symbol + ']') : '' ) + ' Information';
             // Read description from tx
             if(data.contract && data.contract.code){
@@ -1227,7 +1240,14 @@ Ethplorer = {
         $('.local-time-offset').text(Ethplorer.Utils.getTZOffset());
         Ethplorer.Utils.hideEmptyFields();
         Ethplorer.hideLoader();
-        if(!data.isContract || (data.contract && data.contract.isChainy)) $('#ethplorer-path').html(qrIcon + "Address: " + address);
+        if (!data.isContract || (data.contract && data.contract.isChainy)) {
+            $('#ethplorer-path')
+                .remove('.qrcode, h2')
+                .find('h1')
+                .html('Address: ' + address)
+                .end()
+                .prepend(qrIcon);
+        }
         $('#disqus_thread').show();
         $('#addressDetails').show();
 

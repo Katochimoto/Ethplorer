@@ -269,7 +269,9 @@ $navbar = $twig->render('navbar.twig');
                 <div>
                 <?php if(true){ ?>
                     <div class="col-xs-12 col-sm-12">
-                        <h1 id="ethplorer-path"><?=$header?></h1>
+                        <header id="ethplorer-path">
+                            <h1><?=$header?></h1>
+                        </header>
                     </div>
                 <?php }else{ ?>
                     <div class="hidden-xs col-sm-2"></div>
