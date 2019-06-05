@@ -1072,21 +1072,14 @@ Ethplorer = {
                     return 0;
                 });
 
-                if (hasEthPrice) {
+                if (Ethplorer.ethPrice) {
                     balances = [].concat({
                         isEth: true,
                         name: 'Ethereum',
                         symbol: 'ETH',
                         balance: data.balance,
-                        balanceUSD: Ethplorer.ethPrice.rate * data.balance
+                        balanceUSD: (Ethplorer.ethPrice.rate && data.balance) ? Ethplorer.ethPrice.rate * data.balance : 0
                     }, balances);
-                }
-
-                if (hasEthPrice) {
-                    var row = $('<TR>')
-                        .append('<td class="cut-long-text">Ethereum</td>')
-                        .append('<td align="right">' + Ethplorer.formatValue(data.balance, 'ether-full') + '</td>');
-                    $('#address-token-balances table').append(row);
                 }
 
                 // Show
