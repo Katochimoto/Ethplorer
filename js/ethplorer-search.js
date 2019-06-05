@@ -14,9 +14,7 @@
  * limitations under the License.
  */
 
-import $ from 'jquery'
-
-export const EthplorerSearch = {
+EthplorerSearch = {
     data: {},
     service: "/service/service.php",
     searchCache: {},

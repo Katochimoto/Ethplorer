@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import EthplorerSearch from 'ethplorer-search'
+import { EthplorerSearch } from '@/assets/js/ethplorer-search'
 
 $(function () {
   $('#nav-search-form')

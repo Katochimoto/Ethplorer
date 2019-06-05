@@ -65,10 +65,7 @@ const config = {
   externals: {
     'jquery': 'jQuery',
     'ethplorer-widget': 'ethplorerWidget',
-    'ethplorer-search': 'EthplorerSearch',
-    'ethplorer-note': 'EthplorerNote',
-    'ethplorer-config': 'ethplorerConfig',
-    'ethplorer': 'Ethplorer',
+    'ethplorer-config': 'ethplorerConfig'
   },
   module: {
     rules: [
@@ -292,34 +289,22 @@ const config = {
         hash: true,
       },
       {
-        filepath: path.join(rootPath, 'api/widget.js'),
-        outputPath: 'js',
-        publicPath: '/js',
-        hash: true,
-      },
-      {
-        filepath: path.join(srcPath, 'assets/js/ethplorer-search.js'),
-        outputPath: 'js',
-        publicPath: '/js',
-        hash: true,
-      },
-      {
-        filepath: path.join(srcPath, 'assets/js/ethplorer-note.js'),
-        outputPath: 'js',
-        publicPath: '/js',
-        hash: true,
-      },
-      {
         filepath: path.join(srcPath, 'assets/js/jquery-ui.min.js'),
+        outputPath: 'js',
+        publicPath: '/js',
+        hash: true,
+      },
+      {
+        filepath: path.join(rootPath, 'api/widget.js'),
         outputPath: 'js',
         publicPath: '/js',
         hash: true,
       },
     ]),
 
-    // new SriPlugin({
-    //   hashFuncNames: ['sha256', 'sha384']
-    // }),
+    new SriPlugin({
+      hashFuncNames: ['sha256', 'sha384']
+    }),
   ],
 
   devServer: {

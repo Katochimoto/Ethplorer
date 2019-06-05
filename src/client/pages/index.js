@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import widget from 'ethplorer-widget'
-import EthplorerSearch from 'ethplorer-search'
+import { EthplorerSearch } from '@/assets/js/ethplorer-search'
 
 $(function () {
   widget.init('#token-pulse', 'tokenHistoryGrouped', {
