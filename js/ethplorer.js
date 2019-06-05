@@ -901,9 +901,9 @@ Ethplorer = {
         if(data.isContract){
             Ethplorer.fillValues('address', data, ['contract', 'contract.creator']);
         }
-        var qrIcon = '<a class="qrcode" style="line-height:initial;" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
+        var qrIcon = '<a class="qrcode" style="line-height:initial;" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');" title="view QR-code"><i class="fa fa-qrcode"></i></a>';
         if(data.isContract && data.token){
-            qrIcon = '<a class="qrcode" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');"><i class="fa fa-qrcode"></i></a>';
+            qrIcon = '<a class="qrcode" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');" title="view QR-code"><i class="fa fa-qrcode"></i></a>';
 
             $('#address-token-details').show();
             var oToken = Ethplorer.prepareToken(data.token);
