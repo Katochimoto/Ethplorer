@@ -548,8 +548,12 @@ a.dashed {
 #ethplorer-path .qrcode {
     float: right;
     position: relative;
-    line-height: 48px;
+    line-height: 46px;
     text-decoration: none;
+}
+
+#ethplorer-path .qrcode > img {
+    margin: -4px;
 }
 
 #ethplorer-path .tx-pending {
@@ -1153,7 +1157,7 @@ _::-webkit-:host:not(:root:root), .filter-clear {
         font-size: 18px;
     }
     #ethplorer-path .qrcode {
-        line-height: 41px;
+        line-height: 36px;
     }
 	#qr-code-address {
         font-size: 16px;
@@ -1241,7 +1245,7 @@ _::-webkit-:host:not(:root:root), .filter-clear {
         font-size: 14px;
     }
     #ethplorer-path .qrcode {
-        line-height: 38px;
+        line-height: 32px;
     }
     .table tr td:first-child {
         max-width: 90px;
@@ -1368,7 +1372,7 @@ a.token-update {
         font-size: 16px;
     }
     #ethplorer-path .qrcode {
-        line-height: 41px;
+        line-height: 36px;
     }
 
     .multiop tr td:nth-child(3),

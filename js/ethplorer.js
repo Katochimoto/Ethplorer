@@ -901,9 +901,13 @@ Ethplorer = {
         if(data.isContract){
             Ethplorer.fillValues('address', data, ['contract', 'contract.creator']);
         }
-        var qrIcon = '<a class="qrcode" style="line-height:initial;" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');" title="view QR-code"><i class="fa fa-qrcode"></i></a>';
+        var qrIconFactory = function (content) {
+            return '<a class="qrcode" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');" title="view QR-code">' + content + '</a>';
+        };
+        var qrIcon = '<a class="qrcode" style="line-height:initial;" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');" title="view QR-code"><img src="/images/qr.svg" width="32" height="32" alt="" /></a>';
         if(data.isContract && data.token){
-            qrIcon = '<a class="qrcode" href="javascript:void(0)" onclick="Ethplorer.showQRCode(\'' + address + '\');" title="view QR-code"><i class="fa fa-qrcode"></i></a>';
+            qrIcon = qrIconFactory('<img src="/images/qr.svg" width="32" height="32" alt="" />');
+            Ethplorer.fillValues('address', { qrcode: qrIconFactory('view QR-code') }, ['qrcode']);
 
             $('#address-token-details').show();
             var oToken = Ethplorer.prepareToken(data.token);
@@ -1238,8 +1242,6 @@ Ethplorer = {
         Ethplorer.Events.fire('ethp_showAddressDetails_finish', data);
 
         $('.local-time-offset').text(Ethplorer.Utils.getTZOffset());
-        Ethplorer.Utils.hideEmptyFields();
-        Ethplorer.hideLoader();
         if (!data.isContract || (data.contract && data.contract.isChainy)) {
             $('#ethplorer-path')
                 .remove('.qrcode, h2')
@@ -1247,7 +1249,11 @@ Ethplorer = {
                 .html('Address: ' + address)
                 .end()
                 .prepend(qrIcon);
+
+            Ethplorer.fillValues('address', { qrcode: qrIconFactory('view QR-code') }, ['qrcode']);
         }
+        Ethplorer.Utils.hideEmptyFields();
+        Ethplorer.hideLoader();
         $('#disqus_thread').show();
         $('#addressDetails').show();
 

@@ -580,6 +580,10 @@ $navbar = $twig->render('navbar.twig');
                                 <td>Transactions</td>
                                 <td id="address-contract-txsCount" data-type="int" class="list-field"></td>
                             </tr>
+                            <tr>
+                                <td></td>
+                                <td id="address-qrcode" align="right" class="list-field"></td>
+                            </tr>
                             </table>
                         </div>
                     </div>
